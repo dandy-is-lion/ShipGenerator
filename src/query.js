@@ -1,0 +1,128 @@
+const supabaseUrl = "https://rijnlxwbcvnlmlwnagic.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpam5seHdiY3ZubG1sd25hZ2ljIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc5MzgxNDcsImV4cCI6MTk5MzUxNDE0N30.kphwi9awGU4U5CZgrZNpULj6jYH60-f5sXxHznKOt-M";
+const db = supabase.createClient(supabaseUrl, supabaseKey);
+var buttonQuery = document.getElementById("button-query");
+var buttonSave = document.getElementById("button-save");
+buttonSave.disabled = true;
+
+async function getData(e) {
+	e.preventDefault();
+	buttonQuery.disabled = true;
+	buttonSave.disabled = true;
+	buttonQuery.innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
+	let dataTargets = chartRadar.data.datasets[0].data;
+	let selectedShip = document.getElementById("select-ships").value;
+	let selectedShips = ["Lunare", "Conq", "Helix", "Asera", "ESA", "Wallace", "Sulha", "Mantis", "Akhal", "Koen", "Bmoth", "Buran"];
+	if (selectedShip != "Any") selectedShips = Array.from(document.getElementById("select-ships").selectedOptions).map((option) => `${option.value}`);
+	let { data: combosX, error } = await db.rpc("shipxcalc", { data_target: dataTargets, data_ships: selectedShips });
+	if (combosX) {
+		let html = "";
+		for (const obj of combosX) {
+			html += "<tr onmouseover='rowHover(this)' onclick='rowClick(this)' class='border-bottom'>";
+			let i = 0;
+			for (const key in obj) {
+				let cellValue = obj[key];
+				let htmlAppend = "''>";
+				// Html to append to certain cells
+				switch (i) {
+					case 1:
+						htmlAppend = `'border-left border-right cell-ship'><img src='./img/${cellValue}.webp'></img>`;
+						break;
+					case 8:
+						htmlAppend = "'border-left border-right cell-score'>";
+						break;
+					default:
+						if (i > 1 && i < 8) {
+							htmlAppend = getPartClass(cellValue, i - 1);
+						}
+						if (i > 8 && i < 15) {
+							if (cellValue > dataTargets[i - 9] * 1.1) {
+								htmlAppend = "'cell-good'>";
+							} else if (cellValue < dataTargets[i - 9] * 0.9) {
+								htmlAppend = "'cell-bad'>";
+							}
+						}
+				}
+				html += `<td class=${htmlAppend}${cellValue}</td>`;
+				i++;
+			}
+			html += "</tr>";
+		}
+		document.getElementById("tbody-results").innerHTML = html;
+		buttonQuery.disabled = false;
+		buttonSave.disabled = false;
+		buttonQuery.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
+	} else {
+		alert(error.message);
+	}
+}
+
+// See if cell value matches short name of component, if so add a CSS style to it
+function getPartClass(cell, i) {
+	const components = statsData["Parts"]["Components"][i]["Details"];
+	for (const j in components) {
+		if (cell === components[j]["Short"]) {
+			return `'cell-class-${components[j]["Class"]}'>`;
+		}
+	}
+	console.error(`Part ${cell} has no style for it!`);
+	return "''>";
+}
+
+// Change the values of the Comparison data to whatever row's hovered
+function rowHover(row) {
+	let stats = getStats(row);
+	updateStatCharts(chartRadar, 1, stats);
+	updateStatCharts(chartBars, 1, stats);
+}
+
+// Change the values of the Selection data to whatever row's been clicked
+function rowClick(row) {
+	let stats = getStats(row);
+	updateStatCharts(chartRadar, 0, stats);
+	updateStatCharts(chartBars, 0, stats);
+	row.classList.add("results-selected");
+	var siblings = getSiblings(row);
+	for (i = 0; i < siblings.length; i++) {
+		siblings[i].classList.remove("results-selected");
+	}
+}
+
+function getSiblings(e) {
+	// for collecting siblings
+	let siblings = [];
+	// if no parent, return no sibling
+	if (!e.parentNode) {
+		return siblings;
+	}
+	// first child of the parent node
+	let sibling = e.parentNode.firstChild;
+
+	// collecting siblings
+	while (sibling) {
+		if (sibling.nodeType === 1 && sibling !== e) {
+			siblings.push(sibling);
+		}
+		sibling = sibling.nextSibling;
+	}
+	return siblings;
+}
+
+// Get stat values by reading columns 9 - 14 on the table and return it as an array
+function getStats(row) {
+	let stats = [];
+	for (i = 9; i < 15; i++) {
+		stats.push(getCellValue(row, i));
+	}
+	return stats;
+}
+
+function getCellValue(row, cell) {
+	return Math.max(0, row.getElementsByTagName("td")[cell].innerHTML);
+}
+
+function updateStatCharts(chart, dataset, data) {
+	chart.data.datasets[dataset].data = data;
+	chart.data.datasets[dataset].hidden = false;
+	chart.update();
+}

@@ -1,0 +1,333 @@
+:root {
+    --background-color: rgb(14, 15, 17);
+    --foreground-color: rgb(208, 233, 232);
+    --foreground-color-hover: rgb(211, 246, 255);
+    --panel-color: rgba(49, 100, 167, 0.1);
+    --panel-color-hover: rgba(48, 106, 180, 0.25);
+    --border-color: rgb(44, 98, 169);
+    --score-color: rgb(155, 255, 255);
+    --accent-color: rgb(40, 105, 189);
+    --good-color: rgb(153, 255, 51);
+    --bad-color: rgb(229, 43, 80);
+    --border-width: 2px;
+    --transition-speed: 400ms;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Roboto Condensed", Sans-serif;
+}
+
+#background-pattern {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+  
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.1) 9%,
+      transparent 9%
+    );
+    background-position: 0% 0%;
+    background-size: 2vmin 2vmin;
+  
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -5;
+  }
+  
+  #background-pattern-2 {
+    display: block;
+    height: 100vh;
+    width: 100vw;
+  
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.1) 4.5%,
+      transparent 4.5%
+    );
+    background-position: 1vmin 1vmin;
+    background-size: 2vmin 2vmin;
+  
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -5;
+  }
+
+body {
+    background-color: var(--background-color);
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.header {
+    font-size: 2.5em;
+    font-weight: bolder;
+    font-style: oblique;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-decoration: none;
+    color: var(--foreground-color);
+}
+
+.test-border {
+    border: 1px magenta solid;
+}
+
+.border-left {
+    border-left: var(--border-width) solid var(--border-color);
+}
+
+.border-right {
+    border-right: var(--border-width) solid var(--border-color);
+}
+
+.border-top {
+    border-top: var(--border-width) solid var(--border-color);
+}
+
+.border-bottom {
+    border-bottom: var(--border-width) solid var(--border-color);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: min-content auto 386px;
+    grid-template-rows: 100px 100px auto;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "logo title social"
+        "stats query query"
+        "stats results results";
+}
+
+.logo {
+    grid-area: logo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo > img {
+    width: 256px;
+    margin-left: -3%;
+}
+
+.title {
+    grid-area: title;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 2rem;
+    overflow: hidden;
+}
+
+.social {
+    grid-area: social;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    overflow: hidden;
+    padding: 0 2rem;
+}
+
+.social > a {
+    transition: all var(--transition-speed) ease;
+}
+
+.social:hover > a {
+    opacity: 0.5;
+}
+
+.social:hover > a:hover {
+    text-shadow: 0 0 1rem var(--accent-color);
+    color: var(--foreground-color-hover);
+    opacity: 1;
+}
+
+.stats {
+    grid-area: stats;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.button {
+    border: var(--border-width) solid var(--border-color);
+    color: var(--foreground-color);
+    background: var(--panel-color);
+    font-size: 2rem;
+    font-weight: bolder;
+    font-style: oblique;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.button:hover {
+    background: var(--panel-color-hover);
+    border-color: var(--accent-color);
+    text-shadow: 0 0 1rem var(--accent-color);
+}
+
+.button:active {
+    background: var(--accent-color);
+    border-color: var(--foreground-color);
+    color: var(--background-color);
+    transition: none;
+}
+
+.button:disabled {
+    opacity: 0.5;
+}
+
+.query {
+    grid-area: query;
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.query > form {
+    display: flex;
+    padding: 1rem 0 1rem 1rem;
+    gap: 1rem;
+}
+
+.query > .query-extra {
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.results {
+    grid-area: results;
+    overflow: auto;
+}
+
+.table-results {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-results > thead > tr > th {
+    color: var(--foreground-color);
+    font-size: 1.75em;
+    font-weight: bolder;
+    font-style: oblique;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.table-results > thead > tr, tbody > tr {
+    transition: all var(--transition-speed) ease;
+}
+
+.table-results > thead > tr {
+    background-color: var(--panel-color);
+}
+
+.table-results > thead > tr:hover {
+    background-color: var(--panel-color-hover);
+}
+
+.table-results > tbody > tr:hover {
+    background-color: var(--panel-color);
+}
+
+.table-results > thead > tr:hover th:hover {
+    text-shadow: 0 0 1rem var(--accent-color);
+    color: var(--foreground-color-hover);
+}
+
+.table-results > tbody > tr > td {
+    color: var(--foreground-color);
+    font-size: 1.5em;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.table-results > tbody > tr:hover td:hover {
+    text-shadow: 0 0 1rem var(--accent-color);
+    color: var(--foreground-color-hover) !important;
+}
+
+.results-selected {
+    background: var(--panel-color);
+}
+
+.cell-ship {
+    text-shadow: 0 0 1rem var(--accent-color);
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.column-ship {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell-ship > img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.cell-score {
+    text-shadow: 0 0 1rem var(--score-color) !important;
+    font-weight: bolder;
+}
+
+.cell-good {
+    text-shadow: 0 0 1rem var(--good-color) !important;
+    font-weight: bolder;
+}
+
+.cell-bad {
+    text-shadow: 0 0 1rem var(--bad-color) !important;
+    font-weight: bolder;
+}
+
+.cell-class-X {
+    color: rgb(153, 26, 189) !important;
+    font-weight: bolder;
+    font-style: oblique;
+}
+
+.cell-class-S {
+    color: rgb(201, 20, 118) !important;
+    font-weight: bolder;
+    font-style: oblique;
+}
+
+.cell-class-A {
+    color: rgb(222, 172, 16) !important;
+    font-weight: bolder;
+    font-style: oblique;
+}
+
+.cell-class-B {
+    color: rgb(12, 192, 31) !important;
+    font-weight: bolder;
+    font-style: oblique;
+}

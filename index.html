@@ -4,13 +4,105 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./styles.css" />
+		<link rel="stylesheet" id="google-fonts-1-css" href="https://fonts.googleapis.com/css?family=Roboto+Condensed%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=auto&amp;ver=6.1.1" media="all" />
+		<script src="https://kit.fontawesome.com/4a4b78b25c.js" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-		<script defer src="./app.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.2.3/dist/chartjs-plugin-dragdata.min.js"></script>
+		<script src="./src/data.js"></script>
+		<script defer src="./src/query.js"></script>
+		<script defer src="./src/charts.js"></script>
+		<script defer src="./src/app.js"></script>
 		<title>Ship Generator</title>
 	</head>
 	<body>
-		<form onsubmit="getData(event)">
-			<input type="submit" value="Test" />
-		</form>
+		<div class="container">
+			<div class="border-right border-bottom logo">
+				<img src="./img/swrg.png" alt="SWRG" title="Ship Workshop and Rig Generator" />
+			</div>
+			<div class="border-bottom title">
+				<span class="header">Redout II Ship Generator BETA</span>
+			</div>
+			<div class="border-left border-bottom social">
+				<a class="header" href="https://discord.gg/redout" title="Redout Discord">
+					<i class="fa-solid fa-brands fa-discord"></i>
+				</a>
+				<a class="header" href="https://twitter.com/redout2game" title="Redout Twitter">
+					<i class="fa-solid fa-brands fa-twitter"></i>
+				</a>
+				<a class="header" href="https://redout.games/" title="Redout Website">
+					<i class="fa-solid fa-earth"></i>
+				</a>
+				<a class="header" href="https://www.speedrun.com/redout_2/" title="Redout 2 Speedrunning Leaderboard">
+					<i class="fa-solid fa-trophy"></i>
+				</a>
+				<a class="header" href="https://github.com/dandy-is-lion/ShipGenerator" title="View on GitHub!">
+					<i class="fa-brands fa-git-alt"></i>
+				</a>
+			</div>
+			<div class="border-right stats">
+				<canvas id="chart-radar" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
+				<canvas id="chart-bars" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
+			</div>
+			<div class="border-bottom query">
+				<form onsubmit="getData(event)">
+					<button class="button" id="button-query" type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+					<select class="button" id="select-league" title="Select league or custom">
+						<option value="X" selected>X League</option>
+						<option value="SRRL" disabled>SRR League</option>
+						<option value="S" disabled>S League</option>
+						<option value="A" disabled>A League</option>
+						<option value="B" disabled>B League</option>
+						<option value="Custom" disabled>Custom</option>
+					</select>
+					<select class="button" id="select-ships" title="Select ship or any">
+						<option value="Any" selected>Any</option>
+						<option value="Lunare">Lunare</option>
+						<option value="Conq">Conq</option>
+						<option value="Helix">Helix</option>
+						<option value="Asera">Asera</option>
+						<option value="ESA">ESA</option>
+						<option value="Wallace">Wallace</option>
+						<option value="Sulha">Sulha</option>
+						<option value="Mantis">Mantis</option>
+						<option value="Akhal">Akhal</option>
+						<option value="Koen">Koen</option>
+						<option value="Bmoth">Bmoth</option>
+						<option value="Buran">Buran</option>
+					</select>
+				</form>
+				<div class="query-extra">
+					<button class="button" title="View previous selections" disabled><i class="fa-solid fa-clock-rotate-left"></i></button>
+					<button id="button-save" onclick="downloadTable()" class="button" title="Save results to text document" disabled><i class="fa-solid fa-floppy-disk"></i></button>
+				</div>
+			</div>
+			<div class="results">
+				<table class="table-results" id="table-results">
+					<thead>
+						<tr class="border-bottom">
+							<th title="Deviation (from Target)"><i class="fa-solid fa-bullseye"></i></th>
+							<th class="border-left border-right column-ship">Ship</th>
+							<th title="Propulsor"><i class="fa-solid fa-angles-right"></i></th>
+							<th title="Stabilizer"><i class="fa-solid fa-plane-arrival"></i></th>
+							<th title="Rudder"><i class="fa-solid fa-dharmachakra"></i></th>
+							<th title="Hull"><i class="fa-solid fa-shield-halved"></i></th>
+							<th title="Intercooler"><i class="fa-solid fa-snowflake"></i></th>
+							<th title="Electronic Stability Control"><i class="fa-solid fa-bolt"></i></th>
+							<th class="border-left border-right">Score</th>
+							<th title="Durability"><i class="fa-solid fa-plus"></i></th>
+							<th title="Thrust"><i class="fa-solid fa-plane-departure"></i></th>
+							<th title="Top Speed"><i class="fa-solid fa-gauge-high"></i></th>
+							<th title="Stability"><i class="fa-solid fa-magnet"></i></th>
+							<th title="Steer"><i class="fa-solid fa-rotate"></i></th>
+							<th title="Strafe"><i class="fa-solid fa-left-right"></i></th>
+						</tr>
+					</thead>
+					<tbody id="tbody-results"></tbody>
+				</table>
+			</div>
+		</div>
+		<div id="background-pattern"></div>
+		<div id="background-pattern-2"></div>
 	</body>
 </html>
