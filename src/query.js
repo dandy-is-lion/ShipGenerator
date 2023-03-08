@@ -2,43 +2,54 @@ const supabaseUrl = "https://rijnlxwbcvnlmlwnagic.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpam5seHdiY3ZubG1sd25hZ2ljIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc5MzgxNDcsImV4cCI6MTk5MzUxNDE0N30.kphwi9awGU4U5CZgrZNpULj6jYH60-f5sXxHznKOt-M";
 const db = supabase.createClient(supabaseUrl, supabaseKey);
 var buttonQuery = document.getElementById("button-query");
-var buttonSave = document.getElementById("button-save");
-buttonSave.disabled = true;
 
 async function getData(e) {
 	e.preventDefault();
 	buttonQuery.disabled = true;
-	buttonSave.disabled = true;
 	buttonQuery.innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
-	let dataTargets = chartRadar.data.datasets[0].data;
-	let selectedShip = document.getElementById("select-ships").value;
-	let selectedShips = ["Lunare", "Conq", "Helix", "Asera", "ESA", "Wallace", "Sulha", "Mantis", "Akhal", "Koen", "Bmoth", "Buran"];
-	if (selectedShip != "Any") selectedShips = Array.from(document.getElementById("select-ships").selectedOptions).map((option) => `${option.value}`);
-	let { data: combosX, error } = await db.rpc("shipxcalc", { data_target: dataTargets, data_ships: selectedShips });
+	let selectedShip = document.getElementById("select-ship").value;
+	if (selectedShip === "Any") {
+		let { data: combosX, error } = await db.rpc("comboxcalcany", { data_target: dataTarget }).order("deviation").limit(100);
+		runQuery(combosX, error);
+	} else {
+		let { data: combosX, error } = await db.rpc("comboxcalcship", { data_target: dataTarget, data_ship: selectedShip }).order("deviation").limit(100);
+		runQuery(combosX, error);
+	}
+	buttonQuery.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
+	buttonQuery.disabled = false;
+}
+
+function runQuery(combosX, error) {
 	if (combosX) {
 		let html = "";
 		for (const obj of combosX) {
-			html += "<tr onmouseover='rowHover(this)' onclick='rowClick(this)' class='border-bottom'>";
+			html += "<tr onmouseover='rowHover(this)' onclick='rowClick(this, event)' class='border-bottom'>";
 			let i = 0;
 			for (const key in obj) {
 				let cellValue = obj[key];
 				let htmlAppend = "''>";
 				// Html to append to certain cells
 				switch (i) {
-					case 1:
+					case 0: // ID column
+						htmlAppend = "'cell-id'>";
+						break;
+					case 1: // Ship column
 						htmlAppend = `'border-left border-right cell-ship'><img src='./img/${cellValue}.webp'></img>`;
 						break;
-					case 8:
+					case 8: // Score column
 						htmlAppend = "'border-left border-right cell-score'>";
 						break;
-					default:
+					case 15: // Deviation column
+						htmlAppend = "'border-left'>";
+						break;
+					default: // Parts and stats columns
 						if (i > 1 && i < 8) {
 							htmlAppend = getPartClass(cellValue, i - 1);
 						}
 						if (i > 8 && i < 15) {
-							if (cellValue > dataTargets[i - 9] * 1.1) {
+							if (cellValue > dataTarget[i - 9] * 1.1) {
 								htmlAppend = "'cell-good'>";
-							} else if (cellValue < dataTargets[i - 9] * 0.9) {
+							} else if (cellValue < dataTarget[i - 9] * 0.9) {
 								htmlAppend = "'cell-bad'>";
 							}
 						}
@@ -49,9 +60,6 @@ async function getData(e) {
 			html += "</tr>";
 		}
 		document.getElementById("tbody-results").innerHTML = html;
-		buttonQuery.disabled = false;
-		buttonSave.disabled = false;
-		buttonQuery.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
 	} else {
 		alert(error.message);
 	}
@@ -77,15 +85,18 @@ function rowHover(row) {
 }
 
 // Change the values of the Selection data to whatever row's been clicked
-function rowClick(row) {
+function rowClick(row, e) {
 	let stats = getStats(row);
 	updateStatCharts(chartRadar, 0, stats);
 	updateStatCharts(chartBars, 0, stats);
-	row.classList.add("results-selected");
-	var siblings = getSiblings(row);
-	for (i = 0; i < siblings.length; i++) {
-		siblings[i].classList.remove("results-selected");
-	}
+	dataTarget = stats;
+	updateQueryTargets(stats);
+	getData(e);
+	// row.classList.add("results-selected");
+	// var siblings = getSiblings(row);
+	// for (i = 0; i < siblings.length; i++) {
+	// 	siblings[i].classList.remove("results-selected");
+	// }
 }
 
 function getSiblings(e) {
@@ -126,3 +137,11 @@ function updateStatCharts(chart, dataset, data) {
 	chart.data.datasets[dataset].hidden = false;
 	chart.update();
 }
+
+// function targetInputKeyDown(e) {
+// 	console.log(e, isNaN(e.target.value));
+// 	if (isNaN(e.target.value)) {
+// 		e.target.value = "";
+// 		return;
+// 	}
+// }

@@ -12,96 +12,167 @@
 		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.2.3/dist/chartjs-plugin-dragdata.min.js"></script>
 		<script src="./src/data.js"></script>
 		<script defer src="./src/query.js"></script>
-		<script defer src="./src/charts.js"></script>
 		<script defer src="./src/app.js"></script>
+		<script defer src="./src/charts.js"></script>
 		<title>Ship Generator</title>
 	</head>
 	<body>
-		<div class="container">
-			<div class="border-right border-bottom logo">
-				<img src="./img/swrg.png" alt="SWRG" title="Ship Workshop and Rig Generator" />
-			</div>
-			<div class="border-bottom title">
-				<span class="header">Redout II Ship Generator BETA</span>
-			</div>
-			<div class="border-left border-bottom social">
-				<a class="header" href="https://discord.gg/redout" title="Redout Discord">
-					<i class="fa-solid fa-brands fa-discord"></i>
-				</a>
-				<a class="header" href="https://twitter.com/redout2game" title="Redout Twitter">
-					<i class="fa-solid fa-brands fa-twitter"></i>
-				</a>
-				<a class="header" href="https://redout.games/" title="Redout Website">
-					<i class="fa-solid fa-earth"></i>
-				</a>
-				<a class="header" href="https://www.speedrun.com/redout_2/" title="Redout 2 Speedrunning Leaderboard">
-					<i class="fa-solid fa-trophy"></i>
-				</a>
-				<a class="header" href="https://github.com/dandy-is-lion/ShipGenerator" title="View on GitHub!">
-					<i class="fa-brands fa-git-alt"></i>
-				</a>
-			</div>
-			<div class="border-right stats">
-				<canvas id="chart-radar" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
-				<canvas id="chart-bars" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
-			</div>
-			<div class="border-bottom query">
-				<form onsubmit="getData(event)">
-					<button class="button" id="button-query" type="submit" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-					<select class="button" id="select-league" title="Select league or custom">
-						<option value="X" selected>X League</option>
-						<option value="SRRL" disabled>SRR League</option>
-						<option value="S" disabled>S League</option>
-						<option value="A" disabled>A League</option>
-						<option value="B" disabled>B League</option>
-						<option value="Custom" disabled>Custom</option>
-					</select>
-					<select class="button" id="select-ships" title="Select ship or any">
-						<option value="Any" selected>Any</option>
-						<option value="Lunare">Lunare</option>
-						<option value="Conq">Conq</option>
-						<option value="Helix">Helix</option>
-						<option value="Asera">Asera</option>
-						<option value="ESA">ESA</option>
-						<option value="Wallace">Wallace</option>
-						<option value="Sulha">Sulha</option>
-						<option value="Mantis">Mantis</option>
-						<option value="Akhal">Akhal</option>
-						<option value="Koen">Koen</option>
-						<option value="Bmoth">Bmoth</option>
-						<option value="Buran">Buran</option>
-					</select>
-				</form>
-				<div class="query-extra">
-					<button class="button" title="View previous selections" disabled><i class="fa-solid fa-clock-rotate-left"></i></button>
-					<button id="button-save" onclick="downloadTable()" class="button" title="Save results to text document" disabled><i class="fa-solid fa-floppy-disk"></i></button>
+		<form onsubmit="getData(event)" id="form-query" onkeydown="return event.key != 'Enter';">
+			<div class="container">
+				<div class="border-right border-bottom logo">
+					<img src="./img/swrg.png" alt="SWRG" title="Ship Workshop and Rig Generator" />
+				</div>
+				<div class="border-bottom wrapper">
+					<div class="title">
+						<span class="header">Redout II Ship Generator BETA</span>
+					</div>
+					<div class="border-left query">
+						<button id="button-query" type="submit" class="header" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+						<a id="button-save" class="header" href="#" title="Save results to text document" onclick="downloadTable(event)" disabled>
+							<i class="fa-solid fa-floppy-disk"></i>
+						</a>
+						<button id="button-history" class="header" title="View previous selections" disabled><i class="fa-solid fa-clock-rotate-left"></i></button>
+					</div>
+					<div class="border-left social">
+						<a class="header" href="https://discord.gg/redout" title="Redout Discord">
+							<i class="fa-solid fa-brands fa-discord"></i>
+						</a>
+						<a class="header" href="https://twitter.com/redout2game" title="Redout Twitter">
+							<i class="fa-solid fa-brands fa-twitter"></i>
+						</a>
+						<a class="header" href="https://redout.games/" title="Redout Website">
+							<i class="fa-solid fa-earth"></i>
+						</a>
+						<a class="header" href="https://www.speedrun.com/redout_2/" title="Redout 2 Speedrunning Leaderboard">
+							<i class="fa-solid fa-trophy"></i>
+						</a>
+						<a class="header" href="https://github.com/dandy-is-lion/ShipGenerator" title="View on GitHub!">
+							<i class="fa-brands fa-git-alt"></i>
+						</a>
+					</div>
+				</div>
+				<div class="border-right stats">
+					<canvas id="chart-radar" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
+					<canvas id="chart-bars" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
+				</div>
+				<div class="results">
+					<table class="table-results" id="table-results">
+						<thead>
+							<tr class="border-bottom">
+								<th title="ID"><i class="fa-solid fa-hashtag"></i></th>
+								<th class="border-left border-right column-ship">Ship</th>
+								<th title="Propulsor"><i class="fa-solid fa-angles-right"></i></th>
+								<th title="Stabilizer"><i class="fa-solid fa-plane-arrival"></i></th>
+								<th title="Rudder"><i class="fa-solid fa-dharmachakra"></i></th>
+								<th title="Hull"><i class="fa-solid fa-shield-halved"></i></th>
+								<th title="Intercooler"><i class="fa-solid fa-snowflake"></i></th>
+								<th title="Electronic Stability Control"><i class="fa-solid fa-bolt"></i></th>
+								<th class="border-left border-right">Class</th>
+								<th title="Durability"><i class="fa-solid fa-plus"></i></th>
+								<th title="Thrust"><i class="fa-solid fa-plane-departure"></i></th>
+								<th title="Top Speed"><i class="fa-solid fa-gauge-high"></i></th>
+								<th title="Stability"><i class="fa-solid fa-magnet"></i></th>
+								<th title="Steer"><i class="fa-solid fa-rotate"></i></th>
+								<th title="Strafe"><i class="fa-solid fa-left-right"></i></th>
+								<th class="border-left" title="Deviation (from Target)"><i class="fa-solid fa-bullseye"></i></th>
+							</tr>
+							<tr class="border-bottom" id="row-query">
+								<th title="Search ID" class="column-id">
+									<input size="9" id="select-id" class="column-input" type="number" placeholder="Search ID" min="0" max="198976500" disabled />
+								</th>
+								<th title="Select ship(s)" class="border-left border-right column-ship">
+									<select id="select-ship" class="column-select">
+										<!-- onchange="getData(event)"> -->
+										<option value="Any" selected>Any</option>
+										<option value="Lunare">Lunare</option>
+										<option value="Conq">Conq</option>
+										<option value="Helix">Helix</option>
+										<option value="Asera">Asera</option>
+										<option value="ESA">ESA</option>
+										<option value="Wallace">Wallace</option>
+										<option value="Sulha">Sulha</option>
+										<option value="Mantis">Mantis</option>
+										<option value="Akhal">Akhal</option>
+										<option value="Koen">Koen</option>
+										<option value="Bmoth">Bmoth</option>
+										<option value="Buran">Buran</option>
+									</select>
+								</th>
+								<th title="Select propulsor">
+									<select name="select-propulsor" id="select-propulsor" class="column-select" disabled>
+										<option selected>Any</option>
+										<option>XXXX</option>
+									</select>
+								</th>
+								<th title="Select stabilizer">
+									<select name="select-stabilizer" id="select-stabilizer" class="column-select" disabled>
+										<option selected>Any</option>
+										<option>XXXX</option>
+									</select>
+								</th>
+								<th title="Select rudder">
+									<select name="select-rudder" id="select-rudder" class="column-select" disabled>
+										<option selected>Any</option>
+										<option>XXXX</option>
+									</select>
+								</th>
+								<th title="Select hull">
+									<select name="select-hull" id="select-hull" class="column-select" disabled>
+										<option selected>Any</option>
+										<option>XXXX</option>
+									</select>
+								</th>
+								<th title="Select intercooler">
+									<select name="select-intercooler" id="select-intercooler" class="column-select" disabled>
+										<option selected>Any</option>
+										<option>XXXX</option>
+									</select>
+								</th>
+								<th title="Select electronic stability control">
+									<select name="select-esc" id="select-esc" class="column-select" disabled>
+										<option selected>Any</option>
+										<option>XXXX</option>
+									</select>
+								</th>
+								<th title="Select class" class="border-left border-right">
+									<select id="select-class" class="column-select" disabled>
+										<!--onchange="getData(event)"> -->
+										<option value="X" selected>X</option>
+										<option value="SRRL" disabled>SRRL</option>
+										<option value="S" disabled>S</option>
+										<option value="A" disabled>A</option>
+										<option value="B" disabled>B</option>
+										<!-- <option value="Custom" disabled></option> -->
+									</select>
+								</th>
+								<th title="Select durability">
+									<input size="3" class="column-input" onchange="targetInputChange(event, 0)" type="number" value="39" placeholder="39" min="1" max="100" />
+								</th>
+								<th title="Select thrust">
+									<input size="3" class="column-input" onchange="targetInputChange(event, 1)" type="number" value="43" placeholder="43" min="1" max="100" />
+								</th>
+								<th title="Select top speed">
+									<input size="3" class="column-input" onchange="targetInputChange(event, 2)" type="number" value="42" placeholder="42" min="1" max="100" />
+								</th>
+								<th title="Select stability">
+									<input size="3" class="column-input" onchange="targetInputChange(event, 3)" type="number" value="37" placeholder="37" min="1" max="100" />
+								</th>
+								<th title="Select steer">
+									<input size="3" class="column-input" onchange="targetInputChange(event, 4)" type="number" value="42" placeholder="42" min="1" max="100" />
+								</th>
+								<th title="Select strafe">
+									<input size="3" class="column-input" onchange="targetInputChange(event, 5)" type="number" value="41" placeholder="41" min="1" max="100" />
+								</th>
+								<th title="Reset all targets" class="border-left">
+									<button type="reset" class="column-input" onclick="resetClick(event)"><i class="fa-solid fa-delete-left"></i></button>
+								</th>
+							</tr>
+						</thead>
+						<tbody id="tbody-results"></tbody>
+					</table>
 				</div>
 			</div>
-			<div class="results">
-				<table class="table-results" id="table-results">
-					<thead>
-						<tr class="border-bottom">
-							<th title="Deviation (from Target)"><i class="fa-solid fa-bullseye"></i></th>
-							<th class="border-left border-right column-ship">Ship</th>
-							<th title="Propulsor"><i class="fa-solid fa-angles-right"></i></th>
-							<th title="Stabilizer"><i class="fa-solid fa-plane-arrival"></i></th>
-							<th title="Rudder"><i class="fa-solid fa-dharmachakra"></i></th>
-							<th title="Hull"><i class="fa-solid fa-shield-halved"></i></th>
-							<th title="Intercooler"><i class="fa-solid fa-snowflake"></i></th>
-							<th title="Electronic Stability Control"><i class="fa-solid fa-bolt"></i></th>
-							<th class="border-left border-right">Score</th>
-							<th title="Durability"><i class="fa-solid fa-plus"></i></th>
-							<th title="Thrust"><i class="fa-solid fa-plane-departure"></i></th>
-							<th title="Top Speed"><i class="fa-solid fa-gauge-high"></i></th>
-							<th title="Stability"><i class="fa-solid fa-magnet"></i></th>
-							<th title="Steer"><i class="fa-solid fa-rotate"></i></th>
-							<th title="Strafe"><i class="fa-solid fa-left-right"></i></th>
-						</tr>
-					</thead>
-					<tbody id="tbody-results"></tbody>
-				</table>
-			</div>
-		</div>
+		</form>
 		<div id="background-pattern"></div>
 		<div id="background-pattern-2"></div>
 	</body>

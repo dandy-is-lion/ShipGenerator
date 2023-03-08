@@ -1,11 +1,11 @@
 const borderColor = getComputedStyle(document.documentElement).getPropertyValue("--border-color");
 const foregroundColor = getComputedStyle(document.documentElement).getPropertyValue("--foreground-color");
 const targetColor = getComputedStyle(document.documentElement).getPropertyValue("--good-color");
-const selectionColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
+// const selectionColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
 const comparisonColor = getComputedStyle(document.documentElement).getPropertyValue("--bad-color");
 
 const targetColorA = targetColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
-const selectionColorA = selectionColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
+// const selectionColorA = selectionColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
 const comparisonColorA = comparisonColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
 
 Chart.defaults.borderColor = borderColor;
@@ -16,7 +16,7 @@ Chart.defaults.plugins.decimation = false;
 
 // var dataSelection = [0, 0, 0, 0, 0, 0];
 var dataComparison = [0, 0, 0, 0, 0, 0];
-var dataTarget = [39, 43, 42, 37, 42, 41];
+var dataTarget = getQueryStats();
 
 const chartLabels = ["Durability", "Thrust", "Top Speed", "Stability", "Steer", "Strafe"];
 
@@ -100,9 +100,12 @@ var chartRadar = new Chart(ctxRadar, {
 					if (value < 1) return false;
 					if (!(datasetIndex === 0)) return false;
 					e.target.style.cursor = "grabbing";
-					chartBars.update();
 				},
-				onDragEnd: function (e, datasetIndex, index, value) {},
+				onDragEnd: function (e, datasetIndex, index, value) {
+					dataTarget[index] = value;
+					chartBars.update();
+					document.getElementById("row-query").getElementsByTagName("th")[index + 9].getElementsByTagName("input")[0].value = value;
+				},
 				magnet: {
 					to: Math.round,
 				},
@@ -169,9 +172,12 @@ var chartBars = new Chart(ctxBars, {
 					if (value < 1) return false;
 					if (!(datasetIndex === 0)) return false;
 					e.target.style.cursor = "grabbing";
-					chartRadar.update();
 				},
-				onDragEnd: function (e, datasetIndex, index, value) {},
+				onDragEnd: function (e, datasetIndex, index, value) {
+					dataTarget[index] = value;
+					chartRadar.update();
+					document.getElementById("row-query").getElementsByTagName("th")[index + 9].getElementsByTagName("input")[0].value = value;
+				},
 				magnet: {
 					to: Math.round, // to: (value) => value + 5
 				},

@@ -1,11 +1,12 @@
 // Quick and simple export target #tableID into a csv
-function downloadTable(tableID, separator = ",") {
-	tableID = "table-results";
+function downloadTable(e, separator = ",") {
+	e.preventDefault();
+	tableID = "tbody-results";
 	// Select rows from tableID
-	var rows = document.querySelectorAll("table#" + tableID + " tr");
+	var rows = document.querySelectorAll("tbody#" + tableID + " tr");
 	// Construct csv
-	var csv = ['"DEVI", "SHIP", "PROP", "STBZ", "RUDD", "HULL", "INTR", "ESC", "SCOR", "DURA", "THRU", "TSPD", "STBY", "STER", "STRF"'];
-	for (var i = 1; i < rows.length; i++) {
+	var csv = ['"ID", "Ship", "Propulsor", "Stabilizer", "Rudder", "Hull", "Intercooler", "ESC", "Class", "Durability", "Thrust", "TopSpeed", "Stability", "Steer", "Strafe", "Deviation"'];
+	for (var i = 0; i < rows.length; i++) {
 		var row = [],
 			cols = rows[i].querySelectorAll("td, th");
 		for (var j = 0; j < cols.length; j++) {
@@ -29,4 +30,36 @@ function downloadTable(tableID, separator = ",") {
 	document.body.appendChild(link);
 	link.click();
 	document.body.removeChild(link);
+}
+
+function targetInputChange(e, i) {
+	if (e.target.value < 0 || e.target.value > 100) {
+		e.target.value = "";
+		return;
+	}
+	dataTarget[i] = e.target.value;
+	updateStatCharts(chartRadar, 0, dataTarget);
+	updateStatCharts(chartBars, 0, dataTarget);
+}
+
+function updateQueryTargets(stats) {
+	for (i = 9; i < 15; i++) {
+		document.getElementById("row-query").getElementsByTagName("th")[i].getElementsByTagName("input")[0].value = stats[i - 9];
+	}
+}
+
+function getQueryStats() {
+	let stats = [];
+	for (i = 9; i < 15; i++) {
+		stats.push(document.getElementById("row-query").getElementsByTagName("th")[i].getElementsByTagName("input")[0].value);
+	}
+	return stats;
+}
+
+function resetClick(e) {
+	e.preventDefault();
+	document.getElementById("form-query").reset();
+	dataTarget = getQueryStats();
+	updateStatCharts(chartRadar, 0, dataTarget);
+	updateStatCharts(chartBars, 0, dataTarget);
 }
