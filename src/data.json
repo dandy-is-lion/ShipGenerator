@@ -1,901 +1,1224 @@
 {
-    "StatMultiplier": 2.5,
-    "Stats": {
-        "Amount": 6,
-        "Names": ["Durability", "Thrust", "Max Speed", "Stability", "Steer", "Strafe"],
-        "ShortNames": ["Dur", "Thr", "Spd", "Stb", "Str", "Stf"],
-        "Weight": [8, 10, 12, 5, 6, 5]
-    },
-    "Classes": {
-        "Amount": 5,
-        "Names": ["C", "B", "A", "S", "X"],
-        "Universal": "N"
-    },
-    "Parts": {
-        "Amount": 7,
-        "Components": [
-            {
-                "Type": "Glider",
-                "Variations": 12,
-                "Details": [
-                    {
-                        "Name": "Lunare",
-                        "Points": 184,
-                        "Class": "N",
-                        "Stats": [2, 3, 5, 3, 8, 3]
-                    },
-                    {
-                        "Name": "Conqueror",
-                        "Points": 186,
-                        "Class": "N",
-                        "Stats": [4, 3, 7, 1, 0, 7]
-                    },
-                    {
-                        "Name": "Helix",
-                        "Points": 182,
-                        "Class": "N",
-                        "Stats": [3, 5, 5, 4, 3, 2]
-                    },
-                    {
-                        "Name": "Asera",
-                        "Points": 185,
-                        "Class": "N",
-                        "Stats": [5, 8, 2, 3, 1, 4]
-                    },
-                    {
-                        "Name": "ESA-AGR",
-                        "Points": 184,
-                        "Class": "N",
-                        "Stats": [4, 4, 4, 4, 4, 4]
-                    },
-                    {
-                        "Name": "Wallace-RG",
-                        "Points": 183,
-                        "Class": "N",
-                        "Stats": [4, 2, 4, 4, 8, 3]
-                    },
-                    {
-                        "Name": "Sulha",
-                        "Points": 185,
-                        "Class": "N",
-                        "Stats": [1, 6, 8, 1, 1, 2]
-                    },
-                    {
-                        "Name": "Mantis",
-                        "Points": 183,
-                        "Class": "N",
-                        "Stats": [2, 7, 4, 3, 4, 2]
-                    },
-                    {
-                        "Name": "Akhal-Tech",
-                        "Points": 184,
-                        "Class": "N",
-                        "Stats": [0, 2, 8, 8, 3, 2]
-                    },
-                    {
-                        "Name": "Koeniggswerth",
-                        "Points": 186,
-                        "Class": "N",
-                        "Stats": [6, 2, 2, 8, 4, 6]
-                    },
-                    {
-                        "Name": "Behemoth",
-                        "Points": 186,
-                        "Class": "N",
-                        "Stats": [8, 4, 3, 1, 1, 7]
-                    },
-                    {
-                        "Name": "Buran",
-                        "Points": 185,
-                        "Class": "N",
-                        "Stats": [8, 6, 2, 2, 2, 3]
-                    }
-                ]
-            },
-            {
-                "Type": "Propulsor",
-                "Variations": 15,
-                "Details": [
-                    {
-                        "Name": "Base",
-                        "Short": "OCT",
-                        "Manufacturer": "Octonic",
-                        "Points": 0,
-                        "Class": "C",
-                        "Stats": [0, 0, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "8-TA",
-                        "Short": "8-TA",
-                        "Manufacturer": "Octonic",
-                        "Points": 24,
-                        "Class": "B",
-                        "Stats": [0, 0, 2, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Drapper v1",
-                        "Short": "IDV-1",
-                        "Manufacturer": "Icaro",
-                        "Points": 48,
-                        "Class": "B",
-                        "Stats": [0, 0, 4, 0, 0, 0]
-                    },
-                    {
-                        "Name": "F460",
-                        "Short": "F460",
-                        "Manufacturer": "Ferox",
-                        "Points": 66,
-                        "Class": "B",
-                        "Stats": [0, 3, 3, 0, 0, 0]
-                    },
-                    {
-                        "Name": "8-TE",
-                        "Short": "8-TE",
-                        "Manufacturer": "Octonic",
-                        "Points": 102,
-                        "Class": "A",
-                        "Stats": [0, 3, 6, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Breda v1",
-                        "Short": "IBV1",
-                        "Manufacturer": "Icaro",
-                        "Points": 106,
-                        "Class": "A",
-                        "Stats": [0, 1, 8, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Drapper v2",
-                        "Short": "IDV2",
-                        "Manufacturer": "Icaro",
-                        "Points": 144,
-                        "Class": "A",
-                        "Stats": [0, 0, 12, 0, 0, 0]
-                    },
-                    {
-                        "Name": "F570",
-                        "Short": "F570",
-                        "Manufacturer": "Ferox",
-                        "Points": 148,
-                        "Class": "A",
-                        "Stats": [0, 4, 9, 0, 0, 0]
-                    },
-                    {
-                        "Name": "8-TI",
-                        "Short": "8-TI",
-                        "Manufacturer": "Octonic",
-                        "Points": 228,
-                        "Class": "S",
-                        "Stats": [0, 6, 14, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Breda v2",
-                        "Short": "IBV2",
-                        "Manufacturer": "Icaro",
-                        "Points": 226,
-                        "Class": "S",
-                        "Stats": [0, 1, 18, 0, 0, 0]
-                    },
-                    {
-                        "Name": "F690",
-                        "Short": "F690",
-                        "Manufacturer": "Ferox",
-                        "Points": 224,
-                        "Class": "S",
-                        "Stats": [0, 8, 12, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Sg Sulha",
-                        "Short": "PSSU",
-                        "Manufacturer": "Sulha",
-                        "Points": 237,
-                        "Class": "X",
-                        "Stats": [-6, 5, 20, 0, 0, -1]
-                    },
-                    {
-                        "Name": "Sg Mantis",
-                        "Short": "PSBU",
-                        "Manufacturer": "Mantis",
-                        "Points": 237,
-                        "Class": "X",
-                        "Stats": [-1, 10, 14, 0, 0, -7]
-                    },
-                    {
-                        "Name": "Sg Lunare",
-                        "Short": "PSLN",
-                        "Manufacturer": "Lunare",
-                        "Points": 238,
-                        "Class": "X",
-                        "Stats": [-5, 8, 22, 0, 0, -6]
-                    },
-                    {
-                        "Name": "Sg Conqueror",
-                        "Short": "PSCO",
-                        "Manufacturer": "Conqueror",
-                        "Points": 237,
-                        "Class": "X",
-                        "Stats": [-4, 2, 22, 0, 0, -3]
-                    }
-                ]
-            },
-            {
-                "Type": "Stabilizer",
-                "Variations": 17,
-                "Details": [
-                    {
-                        "Name": "Base",
-                        "Short": "MGA",
-                        "Manufacturer": "Magna",
-                        "Points": 0,
-                        "Class": "C",
-                        "Stats": [0, 0, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Alfa55",
-                        "Short": "AL55",
-                        "Manufacturer": "Magna",
-                        "Points": 10,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 2, 0, 0]
-                    },
-                    {
-                        "Name": "Beta55",
-                        "Short": "BE55",
-                        "Manufacturer": "Magna",
-                        "Points": 20,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 4, 0, 0]
-                    },
-                    {
-                        "Name": "Alto",
-                        "Short": "ALTO",
-                        "Manufacturer": "Airbender",
-                        "Points": 22,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 2, 2, 0]
-                    },
-                    {
-                        "Name": "Rigel",
-                        "Short": "RIGL",
-                        "Manufacturer": "Orion",
-                        "Points": 32,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 4, 2, 0]
-                    },
-                    {
-                        "Name": "Cirrus",
-                        "Short": "CIRR",
-                        "Manufacturer": "Airbender",
-                        "Points": 54,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 6, 4, 0]
-                    },
-                    {
-                        "Name": "Bellatrix",
-                        "Short": "BLLX",
-                        "Manufacturer": "Orion",
-                        "Points": 52,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 8, 2, 0]
-                    },
-                    {
-                        "Name": "Gamma60",
-                        "Short": "GA60",
-                        "Manufacturer": "Magna",
-                        "Points": 60,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 12, 0, 0]
-                    },
-                    {
-                        "Name": "Mintaka",
-                        "Short": "MTKA",
-                        "Manufacturer": "Orion",
-                        "Points": 62,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 10, 2, 0]
-                    },
-                    {
-                        "Name": "Cumulus",
-                        "Short": "CUMU",
-                        "Manufacturer": "Airbender",
-                        "Points": 66,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 6, 6, 0]
-                    },
-                    {
-                        "Name": "Storm",
-                        "Short": "STRM",
-                        "Manufacturer": "Airbender",
-                        "Points": 110,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 10, 10, 0]
-                    },
-                    {
-                        "Name": "Betelgeuse",
-                        "Short": "BTLG",
-                        "Manufacturer": "Orion",
-                        "Points": 106,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 14, 6, 0]
-                    },
-                    {
-                        "Name": "Zeta70",
-                        "Short": "ZE70",
-                        "Manufacturer": "Magna",
-                        "Points": 102,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 18, 2, 0]
-                    },
-                    {
-                        "Name": "Sg Wallace",
-                        "Short": "SSWR",
-                        "Manufacturer": "Wallace-RG",
-                        "Points": 121,
-                        "Class": "X",
-                        "Stats": [0, -2, -2, 21, 10, 0]
-                    },
-                    {
-                        "Name": "Sg Helix",
-                        "Short": "SSHE",
-                        "Manufacturer": "Helix",
-                        "Points": 120,
-                        "Class": "X",
-                        "Stats": [0, -1, -1, 20, 7, 0]
-                    },
-                    {
-                        "Name": "Sg ESA-AGR",
-                        "Short": "SSES",
-                        "Manufacturer": "ESA-AGR",
-                        "Points": 122,
-                        "Class": "X",
-                        "Stats": [0, 0, -4, 16, 9, 0]
-                    },
-                    {
-                        "Name": "Sg Buran",
-                        "Short": "SSBR",
-                        "Manufacturer": "Buran",
-                        "Points": 118,
-                        "Class": "X",
-                        "Stats": [0, -4, 0, 22, 8, 0]
-                    }
-                ]
-            },
-            {
-                "Type": "Rudder",
-                "Variations": 17,
-                "Details": [
-                    {
-                        "Name": "Base",
-                        "Short": "OKS",
-                        "Manufacturer": "Oikos",
-                        "Points": 0,
-                        "Class": "C",
-                        "Stats": [0, 0, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Castellanus",
-                        "Short": "CAST",
-                        "Manufacturer": "Airbender",
-                        "Points": 18,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 0, 3, 0]
-                    },
-                    {
-                        "Name": "Svelto X",
-                        "Short": "SVTX",
-                        "Manufacturer": "Nimblelab",
-                        "Points": 23,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 0, 3, 1]
-                    },
-                    {
-                        "Name": "Lovelock",
-                        "Short": "LVLK",
-                        "Manufacturer": "Oikos",
-                        "Points": 29,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 0, 4, 1]
-                    },
-                    {
-                        "Name": "Stratus",
-                        "Short": "STRA",
-                        "Manufacturer": "Airbender",
-                        "Points": 30,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 0, 5, 0]
-                    },
-                    {
-                        "Name": "Svelto K",
-                        "Short": "SVTK",
-                        "Manufacturer": "Nimblelab",
-                        "Points": 44,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 0, 4, 4]
-                    },
-                    {
-                        "Name": "Darwin",
-                        "Short": "DRWN",
-                        "Manufacturer": "Oikos",
-                        "Points": 47,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 0, 7, 1]
-                    },
-                    {
-                        "Name": "Nimbus",
-                        "Short": "NIMB",
-                        "Manufacturer": "Airbender",
-                        "Points": 54,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 0, 9, 0]
-                    },
-                    {
-                        "Name": "Harper",
-                        "Short": "HRPR",
-                        "Manufacturer": "Oikos",
-                        "Points": 64,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 0, 9, 2]
-                    },
-                    {
-                        "Name": "Tornado",
-                        "Short": "TORN",
-                        "Manufacturer": "Airbender",
-                        "Points": 65,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 0, 10, 1]
-                    },
-                    {
-                        "Name": "Svelto Y",
-                        "Short": "SVLY",
-                        "Manufacturer": "Nimblelab",
-                        "Points": 111,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 0, 11, 9]
-                    },
-                    {
-                        "Name": "Tansley",
-                        "Short": "TSLY",
-                        "Manufacturer": "Oikos",
-                        "Points": 109,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 0, 14, 5]
-                    },
-                    {
-                        "Name": "Hurricane",
-                        "Short": "HURR",
-                        "Manufacturer": "Airbender",
-                        "Points": 108,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 0, 18, 0]
-                    },
-                    {
-                        "Name": "Sg Wallace",
-                        "Short": "RSWR",
-                        "Manufacturer": "Wallace-RG",
-                        "Points": 119,
-                        "Class": "X",
-                        "Stats": [-6, 0, 0, -3, 22, 10]
-                    },
-                    {
-                        "Name": "Sg Lunare",
-                        "Short": "RSLU",
-                        "Manufacturer": "",
-                        "Points": 119,
-                        "Class": "X",
-                        "Stats": [-3, 0, 0, -1, 18, 8]
-                    },
-                    {
-                        "Name": "Sg Behemoth",
-                        "Short": "RSBE",
-                        "Manufacturer": "Behemoth",
-                        "Points": 122,
-                        "Class": "X",
-                        "Stats": [-1, 0, 0, -1, 20, 3]
-                    },
-                    {
-                        "Name": "Sg ESA-AGR",
-                        "Short": "RSES",
-                        "Manufacturer": "ESA-AGR",
-                        "Points": 121,
-                        "Class": "X",
-                        "Stats": [0, 0, 0, -5, 16, 10]
-                    }
-                ]
-            },
-            {
-                "Type": "Hull",
-                "Variations": 15,
-                "Details": [
-                    {
-                        "Name": "Base",
-                        "Short": "QIQ",
-                        "Manufacturer": "QiQi",
-                        "Points": 0,
-                        "Class": "C",
-                        "Stats": [0, 0, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Ling",
-                        "Short": "LING",
-                        "Manufacturer": "QiQi",
-                        "Points": 16,
-                        "Class": "B",
-                        "Stats": [2, 0, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "45P15",
-                        "Short": "45P1",
-                        "Manufacturer": "Armoden",
-                        "Points": 32,
-                        "Class": "B",
-                        "Stats": [4, 0, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "8-TM",
-                        "Short": "8-TM",
-                        "Manufacturer": "Octonic",
-                        "Points": 48,
-                        "Class": "B",
-                        "Stats": [3, 0, 2, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Yi",
-                        "Short": "YI",
-                        "Manufacturer": "QiQi",
-                        "Points": 72,
-                        "Class": "A",
-                        "Stats": [6, 0, 2, 0, 0, 0]
-                    },
-                    {
-                        "Name": "8-TN",
-                        "Short": "8-TN",
-                        "Manufacturer": "Octonic",
-                        "Points": 80,
-                        "Class": "A",
-                        "Stats": [4, 0, 4, 0, 0, 0]
-                    },
-                    {
-                        "Name": "P4RM4",
-                        "Short": "P4RM",
-                        "Manufacturer": "Armoden",
-                        "Points": 104,
-                        "Class": "A",
-                        "Stats": [10, 0, 2, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Er",
-                        "Short": "ER",
-                        "Manufacturer": "QiQi",
-                        "Points": 112,
-                        "Class": "A",
-                        "Stats": [8, 0, 4, 0, 0, 0]
-                    },
-                    {
-                        "Name": "8-TW",
-                        "Short": "8-TW",
-                        "Manufacturer": "Octonic",
-                        "Points": 152,
-                        "Class": "S",
-                        "Stats": [10, 0, 6, 0, 0, 0]
-                    },
-                    {
-                        "Name": "San",
-                        "Short": "SAN",
-                        "Manufacturer": "QiQi",
-                        "Points": 156,
-                        "Class": "S",
-                        "Stats": [15, 0, 3, 0, 0, 0]
-                    },
-                    {
-                        "Name": "8UCKL3R",
-                        "Short": "8UCK",
-                        "Manufacturer": "Armoden",
-                        "Points": 156,
-                        "Class": "S",
-                        "Stats": [18, 0, 1, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Sg Koeniggswerth",
-                        "Short": "HSKO",
-                        "Manufacturer": "Koeniggswerth",
-                        "Points": 182,
-                        "Class": "X",
-                        "Stats": [22, 0, 0, 0, -3, 0]
-                    },
-                    {
-                        "Name": "Sg Akhal-Tech",
-                        "Short": "HSAK",
-                        "Manufacturer": "Akhal-Tech",
-                        "Points": 176,
-                        "Class": "X",
-                        "Stats": [17, -2, 8, 0, -6, 0]
-                    },
-                    {
-                        "Name": "Sg Buran",
-                        "Short": "HSBU",
-                        "Manufacturer": "Buran",
-                        "Points": 176,
-                        "Class": "X",
-                        "Stats": [15, -4, 10, 0, -4, 0]
-                    },
-                    {
-                        "Name": "Sg Behemoth",
-                        "Short": "HSBE",
-                        "Manufacturer": "Behemoth",
-                        "Points": 180,
-                        "Class": "X",
-                        "Stats": [19, -2, 3, 0, 0, 0]
-                    }
-                ]
-            },
-            {
-                "Type": "Intercooler",
-                "Variations": 15,
-                "Details": [
-                    {
-                        "Name": "Base",
-                        "Short": "TLC",
-                        "Manufacturer": "TrustLance",
-                        "Points": 0,
-                        "Class": "C",
-                        "Stats": [0, 0, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "F850",
-                        "Short": "F850",
-                        "Manufacturer": "Ferox",
-                        "Points": 20,
-                        "Class": "B",
-                        "Stats": [0, 2, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "70W3R",
-                        "Short": "70W3",
-                        "Manufacturer": "Armoden",
-                        "Points": 36,
-                        "Class": "B",
-                        "Stats": [2, 2, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Uriel",
-                        "Short": "TLUR",
-                        "Manufacturer": "TrustLance",
-                        "Points": 40,
-                        "Class": "B",
-                        "Stats": [0, 4, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Gabriel",
-                        "Short": "TLGA",
-                        "Manufacturer": "TrustLance",
-                        "Points": 70,
-                        "Class": "A",
-                        "Stats": [0, 7, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "F880",
-                        "Short": "F880",
-                        "Manufacturer": "Ferox",
-                        "Points": 96,
-                        "Class": "A",
-                        "Stats": [2, 8, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "K33P",
-                        "Short": "K33P",
-                        "Manufacturer": "Armoden",
-                        "Points": 108,
-                        "Class": "A",
-                        "Stats": [6, 6, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "F980",
-                        "Short": "F980",
-                        "Manufacturer": "Ferox",
-                        "Points": 116,
-                        "Class": "A",
-                        "Stats": [2, 10, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "C457L3",
-                        "Short": "C457",
-                        "Manufacturer": "Armoden",
-                        "Points": 164,
-                        "Class": "S",
-                        "Stats": [8, 10, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Michael",
-                        "Short": "TLMI",
-                        "Manufacturer": "TrustLance",
-                        "Points": 170,
-                        "Class": "S",
-                        "Stats": [0, 17, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "F990",
-                        "Short": "F990",
-                        "Manufacturer": "Ferox",
-                        "Points": 168,
-                        "Class": "S",
-                        "Stats": [6, 12, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Sg Behemoth",
-                        "Short": "ISBE",
-                        "Manufacturer": "Behemoth",
-                        "Points": 190,
-                        "Class": "X",
-                        "Stats": [10, 20, -8, -6, 0, 0]
-                    },
-                    {
-                        "Name": "Sg ESA-AGR",
-                        "Short": "ISES",
-                        "Manufacturer": "ESA-AGR",
-                        "Points": 189,
-                        "Class": "X",
-                        "Stats": [7, 15, -1, -1, 0, 0]
-                    },
-                    {
-                        "Name": "Sg Koeniggswerth",
-                        "Short": "ISKO",
-                        "Manufacturer": "Koeniggswerth",
-                        "Points": 189,
-                        "Class": "X",
-                        "Stats": [9, 19, -5, -5, 0, 0]
-                    },
-                    {
-                        "Name": "Sg Buran",
-                        "Short": "ISBU",
-                        "Manufacturer": "Buran",
-                        "Points": 184,
-                        "Class": "X",
-                        "Stats": [2, 22, -1, -8, 0, 0]
-                    }
-                ]
-            },
-            {
-                "Type": "E.S.C.",
-                "Variations": 17,
-                "Details": [
-                    {
-                        "Name": "Base",
-                        "Short": "NBL",
-                        "Manufacturer": "Nimblelab",
-                        "Points": 0,
-                        "Class": "C",
-                        "Stats": [0, 0, 0, 0, 0, 0]
-                    },
-                    {
-                        "Name": "Tengu",
-                        "Short": "TENGU",
-                        "Manufacturer": "Gozu",
-                        "Points": 15,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 1, 0, 2]
-                    },
-                    {
-                        "Name": "Nue",
-                        "Short": "NUE",
-                        "Manufacturer": "Gozu",
-                        "Points": 20,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 1, 0, 3]
-                    },
-                    {
-                        "Name": "Theta60",
-                        "Short": "TH60",
-                        "Manufacturer": "Magna",
-                        "Points": 25,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 2, 0, 3]
-                    },
-                    {
-                        "Name": "AgileZ",
-                        "Short": "AGIZ",
-                        "Manufacturer": "Nimblelab",
-                        "Points": 30,
-                        "Class": "B",
-                        "Stats": [0, 0, 0, 1, 0, 5]
-                    },
-                    {
-                        "Name": "AgileX",
-                        "Short": "AGIX",
-                        "Manufacturer": "Nimblelab",
-                        "Points": 40,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 0, 0, 8]
-                    },
-                    {
-                        "Name": "Eta61",
-                        "Short": "ET61",
-                        "Manufacturer": "Magna",
-                        "Points": 40,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 3, 0, 5]
-                    },
-                    {
-                        "Name": "AgileK",
-                        "Short": "AGIK",
-                        "Manufacturer": "Nimblelab",
-                        "Points": 55,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 1, 0, 10]
-                    },
-                    {
-                        "Name": "Oni",
-                        "Short": "ONI",
-                        "Manufacturer": "Gozu",
-                        "Points": 55,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 2, 0, 9]
-                    },
-                                            {
-                        "Name": "Sigma69",
-                        "Short": "SG69",
-                        "Manufacturer": "Magna",
-                        "Points": 55,
-                        "Class": "A",
-                        "Stats": [0, 0, 0, 4, 0, 7]
-                    },
-                    {
-                        "Name": "Phi70",
-                        "Short": "PI70",
-                        "Manufacturer": "Magna",
-                        "Points": 80,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 4, 0, 12]
-                    },
-                    {
-                        "Name": "Ryuu",
-                        "Short": "RYUU",
-                        "Manufacturer": "Gozu",
-                        "Points": 85,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 2, 0, 15]
-                    },
-                    {
-                        "Name": "AgileY",
-                        "Short": "AGIY",
-                        "Manufacturer": "Nimblelab",
-                        "Points": 90,
-                        "Class": "S",
-                        "Stats": [0, 0, 0, 0, 0, 18]
-                    },
-                    {
-                        "Name": "Sg Lunare",
-                        "Short": "ESLU",
-                        "Manufacturer": "Lunare",
-                        "Points": 96,
-                        "Class": "X",
-                        "Stats": [-3, 0, -1, 6, 0, 18]
-                    },
-                    {
-                        "Name": "Sg Koeniggswerth",
-                        "Short": "ESKO",
-                        "Manufacturer": "Koeniggswerth",
-                        "Points": 99,
-                        "Class": "X",
-                        "Stats": [0, 0, -4, 5, 0, 22]
-                    },
-                    {
-                        "Name": "Sg Mantis",
-                        "Short": "ESMA",
-                        "Manufacturer": "Mantis",
-                        "Points": 95,
-                        "Class": "X",
-                        "Stats": [-6, 0, -1, 10, 0, 21]
-                    },
-                    {
-                        "Name": "Sg Asera",
-                        "Short": "ESAS",
-                        "Manufacturer": "Asera",
-                        "Points": 97,
-                        "Class": "X",
-                        "Stats": [-3, 0, -3, 10, 0, 19]
-                    }
-                ]
-            }
-        ]
-    }
+    "gliders": [
+        {
+            "name": "Lunare",
+            "short": "LUN",
+            "scr": 184,
+            "dur": 2,
+            "thr": 3,
+            "spd": 5,
+            "stb": 3,
+            "str": 8,
+            "stf": 3
+        },
+        {
+            "name": "Conq",
+            "short": "CNQ",
+            "scr": 184,
+            "dur": 4,
+            "thr": 3,
+            "spd": 7,
+            "stb": 1,
+            "str": 0,
+            "stf": 7
+        },
+        {
+            "name": "Helix",
+            "short": "HEL",
+            "scr": 184,
+            "dur": 8,
+            "thr": 5,
+            "spd": 5,
+            "stb": 4,
+            "str": 3,
+            "stf": 2
+        },
+        {
+            "name": "Asera",
+            "short": "ASE",
+            "scr": 184,
+            "dur": 12,
+            "thr": 20,
+            "spd": 5,
+            "stb": 8,
+            "str": 2,
+            "stf": 10
+        },
+        {
+            "name": "ESA",
+            "short": "ESA",
+            "scr": 184,
+            "dur": 10,
+            "thr": 10,
+            "spd": 10,
+            "stb": 10,
+            "str": 10,
+            "stf": 10
+        },
+        {
+            "name": "Wallace",
+            "short": "WRG",
+            "scr": 184,
+            "dur": 10,
+            "thr": 5,
+            "spd": 10,
+            "stb": 10,
+            "str": 20,
+            "stf": 8
+        },
+        {
+            "name": "Sulha",
+            "short": "SUL",
+            "scr": 184,
+            "dur": 2,
+            "thr": 15,
+            "spd": 20,
+            "stb": 2,
+            "str": 2,
+            "stf": 5
+        },
+        {
+            "name": "Mantis",
+            "short": "MAN",
+            "scr": 184,
+            "dur": 5,
+            "thr": 17,
+            "spd": 10,
+            "stb": 8,
+            "str": 10,
+            "stf": 5
+        },
+        {
+            "name": "Akhal",
+            "short": "AKT",
+            "scr": 184,
+            "dur": 0,
+            "thr": 5,
+            "spd": 20,
+            "stb": 20,
+            "str": 8,
+            "stf": 5
+        },
+        {
+            "name": "Koen",
+            "short": "KGW",
+            "scr": 184,
+            "dur": 15,
+            "thr": 5,
+            "spd": 5,
+            "stb": 20,
+            "str": 10,
+            "stf": 15
+        },
+        {
+            "name": "Bmoth",
+            "short": "BEH",
+            "scr": 184,
+            "dur": 20,
+            "thr": 10,
+            "spd": 8,
+            "stb": 2,
+            "str": 2,
+            "stf": 17
+        },
+        {
+            "name": "Buran",
+            "short": "BRN",
+            "scr": 184,
+            "dur": 20,
+            "thr": 15,
+            "spd": 5,
+            "stb": 5,
+            "str": 5,
+            "stf": 8
+        }
+    ],
+    "parts": [
+        {
+            "type": "propulsor",
+            "details": [
+                {
+                    "name": "OCT",
+                    "scr": 0,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "C"
+                },
+                {
+                    "name": "8-TA",
+                    "scr": 24,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 5,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "IDV1",
+                    "scr": 48,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 10,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "F460",
+                    "scr": 66,
+                    "dur": 0,
+                    "thr": 7,
+                    "spd": 7,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "8-TE",
+                    "scr": 102,
+                    "dur": 0,
+                    "thr": 7,
+                    "spd": 15,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "IBV1",
+                    "scr": 106,
+                    "dur": 0,
+                    "thr": 2,
+                    "spd": 20,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "IDV2",
+                    "scr": 144,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 30,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "F570",
+                    "scr": 148,
+                    "dur": 0,
+                    "thr": 10,
+                    "spd": 22,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "8-TI",
+                    "scr": 228,
+                    "dur": 0,
+                    "thr": 15,
+                    "spd": 35,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "IBV2",
+                    "scr": 226,
+                    "dur": 0,
+                    "thr": 2,
+                    "spd": 45,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "F690",
+                    "scr": 224,
+                    "dur": 0,
+                    "thr": 20,
+                    "spd": 30,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "PSSU",
+                    "scr": 237,
+                    "dur": -15,
+                    "thr": 12,
+                    "spd": 50,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": -2,
+                    "class": "X"
+                },
+                {
+                    "name": "PSBU",
+                    "scr": 237,
+                    "dur": -2,
+                    "thr": 25,
+                    "spd": 35,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": -18,
+                    "class": "X"
+                },
+                {
+                    "name": "PSLN",
+                    "scr": 238,
+                    "dur": -12,
+                    "thr": 20,
+                    "spd": 55,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": -15,
+                    "class": "X"
+                },
+                {
+                    "name": "PSCO",
+                    "scr": 237,
+                    "dur": -10,
+                    "thr": 5,
+                    "spd": 55,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": -7,
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "stabilizer",
+            "details": [
+                {
+                    "name": "MGA",
+                    "scr": 0,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "C"
+                },
+                {
+                    "name": "AL55",
+                    "scr": 10,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 5,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "BE55",
+                    "scr": 20,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 10,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "ALTO",
+                    "scr": 22,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 5,
+                    "str": 5,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "RIGL",
+                    "scr": 32,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 10,
+                    "str": 5,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "CIRR",
+                    "scr": 54,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 15,
+                    "str": 10,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "BLLX",
+                    "scr": 52,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 20,
+                    "str": 5,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "GA60",
+                    "scr": 60,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 30,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "MTKA",
+                    "scr": 62,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 25,
+                    "str": 5,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "CUMU",
+                    "scr": 66,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 15,
+                    "str": 15,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "STRM",
+                    "scr": 110,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 25,
+                    "str": 25,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "BTLG",
+                    "scr": 106,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 35,
+                    "str": 15,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "ZE70",
+                    "scr": 102,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 45,
+                    "str": 5,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "SSWR",
+                    "scr": 121,
+                    "dur": 0,
+                    "thr": -5,
+                    "spd": -5,
+                    "stb": 52,
+                    "str": 25,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "SSHE",
+                    "scr": 120,
+                    "dur": 0,
+                    "thr": -2,
+                    "spd": -2,
+                    "stb": 50,
+                    "str": 18,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "SSES",
+                    "scr": 122,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": -10,
+                    "stb": 40,
+                    "str": 22,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "SSBR",
+                    "scr": 118,
+                    "dur": 0,
+                    "thr": -10,
+                    "spd": 0,
+                    "stb": 55,
+                    "str": 20,
+                    "stf": 0,
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "rudder",
+            "details": [
+                {
+                    "name": "OKS",
+                    "scr": 0,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "C"
+                },
+                {
+                    "name": "CAST",
+                    "scr": 18,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 7,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "SVTX",
+                    "scr": 23,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 7,
+                    "stf": 2,
+                    "class": "B"
+                },
+                {
+                    "name": "LVLK",
+                    "scr": 29,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 10,
+                    "stf": 2,
+                    "class": "B"
+                },
+                {
+                    "name": "STRA",
+                    "scr": 30,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 12,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "SVTK",
+                    "scr": 44,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 10,
+                    "stf": 10,
+                    "class": "A"
+                },
+                {
+                    "name": "DRWN",
+                    "scr": 47,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 18,
+                    "stf": 2,
+                    "class": "A"
+                },
+                {
+                    "name": "NIMB",
+                    "scr": 54,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 22,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "HRPR",
+                    "scr": 64,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 22,
+                    "stf": 5,
+                    "class": "A"
+                },
+                {
+                    "name": "TORN",
+                    "scr": 65,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 25,
+                    "stf": 2,
+                    "class": "A"
+                },
+                {
+                    "name": "SVLY",
+                    "scr": 111,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 28,
+                    "stf": 22,
+                    "class": "S"
+                },
+                {
+                    "name": "TSLY",
+                    "scr": 109,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 35,
+                    "stf": 12,
+                    "class": "S"
+                },
+                {
+                    "name": "HURR",
+                    "scr": 108,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 45,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "RSWR",
+                    "scr": 119,
+                    "dur": -15,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": -8,
+                    "str": 55,
+                    "stf": 25,
+                    "class": "X"
+                },
+                {
+                    "name": "RSLU",
+                    "scr": 119,
+                    "dur": -8,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": -2,
+                    "str": 45,
+                    "stf": 20,
+                    "class": "X"
+                },
+                {
+                    "name": "RSBE",
+                    "scr": 122,
+                    "dur": -2,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": -2,
+                    "str": 50,
+                    "stf": 7,
+                    "class": "X"
+                },
+                {
+                    "name": "RSES",
+                    "scr": 121,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": -12,
+                    "str": 40,
+                    "stf": 25,
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "hull",
+            "details": [
+                {
+                    "name": "QIQ",
+                    "scr": 0,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "C"
+                },
+                {
+                    "name": "LING",
+                    "scr": 16,
+                    "dur": 5,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "45P1",
+                    "scr": 32,
+                    "dur": 10,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "8-TM",
+                    "scr": 48,
+                    "dur": 7,
+                    "thr": 0,
+                    "spd": 5,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "YI",
+                    "scr": 72,
+                    "dur": 15,
+                    "thr": 0,
+                    "spd": 5,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "8-TN",
+                    "scr": 80,
+                    "dur": 10,
+                    "thr": 0,
+                    "spd": 10,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "P4RM",
+                    "scr": 104,
+                    "dur": 25,
+                    "thr": 0,
+                    "spd": 5,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "ER",
+                    "scr": 112,
+                    "dur": 20,
+                    "thr": 0,
+                    "spd": 10,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "8-TW",
+                    "scr": 152,
+                    "dur": 25,
+                    "thr": 0,
+                    "spd": 15,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "SAN",
+                    "scr": 156,
+                    "dur": 38,
+                    "thr": 0,
+                    "spd": 7,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "8UCK",
+                    "scr": 156,
+                    "dur": 45,
+                    "thr": 0,
+                    "spd": 2,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "HSKO",
+                    "scr": 182,
+                    "dur": 55,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": -8,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "HSAK",
+                    "scr": 176,
+                    "dur": 42,
+                    "thr": -5,
+                    "spd": 20,
+                    "stb": 0,
+                    "str": -15,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "HSBU",
+                    "scr": 176,
+                    "dur": 38,
+                    "thr": -10,
+                    "spd": 25,
+                    "stb": 0,
+                    "str": -10,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "HSBE",
+                    "scr": 180,
+                    "dur": 48,
+                    "thr": -5,
+                    "spd": 6,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "intercooler",
+            "details": [
+                {
+                    "name": "TLC",
+                    "scr": 0,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "C"
+                },
+                {
+                    "name": "F850",
+                    "scr": 20,
+                    "dur": 0,
+                    "thr": 5,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "70W3",
+                    "scr": 36,
+                    "dur": 5,
+                    "thr": 5,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "TLUR",
+                    "scr": 40,
+                    "dur": 0,
+                    "thr": 10,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "B"
+                },
+                {
+                    "name": "TLGA",
+                    "scr": 70,
+                    "dur": 0,
+                    "thr": 18,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "F880",
+                    "scr": 96,
+                    "dur": 5,
+                    "thr": 20,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "K33P",
+                    "scr": 108,
+                    "dur": 15,
+                    "thr": 15,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "F980",
+                    "scr": 116,
+                    "dur": 5,
+                    "thr": 25,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "A"
+                },
+                {
+                    "name": "C457",
+                    "scr": 164,
+                    "dur": 20,
+                    "thr": 25,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "TLMI",
+                    "scr": 170,
+                    "dur": 0,
+                    "thr": 42,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "F990",
+                    "scr": 168,
+                    "dur": 15,
+                    "thr": 30,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "S"
+                },
+                {
+                    "name": "ISBE",
+                    "scr": 190,
+                    "dur": 25,
+                    "thr": 50,
+                    "spd": -20,
+                    "stb": -15,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "ISES",
+                    "scr": 189,
+                    "dur": 18,
+                    "thr": 38,
+                    "spd": -2,
+                    "stb": -2,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "ISKO",
+                    "scr": 189,
+                    "dur": 22,
+                    "thr": 48,
+                    "spd": -12,
+                    "stb": -12,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "X"
+                },
+                {
+                    "name": "ISBU",
+                    "scr": 184,
+                    "dur": 5,
+                    "thr": 55,
+                    "spd": -2,
+                    "stb": -20,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "esc",
+            "details": [
+                {
+                    "name": "NBL",
+                    "scr": 0,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 0,
+                    "class": "C"
+                },
+                {
+                    "name": "TENGU",
+                    "scr": 15,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 3,
+                    "str": 0,
+                    "stf": 5,
+                    "class": "B"
+                },
+                {
+                    "name": "NUE",
+                    "scr": 20,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 3,
+                    "str": 0,
+                    "stf": 8,
+                    "class": "B"
+                },
+                {
+                    "name": "TH60",
+                    "scr": 25,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 5,
+                    "str": 0,
+                    "stf": 8,
+                    "class": "B"
+                },
+                {
+                    "name": "AGIZ",
+                    "scr": 30,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 3,
+                    "str": 0,
+                    "stf": 12,
+                    "class": "B"
+                },
+                {
+                    "name": "AGIX",
+                    "scr": 40,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 20,
+                    "class": "A"
+                },
+                {
+                    "name": "ET61",
+                    "scr": 40,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 8,
+                    "str": 0,
+                    "stf": 12,
+                    "class": "A"
+                },
+                {
+                    "name": "AGIK",
+                    "scr": 55,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 3,
+                    "str": 0,
+                    "stf": 25,
+                    "class": "A"
+                },
+                {
+                    "name": "ONI",
+                    "scr": 55,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 5,
+                    "str": 0,
+                    "stf": 22,
+                    "class": "A"
+                },
+                {
+                    "name": "SG69",
+                    "scr": 55,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 10,
+                    "str": 0,
+                    "stf": 18,
+                    "class": "A"
+                },
+                {
+                    "name": "PI70",
+                    "scr": 80,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 10,
+                    "str": 0,
+                    "stf": 30,
+                    "class": "S"
+                },
+                {
+                    "name": "RYUU",
+                    "scr": 85,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 5,
+                    "str": 0,
+                    "stf": 38,
+                    "class": "S"
+                },
+                {
+                    "name": "AGIY",
+                    "scr": 90,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": 0,
+                    "stb": 0,
+                    "str": 0,
+                    "stf": 45,
+                    "class": "S"
+                },
+                {
+                    "name": "ESLU",
+                    "scr": 96,
+                    "dur": -7,
+                    "thr": 0,
+                    "spd": -2,
+                    "stb": 15,
+                    "str": 0,
+                    "stf": 45,
+                    "class": "X"
+                },
+                {
+                    "name": "ESKO",
+                    "scr": 99,
+                    "dur": 0,
+                    "thr": 0,
+                    "spd": -10,
+                    "stb": 12,
+                    "str": 0,
+                    "stf": 55,
+                    "class": "X"
+                },
+                {
+                    "name": "ESMA",
+                    "scr": 95,
+                    "dur": -15,
+                    "thr": 0,
+                    "spd": -2,
+                    "stb": 25,
+                    "str": 0,
+                    "stf": 52,
+                    "class": "X"
+                },
+                {
+                    "name": "ESAS",
+                    "scr": 97,
+                    "dur": -7,
+                    "thr": 0,
+                    "spd": -7,
+                    "stb": 25,
+                    "str": 0,
+                    "stf": 48,
+                    "class": "X"
+                }
+            ]
+        }
+    ]
 }

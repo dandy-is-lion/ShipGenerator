@@ -4,20 +4,24 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="./styles.css" />
-		<link rel="stylesheet" id="google-fonts-1-css" href="https://fonts.googleapis.com/css?family=Roboto+Condensed%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=auto&amp;ver=6.1.1" media="all" />
+		<link rel="stylesheet" href="./src/styles.css" />
+		<link
+			rel="stylesheet"
+			id="google-fonts-1-css"
+			href="https://fonts.googleapis.com/css?family=Roboto+Condensed%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=auto&amp;ver=6.1.1"
+			media="all"
+		/>
 		<script src="https://kit.fontawesome.com/4a4b78b25c.js" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.2.3/dist/chartjs-plugin-dragdata.min.js"></script>
-		<script src="./src/data.js"></script>
-		<script defer src="./src/query.js"></script>
 		<script defer src="./src/app.js"></script>
+		<script defer src="./src/query.js"></script>
 		<script defer src="./src/charts.js"></script>
 		<title>Ship Generator</title>
 	</head>
-	<body>
-		<form onsubmit="getData(event)" id="form-query" onkeydown="return event.key != 'Enter';">
+	<body class="border-left border-right border-top border-bottom">
+		<form class="blur" onsubmit="getData(event)" id="form-query" onkeydown="return event.key != 'Enter';">
 			<div class="container">
 				<div class="border-right border-bottom logo">
 					<img src="./img/swrg.png" alt="SWRG" title="Ship Workshop and Rig Generator" />
@@ -25,13 +29,6 @@
 				<div class="border-bottom wrapper">
 					<div class="title">
 						<span class="header">Redout II Ship Generator BETA</span>
-					</div>
-					<div class="border-left query">
-						<button id="button-query" type="submit" class="header" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-						<a id="button-save" class="header" href="#" title="Save results to text document" onclick="downloadTable(event)" disabled>
-							<i class="fa-solid fa-floppy-disk"></i>
-						</a>
-						<button id="button-history" class="header" title="View previous selections" disabled><i class="fa-solid fa-clock-rotate-left"></i></button>
 					</div>
 					<div class="border-left social">
 						<a class="header" href="https://discord.gg/redout" title="Redout Discord">
@@ -43,128 +40,290 @@
 						<a class="header" href="https://redout.games/" title="Redout Website">
 							<i class="fa-solid fa-earth"></i>
 						</a>
-						<a class="header" href="https://www.speedrun.com/redout_2/" title="Redout 2 Speedrunning Leaderboard">
+						<a class="header" href="https://www.speedrun.com/redout_2/" title="Redout Speedrunning Leaderboard">
 							<i class="fa-solid fa-trophy"></i>
 						</a>
-						<a class="header" href="https://github.com/dandy-is-lion/ShipGenerator" title="View on GitHub!">
+						<a class="header" href="https://github.com/dandy-is-lion/ShipGenerator" title="Follow on GitHub!">
 							<i class="fa-brands fa-git-alt"></i>
 						</a>
 					</div>
 				</div>
 				<div class="border-right stats">
-					<canvas id="chart-radar" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
-					<canvas id="chart-bars" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
+					<div class="border-bottom query blurier">
+						<button id="button-random" class="button" title="Randomize targets" onclick="randomTargets(event)">
+							<i class="fa-solid fa-dice"></i>
+						</button>
+						<button id="button-save" class="button" title="Save results to text document" onclick="downloadTable(event)" disabled>
+							<i class="fa-solid fa-file-csv"></i>
+						</button>
+						<button id="button-favs" class="button" title="View starred and named ships" disabled>
+							<i class="fa-solid fa-star"></i>
+						</button>
+						<button id="button-history" class="button" title="View previous selections" disabled>
+							<i class="fa-solid fa-clock-rotate-left"></i>
+						</button>
+						<button id="button-query" type="submit" class="button" title="Search">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</div>
+					<div class="charts">
+						<canvas id="chart-radar" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
+						<canvas id="chart-bars" style="min-height: 19rem; height: 19rem; width: 22rem"></canvas>
+					</div>
 				</div>
 				<div class="results">
 					<table class="table-results" id="table-results">
-						<thead>
-							<tr class="border-bottom">
+						<thead class="blurier">
+							<tr>
 								<th title="ID"><i class="fa-solid fa-hashtag"></i></th>
 								<th class="border-left border-right column-ship">Ship</th>
-								<th title="Propulsor"><i class="fa-solid fa-angles-right"></i></th>
-								<th title="Stabilizer"><i class="fa-solid fa-plane-arrival"></i></th>
+								<th title="Propulsor">
+									<i class="fa-solid fa-angles-right"></i>
+								</th>
+								<th title="Stabilizer">
+									<i class="fa-solid fa-plane-arrival"></i>
+								</th>
 								<th title="Rudder"><i class="fa-solid fa-dharmachakra"></i></th>
 								<th title="Hull"><i class="fa-solid fa-shield-halved"></i></th>
-								<th title="Intercooler"><i class="fa-solid fa-snowflake"></i></th>
-								<th title="Electronic Stability Control"><i class="fa-solid fa-bolt"></i></th>
+								<th title="Intercooler">
+									<i class="fa-solid fa-snowflake"></i>
+								</th>
+								<th title="Electronic Stability Control">
+									<i class="fa-solid fa-bolt"></i>
+								</th>
 								<th class="border-left border-right">Class</th>
 								<th title="Durability"><i class="fa-solid fa-plus"></i></th>
-								<th title="Thrust"><i class="fa-solid fa-plane-departure"></i></th>
-								<th title="Top Speed"><i class="fa-solid fa-gauge-high"></i></th>
+								<th title="Thrust">
+									<i class="fa-solid fa-plane-departure"></i>
+								</th>
+								<th title="Top Speed">
+									<i class="fa-solid fa-gauge-high"></i>
+								</th>
 								<th title="Stability"><i class="fa-solid fa-magnet"></i></th>
 								<th title="Steer"><i class="fa-solid fa-rotate"></i></th>
 								<th title="Strafe"><i class="fa-solid fa-left-right"></i></th>
-								<th class="border-left" title="Deviation (from Target)"><i class="fa-solid fa-bullseye"></i></th>
+								<th class="border-left" title="Deviation (from Target)">
+									<i class="fa-solid fa-bullseye"></i>
+								</th>
 							</tr>
-							<tr class="border-bottom" id="row-query">
+							<tr id="row-query">
 								<th title="Search ID" class="column-id">
-									<input size="9" id="select-id" class="column-input" type="number" placeholder="Search ID" min="0" max="198976500" disabled />
+									<input size="9" id="select-id" class="column-input" type="number" placeholder="Search ID" min="0" max="198976500" />
 								</th>
 								<th title="Select ship(s)" class="border-left border-right column-ship">
 									<select id="select-ship" class="column-select">
-										<!-- onchange="getData(event)"> -->
-										<option value="Any" selected>Any</option>
-										<option value="Lunare">Lunare</option>
-										<option value="Conq">Conq</option>
-										<option value="Helix">Helix</option>
-										<option value="Asera">Asera</option>
-										<option value="ESA">ESA</option>
-										<option value="Wallace">Wallace</option>
-										<option value="Sulha">Sulha</option>
-										<option value="Mantis">Mantis</option>
-										<option value="Akhal">Akhal</option>
-										<option value="Koen">Koen</option>
-										<option value="Bmoth">Bmoth</option>
-										<option value="Buran">Buran</option>
+										<option value="any" selected>Any</option>
+										<option value="1">Lunare</option>
+										<option value="2">Conq</option>
+										<option value="3">Helix</option>
+										<option value="4">Asera</option>
+										<option value="5">ESA</option>
+										<option value="6">Wallace</option>
+										<option value="7">Sulha</option>
+										<option value="8">Mantis</option>
+										<option value="9">Akhal</option>
+										<option value="10">Koen</option>
+										<option value="11">Bmoth</option>
+										<option value="12">Buran</option>
 									</select>
 								</th>
 								<th title="Select propulsor">
-									<select name="select-propulsor" id="select-propulsor" class="column-select" disabled>
-										<option selected>Any</option>
-										<option>XXXX</option>
+									<select name="select-propulsor" id="select-propulsor" class="column-select">
+										<option value="X" title="Signature and red parts" selected>X*</option>
+										<option value="S" title="Red and yellow parts">S*</option>
+										<option hidden value="A" title="Yellow and green parts">A*</option>
+										<option hidden value="B" title="Green and base parts">B*</option>
+										<option value="15">PSCO</option>
+										<option value="14">PSLN</option>
+										<option value="13">PSBU</option>
+										<option value="12">PSSU</option>
+										<option value="11">F690</option>
+										<option value="10">IBV2</option>
+										<option value="9">8-TI</option>
+										<option hidden value="8">F570</option>
+										<option hidden value="7">IDV2</option>
+										<option hidden value="6">IBV1</option>
+										<option hidden value="5">8-TE</option>
+										<option hidden value="4">F460</option>
+										<option hidden value="3">IDV1</option>
+										<option hidden value="2">8-TA</option>
+										<option hidden value="1">OCT</option>
 									</select>
 								</th>
 								<th title="Select stabilizer">
-									<select name="select-stabilizer" id="select-stabilizer" class="column-select" disabled>
-										<option selected>Any</option>
-										<option>XXXX</option>
+									<select name="select-stabilizer" id="select-stabilizer" class="column-select">
+										<option value="X" title="Signature and red parts" selected>X*</option>
+										<option value="S" title="Red and yellow parts">S*</option>
+										<option hidden value="A" title="Yellow and green parts">A*</option>
+										<option hidden value="B" title="Green and base parts">B*</option>
+										<option value="17">SSBR</option>
+										<option value="16">SSES</option>
+										<option value="15">SSHE</option>
+										<option value="14">SSWR</option>
+										<option value="13">ZE70</option>
+										<option value="12">BTLG</option>
+										<option value="11">STRM</option>
+										<option hidden value="10">CUMU</option>
+										<option hidden value="9">MTKA</option>
+										<option hidden value="8">GA60</option>
+										<option hidden value="7">BLLX</option>
+										<option hidden value="6">CIRR</option>
+										<option hidden value="5">RIGL</option>
+										<option hidden value="4">ALTO</option>
+										<option hidden value="3">BE55</option>
+										<option hidden value="2">AL55</option>
+										<option hidden value="1">MGA</option>
 									</select>
 								</th>
 								<th title="Select rudder">
-									<select name="select-rudder" id="select-rudder" class="column-select" disabled>
-										<option selected>Any</option>
-										<option>XXXX</option>
+									<select name="select-rudder" id="select-rudder" class="column-select">
+										<option value="X" title="Signature and red parts" selected>X*</option>
+										<option value="S" title="Red and yellow parts">S*</option>
+										<option hidden value="A" title="Yellow and green parts">A*</option>
+										<option hidden value="B" title="Green and base parts">B*</option>
+										<option value="17">RSES</option>
+										<option value="16">RSBE</option>
+										<option value="15">RSLU</option>
+										<option value="14">RSWR</option>
+										<option value="13">HURR</option>
+										<option value="12">TSLY</option>
+										<option value="11">SVLY</option>
+										<option hidden value="10">TORN</option>
+										<option hidden value="9">HRPR</option>
+										<option hidden value="8">NIMB</option>
+										<option hidden value="7">DRWN</option>
+										<option hidden value="6">SVTK</option>
+										<option hidden value="5">STRA</option>
+										<option hidden value="4">LVLK</option>
+										<option hidden value="3">SVTX</option>
+										<option hidden value="2">CAST</option>
+										<option hidden value="1">OKS</option>
 									</select>
 								</th>
 								<th title="Select hull">
-									<select name="select-hull" id="select-hull" class="column-select" disabled>
-										<option selected>Any</option>
-										<option>XXXX</option>
+									<select name="select-hull" id="select-hull" class="column-select">
+										<option value="X" title="Signature and red parts" selected>X*</option>
+										<option value="S" title="Red and yellow parts">S*</option>
+										<option hidden value="A" title="Yellow and green parts">A*</option>
+										<option hidden value="B" title="Green and base parts">B*</option>
+										<option value="15">HSBE</option>
+										<option value="14">HSBU</option>
+										<option value="13">HSAK</option>
+										<option value="12">HSKO</option>
+										<option value="11">8UCK</option>
+										<option value="10">SAN</option>
+										<option value="9">8-TW</option>
+										<option hidden value="8">ER</option>
+										<option hidden value="7">P4RM</option>
+										<option hidden value="6">8-TN</option>
+										<option hidden value="5">YI</option>
+										<option hidden value="4">8-TM</option>
+										<option hidden value="3">45P1</option>
+										<option hidden value="2">LING</option>
+										<option hidden value="1">QIQ</option>
 									</select>
 								</th>
 								<th title="Select intercooler">
-									<select name="select-intercooler" id="select-intercooler" class="column-select" disabled>
-										<option selected>Any</option>
-										<option>XXXX</option>
+									<select name="select-intercooler" id="select-intercooler" class="column-select">
+										<option value="X" title="Signature and red parts" selected>X*</option>
+										<option value="S" title="Red and yellow parts">S*</option>
+										<option hidden value="A" title="Yellow and green parts">A*</option>
+										<option hidden value="B" title="Green and base parts">B*</option>
+										<option value="15">ISBU</option>
+										<option value="14">ISKO</option>
+										<option value="13">ISES</option>
+										<option value="12">ISBE</option>
+										<option value="11">F990</option>
+										<option value="10">TLMI</option>
+										<option value="9">C457</option>
+										<option hidden value="8">F980</option>
+										<option hidden value="7">K33P</option>
+										<option hidden value="6">F880</option>
+										<option hidden value="5">TLGA</option>
+										<option hidden value="4">TLUR</option>
+										<option hidden value="3">70W3</option>
+										<option hidden value="2">F850</option>
+										<option hidden value="1">TLC</option>
 									</select>
 								</th>
 								<th title="Select electronic stability control">
-									<select name="select-esc" id="select-esc" class="column-select" disabled>
-										<option selected>Any</option>
-										<option>XXXX</option>
+									<select name="select-esc" id="select-esc" class="column-select">
+										<option value="X" title="Signature and red parts" selected>X*</option>
+										<option value="S" title="Red and yellow parts">S*</option>
+										<option hidden value="A" title="Yellow and green parts">A*</option>
+										<option hidden value="B" title="Green and base parts">B*</option>
+										<option value="17">ESAS</option>
+										<option value="16">ESMA</option>
+										<option value="15">ESKO</option>
+										<option value="14">ESLU</option>
+										<option value="13">AGIY</option>
+										<option value="12">RYUU</option>
+										<option value="11">PI70</option>
+										<option hidden value="10">SG69</option>
+										<option hidden value="9">ONI</option>
+										<option hidden value="8">AGIK</option>
+										<option hidden value="7">ET61</option>
+										<option hidden value="6">AGIX</option>
+										<option hidden value="5">AGIZ</option>
+										<option hidden value="4">TH60</option>
+										<option hidden value="3">NUE</option>
+										<option hidden value="2">TENGU</option>
+										<option hidden value="1">NBL</option>
 									</select>
 								</th>
 								<th title="Select class" class="border-left border-right">
-									<select id="select-class" class="column-select" disabled>
-										<!--onchange="getData(event)"> -->
-										<option value="X" selected>X</option>
-										<option value="SRRL" disabled>SRRL</option>
-										<option value="S" disabled>S</option>
-										<option value="A" disabled>A</option>
-										<option value="B" disabled>B</option>
-										<!-- <option value="Custom" disabled></option> -->
+									<select id="select-class" class="column-select">
+										<option value="975-1200" selected>975 - 1200</option>
+										<option value="975-1100">975 - 1100</option>
+										<option value="950-1050">950 - 1050</option>
+										<option value="925-1025">925 - 1025</option>
+										<option hidden value="900-1000">900 - 1000</option>
+										<option hidden value="875-975">875 - 975</option>
+										<option hidden value="800-950">800 - 950</option>
+										<option hidden value="750-900">750 - 900</option>
+										<option hidden value="700-800">700 - 800</option>
+										<option hidden value="675-775">675 - 775</option>
+										<option hidden value="650-750">650 - 750</option>
+										<option hidden value="625-725">625 - 725</option>
+										<option hidden value="600-700">600 - 700</option>
+										<option hidden value="575-675">575 - 675</option>
+										<option hidden value="525-625">525 - 625</option>
+										<option hidden value="500-600">500 - 600</option>
+										<option hidden value="475-575">475 - 575</option>
+										<option hidden value="450-550">450 - 550</option>
+										<option hidden value="425-525">425 - 525</option>
+										<option hidden value="400-500">400 - 500</option>
+										<option hidden value="350-450">350 - 450</option>
+										<option hidden value="325-425">325 - 425</option>
+										<option hidden value="300-400">300 - 400</option>
+										<option hidden value="250-350">250 - 350</option>
+										<option hidden value="225-325">225 - 325</option>
+										<option hidden value="200-325">200 - 325</option>
+										<option hidden value="200-300">200 - 300</option>
 									</select>
 								</th>
 								<th title="Select durability">
-									<input size="3" class="column-input" onchange="targetInputChange(event, 0)" type="number" value="39" placeholder="39" min="1" max="100" />
+									<input size="3" class="column-input" onchange="targetInputChange(event, 0)" type="number" value="39" placeholder="39" min="0" max="100" />
 								</th>
 								<th title="Select thrust">
-									<input size="3" class="column-input" onchange="targetInputChange(event, 1)" type="number" value="43" placeholder="43" min="1" max="100" />
+									<input size="3" class="column-input" onchange="targetInputChange(event, 1)" type="number" value="43" placeholder="43" min="0" max="100" />
 								</th>
 								<th title="Select top speed">
-									<input size="3" class="column-input" onchange="targetInputChange(event, 2)" type="number" value="42" placeholder="42" min="1" max="100" />
+									<input size="3" class="column-input" onchange="targetInputChange(event, 2)" type="number" value="42" placeholder="42" min="0" max="100" />
 								</th>
 								<th title="Select stability">
-									<input size="3" class="column-input" onchange="targetInputChange(event, 3)" type="number" value="37" placeholder="37" min="1" max="100" />
+									<input size="3" class="column-input" onchange="targetInputChange(event, 3)" type="number" value="37" placeholder="37" min="0" max="100" />
 								</th>
 								<th title="Select steer">
-									<input size="3" class="column-input" onchange="targetInputChange(event, 4)" type="number" value="42" placeholder="42" min="1" max="100" />
+									<input size="3" class="column-input" onchange="targetInputChange(event, 4)" type="number" value="42" placeholder="42" min="0" max="100" />
 								</th>
 								<th title="Select strafe">
-									<input size="3" class="column-input" onchange="targetInputChange(event, 5)" type="number" value="41" placeholder="41" min="1" max="100" />
+									<input size="3" class="column-input" onchange="targetInputChange(event, 5)" type="number" value="41" placeholder="41" min="0" max="100" />
 								</th>
 								<th title="Reset all targets" class="border-left">
-									<button type="reset" class="column-input" onclick="resetClick(event)"><i class="fa-solid fa-delete-left"></i></button>
+									<button type="reset" class="column-input" onclick="resetClick(event)">
+										<i class="fa-solid fa-delete-left"></i>
+									</button>
 								</th>
 							</tr>
 						</thead>
@@ -173,7 +332,5 @@
 				</div>
 			</div>
 		</form>
-		<div id="background-pattern"></div>
-		<div id="background-pattern-2"></div>
 	</body>
 </html>

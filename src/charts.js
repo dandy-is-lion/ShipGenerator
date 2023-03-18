@@ -1,11 +1,9 @@
 const borderColor = getComputedStyle(document.documentElement).getPropertyValue("--border-color");
 const foregroundColor = getComputedStyle(document.documentElement).getPropertyValue("--foreground-color");
 const targetColor = getComputedStyle(document.documentElement).getPropertyValue("--good-color");
-// const selectionColor = getComputedStyle(document.documentElement).getPropertyValue("--accent-color");
 const comparisonColor = getComputedStyle(document.documentElement).getPropertyValue("--bad-color");
 
 const targetColorA = targetColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
-// const selectionColorA = selectionColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
 const comparisonColorA = comparisonColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
 
 Chart.defaults.borderColor = borderColor;
@@ -14,7 +12,6 @@ Chart.defaults.responsive = false;
 Chart.defaults.maintainAspectRatio = false;
 Chart.defaults.plugins.decimation = false;
 
-// var dataSelection = [0, 0, 0, 0, 0, 0];
 var dataComparison = [0, 0, 0, 0, 0, 0];
 var dataTarget = getQueryStats();
 
@@ -35,21 +32,6 @@ const chartData = [
 		pointHoverBackgroundColor: targetColor,
 		pointHoverBorderColor: targetColor,
 	},
-	// {
-	// 	label: "Selection",
-	// 	data: dataSelection,
-	// 	fill: true,
-	// 	hidden: true,
-	// 	borderWidth: 3,
-	// 	backgroundColor: selectionColorA,
-	// 	borderColor: selectionColor,
-	// 	pointHitRadius: 25,
-	// 	pointBorderWidth: 0,
-	// 	pointBackgroundColor: selectionColorA,
-	// 	pointBorderColor: selectionColor,
-	// 	pointHoverBackgroundColor: selectionColor,
-	// 	pointHoverBorderColor: selectionColor,
-	// },
 	{
 		label: "Comparison",
 		data: dataComparison,
