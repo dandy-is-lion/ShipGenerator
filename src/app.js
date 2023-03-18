@@ -13,7 +13,7 @@ xhttp.onreadystatechange = function () {
 		statsData = JSON.parse(this.responseText);
 	}
 };
-xhttp.open("GET", "../src/data.json", true);
+xhttp.open("GET", "./data/data.json", true);
 xhttp.send();
 
 // Quick and simple export target #tableID into a csv
