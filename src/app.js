@@ -51,7 +51,7 @@ function downloadTable(e, separator = ",") {
 }
 
 function targetInputChange(e, i) {
-	if (e.target.value < 0 || e.target.value > 100) {
+	if (e.target.value < 1 || e.target.value > 100) {
 		e.target.value = e.target.defaultValue;
 	}
 	dataTarget[i] = e.target.value;
