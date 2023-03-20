@@ -39,7 +39,6 @@ function runQuery(data, error, start) {
 			buttonSave.disabled = true;
 			buttonQuery.disabled = false;
 		} else {
-			// console.log(combos_sx);
 			let html = "";
 			for (const obj of data) {
 				html += "<tr onmouseover='rowHover(this)' onclick='rowClick(this, event)'>";
