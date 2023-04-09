@@ -4,34 +4,34 @@
             "name": "Lunare",
             "short": "LUN",
             "scr": 184,
-            "dur": 2,
-            "thr": 3,
-            "spd": 5,
-            "stb": 3,
-            "str": 8,
-            "stf": 3
+            "dur": 5,
+            "thr": 8,
+            "spd": 12,
+            "stb": 8,
+            "str": 20,
+            "stf": 8
         },
         {
             "name": "Conq",
             "short": "CNQ",
             "scr": 184,
-            "dur": 4,
-            "thr": 3,
-            "spd": 7,
-            "stb": 1,
+            "dur": 10,
+            "thr": 8,
+            "spd": 17,
+            "stb": 2,
             "str": 0,
-            "stf": 7
+            "stf": 17
         },
         {
             "name": "Helix",
             "short": "HEL",
             "scr": 184,
             "dur": 8,
-            "thr": 5,
-            "spd": 5,
-            "stb": 4,
-            "str": 3,
-            "stf": 2
+            "thr": 12,
+            "spd": 12,
+            "stb": 10,
+            "str": 8,
+            "stf": 5
         },
         {
             "name": "Asera",

@@ -20,7 +20,7 @@
 		<script defer src="./src/charts.js"></script>
 		<title>Ship Generator</title>
 	</head>
-	<body class="border-left border-right border-top border-bottom">
+	<body class="border-left border-right">
 		<form class="blur" onsubmit="getData(event)" id="form-query">
 			<div class="container">
 				<div class="border-right border-bottom logo">
@@ -50,16 +50,16 @@
 				</div>
 				<div class="border-right stats">
 					<div class="border-bottom query blurier">
-						<button id="button-random" class="button" title="Randomize targets" onclick="randomTargets(event)">
+						<button id="button-random" type="button" class="button" title="Randomize targets" onclick="randomTargets(event)">
 							<i class="fa-solid fa-dice"></i>
 						</button>
-						<button id="button-save" class="button" title="Save results to text document" onclick="downloadTable(event)" disabled>
+						<button id="button-save" type="button" class="button" title="Save results to text document" onclick="downloadTable(event)" disabled>
 							<i class="fa-solid fa-file-csv"></i>
 						</button>
-						<button id="button-favs" class="button" title="View starred and named ships" disabled>
+						<button id="button-favs" type="button" class="button" title="View starred and named ships" disabled>
 							<i class="fa-solid fa-star"></i>
 						</button>
-						<button id="button-history" class="button" title="View previous selections" disabled>
+						<button id="button-history" type="button" class="button" title="View previous selections" disabled>
 							<i class="fa-solid fa-clock-rotate-left"></i>
 						</button>
 						<button id="button-query" type="submit" class="button" title="Search">

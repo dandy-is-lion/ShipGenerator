@@ -234,7 +234,6 @@ body {
 
 .table-results > tbody {
 	overflow: auto;
-	max-width: 100%;
 }
 
 .table-results > tbody:disabled {
@@ -343,6 +342,13 @@ body {
 .column-select:disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
+}
+
+.column-input::-webkit-outer-spin-button,
+.column-input::-webkit-inner-spin-button {
+	/* display: none; <- Crashes Chrome on hover */
+	-webkit-appearance: none;
+	margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 .column-input {
