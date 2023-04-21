@@ -5,49 +5,43 @@ const tableResults = document.getElementById("tbody-results");
 
 buttonSave.disabled = true;
 
-// Read data.json and store it in statsData
-let statsData;
-let xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function () {
-	if (this.readyState == 4 && this.status == 200) {
-		statsData = JSON.parse(this.responseText);
-	}
-};
-xhttp.open("GET", "./data/data.json", true);
-xhttp.send();
+let inputTargets = [
+	document.getElementById("durability-input"),
+	document.getElementById("thrust-input"),
+	document.getElementById("speed-input"),
+	document.getElementById("stability-input"),
+	document.getElementById("steer-input"),
+	document.getElementById("strafe-input"),
+];
 
-// Quick and simple export target #tableID into a csv
-function downloadTable(e, separator = ",") {
+function downloadTable(e) {
 	e.preventDefault();
-	tableID = "tbody-results";
-	// Select rows from tableID
-	let rows = document.querySelectorAll("tbody#" + tableID + " tr");
-	// Construct csv
-	let csv = ['"ID", "Ship", "Propulsor", "Stabilizer", "Rudder", "Hull", "Intercooler", "ESC", "Class", "Durability", "Thrust", "TopSpeed", "Stability", "Steer", "Strafe", "Deviation"'];
-	for (let i = 0; i < rows.length; i++) {
-		let row = [],
-			cols = rows[i].querySelectorAll("td, th");
-		for (let j = 0; j < cols.length; j++) {
-			// Clean innertext to remove multiple spaces and jumpline (break csv)
-			let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
-			// Escape double-quote with double-double-quote (see https://stackoverflow.com/questions/17808511/properly-escape-a-double-quote-in-csv)
-			data = data.replace(/"/g, '""');
-			// Push escaped string
-			row.push('"' + data + '"');
-		}
-		csv.push(row.join(separator));
+	if (results) {
+		const separator = ",";
+		let csv = ["ID, Ship, Propulsor, Stabilizer, Rudder, Hull, Intercooler, ESC, Score, Durability, Thrust, Top_Speed, Stability, Steer, Strafe, Delta"];
+		results.forEach((row, rowIndex) => {
+			let _row = [];
+			row.forEach((column, columnIndex) => {
+				if (columnIndex === 1) {
+					_row.push(query[0][column].name);
+				} else if (columnIndex >= 2 && columnIndex <= 7) {
+					_row.push(query[columnIndex - 1][column].name);
+				} else {
+					_row.push(column);
+				}
+			});
+			csv.push(_row.join(separator));
+		});
+		const file = `shipgen_${new Date().toLocaleDateString()}.csv`;
+		let a = document.createElement("a");
+		a.style.display = "none";
+		a.setAttribute("target", "_blank");
+		a.setAttribute("href", `data:text/csv;charset=utf-8,${encodeURIComponent(csv.join("\n"))}`);
+		a.setAttribute("download", file);
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
 	}
-	let csv_string = csv.join("\n");
-	// Download it
-	let filename = "ship_results_" + new Date().toLocaleDateString() + ".csv";
-	let link = document.createElement("a");
-	link.style.display = "none";
-	link.setAttribute("target", "_blank");
-	link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csv_string));
-	link.setAttribute("download", filename);
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
 }
 
 function targetInputChange(e, i) {
@@ -59,17 +53,19 @@ function targetInputChange(e, i) {
 	updateStatCharts(chartBars, 0, dataTarget);
 }
 
-function updateQueryTargets(stats) {
-	for (i = 9; i < 15; i++) {
-		rowQuery[i].getElementsByTagName("input")[0].value = stats[i - 9];
+function selectIDChange(e) {
+	if (e.target.value.length > 10 && e.target.value.length <= 14) {
+		e.target.size = e.target.value.length;
+	} else {
+		e.target.size = 10;
 	}
 }
 
 function getQueryStats() {
 	let stats = [];
-	for (i = 9; i < 15; i++) {
-		stats.push(rowQuery[i].getElementsByTagName("input")[0].value);
-	}
+	inputTargets.forEach((input, inputIndex) => {
+		stats.push(input.value);
+	});
 	return stats;
 }
 
@@ -84,9 +80,9 @@ function resetClick(e) {
 function randomTargets(e) {
 	e.preventDefault();
 	dataTarget = [getRandomInt(1, 100), getRandomInt(1, 100), getRandomInt(1, 100), getRandomInt(1, 100), getRandomInt(1, 100), getRandomInt(1, 100)];
-	for (i = 9; i < 15; i++) {
-		rowQuery[i].getElementsByTagName("input")[0].value = dataTarget[i - 9];
-	}
+	inputTargets.forEach((input, inputIndex) => {
+		input.value = dataTarget[inputIndex];
+	});
 	updateStatCharts(chartRadar, 0, dataTarget);
 	updateStatCharts(chartBars, 0, dataTarget);
 }
@@ -95,4 +91,54 @@ function getRandomInt(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
+
+function decreaseTargets(e) {
+	e.preventDefault();
+	inputTargets.forEach((input, inputIndex) => {
+		dataTarget[inputIndex] = Math.round(Math.max(1, dataTarget[inputIndex] * 0.9));
+		input.value = dataTarget[inputIndex];
+	});
+	updateStatCharts(chartRadar, 0, dataTarget);
+	updateStatCharts(chartBars, 0, dataTarget);
+}
+
+function increaseTargets(e) {
+	e.preventDefault();
+	inputTargets.forEach((input, inputIndex) => {
+		dataTarget[inputIndex] = Math.round(Math.min(100, dataTarget[inputIndex] * 1.1));
+		input.value = dataTarget[inputIndex];
+	});
+	updateStatCharts(chartRadar, 0, dataTarget);
+	updateStatCharts(chartBars, 0, dataTarget);
+}
+
+function rotateTargetsRight(e) {
+	let newTargets = new Array(6);
+	inputTargets.forEach((input, inputIndex) => {
+		if (inputIndex === 0) {
+			newTargets[inputIndex] = dataTarget[inputTargets.length - 1];
+		} else {
+			newTargets[inputIndex] = dataTarget[inputIndex - 1];
+		}
+		input.value = newTargets[inputIndex];
+	});
+	dataTarget = newTargets;
+	updateStatCharts(chartRadar, 0, dataTarget);
+	updateStatCharts(chartBars, 0, dataTarget);
+}
+
+function rotateTargetsLeft(e) {
+	let newTargets = new Array(6);
+	inputTargets.forEach((input, inputIndex) => {
+		if (inputIndex === inputTargets.length - 1) {
+			newTargets[inputIndex] = dataTarget[0];
+		} else {
+			newTargets[inputIndex] = dataTarget[inputIndex + 1];
+		}
+		input.value = newTargets[inputIndex];
+	});
+	dataTarget = newTargets;
+	updateStatCharts(chartRadar, 0, dataTarget);
+	updateStatCharts(chartBars, 0, dataTarget);
 }

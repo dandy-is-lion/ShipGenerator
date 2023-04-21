@@ -1,0 +1,1440 @@
+{
+    "gliders": [
+        {
+            "name": "Lunare",
+            "short": "LUN",
+            "score": 184,
+            "stats": [
+                5,
+                8,
+                12,
+                8,
+                20,
+                8
+            ]
+        },
+        {
+            "name": "Conq",
+            "short": "CNQ",
+            "score": 184,
+            "stats": [
+                10,
+                8,
+                17,
+                2,
+                0,
+                17
+            ]
+        },
+        {
+            "name": "Helix",
+            "short": "HEL",
+            "score": 184,
+            "stats": [
+                8,
+                12,
+                12,
+                10,
+                8,
+                5
+            ]
+        },
+        {
+            "name": "Asera",
+            "short": "ASE",
+            "score": 184,
+            "stats": [
+                12,
+                20,
+                5,
+                8,
+                2,
+                10
+            ]
+        },
+        {
+            "name": "ESA-AGR",
+            "short": "ESA",
+            "score": 184,
+            "stats": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
+            ]
+        },
+        {
+            "name": "Wallace",
+            "short": "WRG",
+            "score": 184,
+            "stats": [
+                10,
+                5,
+                10,
+                10,
+                20,
+                8
+            ]
+        },
+        {
+            "name": "Sulha",
+            "short": "SUL",
+            "score": 184,
+            "stats": [
+                2,
+                15,
+                20,
+                2,
+                2,
+                5
+            ]
+        },
+        {
+            "name": "Mantis",
+            "short": "MAN",
+            "score": 184,
+            "stats": [
+                5,
+                17,
+                10,
+                8,
+                10,
+                5
+            ]
+        },
+        {
+            "name": "Akhal",
+            "short": "AKT",
+            "score": 184,
+            "stats": [
+                0,
+                5,
+                20,
+                20,
+                8,
+                5
+            ]
+        },
+        {
+            "name": "Koen",
+            "short": "KGW",
+            "score": 184,
+            "stats": [
+                15,
+                5,
+                5,
+                20,
+                10,
+                15
+            ]
+        },
+        {
+            "name": "Bmoth",
+            "short": "BEH",
+            "score": 184,
+            "stats": [
+                20,
+                10,
+                8,
+                2,
+                2,
+                17
+            ]
+        },
+        {
+            "name": "Buran",
+            "short": "BRN",
+            "score": 184,
+            "stats": [
+                20,
+                15,
+                5,
+                5,
+                5,
+                8
+            ]
+        }
+    ],
+    "parts": [
+        {
+            "type": "propulsor",
+            "details": [
+                {
+                    "name": "OCT",
+                    "score": 0,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "C"
+                },
+                {
+                    "name": "8-TA",
+                    "score": 24,
+                    "stats": [
+                        0,
+                        0,
+                        5,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "IDV1",
+                    "score": 48,
+                    "stats": [
+                        0,
+                        0,
+                        10,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "F460",
+                    "score": 66,
+                    "stats": [
+                        0,
+                        7,
+                        7,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "8-TE",
+                    "score": 102,
+                    "stats": [
+                        0,
+                        7,
+                        15,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "IBV1",
+                    "score": 106,
+                    "stats": [
+                        0,
+                        2,
+                        20,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "IDV2",
+                    "score": 144,
+                    "stats": [
+                        0,
+                        0,
+                        30,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "F570",
+                    "score": 148,
+                    "stats": [
+                        0,
+                        10,
+                        22,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "8-TI",
+                    "score": 228,
+                    "stats": [
+                        0,
+                        15,
+                        35,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "IBV2",
+                    "score": 226,
+                    "stats": [
+                        0,
+                        2,
+                        45,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "F690",
+                    "score": 224,
+                    "stats": [
+                        0,
+                        20,
+                        30,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "PSSU",
+                    "score": 237,
+                    "stats": [
+                        -15,
+                        12,
+                        50,
+                        0,
+                        0,
+                        -2
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "PSBU",
+                    "score": 237,
+                    "stats": [
+                        -2,
+                        25,
+                        35,
+                        0,
+                        0,
+                        -18
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "PSLN",
+                    "score": 238,
+                    "stats": [
+                        -12,
+                        20,
+                        55,
+                        0,
+                        0,
+                        -15
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "PSCO",
+                    "score": 237,
+                    "stats": [
+                        -10,
+                        5,
+                        55,
+                        0,
+                        0,
+                        -7
+                    ],
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "stabilizer",
+            "details": [
+                {
+                    "name": "MGA",
+                    "score": 0,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "C"
+                },
+                {
+                    "name": "AL55",
+                    "score": 10,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        5,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "BE55",
+                    "score": 20,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        10,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "ALTO",
+                    "score": 22,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        5,
+                        5,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "RIGL",
+                    "score": 32,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        10,
+                        5,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "CIRR",
+                    "score": 54,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        15,
+                        10,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "BLLX",
+                    "score": 52,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        20,
+                        5,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "GA60",
+                    "score": 60,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        30,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "MTKA",
+                    "score": 62,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        25,
+                        5,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "CUMU",
+                    "score": 66,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        15,
+                        15,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "STRM",
+                    "score": 110,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        25,
+                        25,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "BTLG",
+                    "score": 106,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        35,
+                        15,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "ZE70",
+                    "score": 102,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        45,
+                        5,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "SSWR",
+                    "score": 121,
+                    "stats": [
+                        0,
+                        -5,
+                        -5,
+                        52,
+                        25,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "SSHE",
+                    "score": 120,
+                    "stats": [
+                        0,
+                        -2,
+                        -2,
+                        50,
+                        18,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "SSES",
+                    "score": 122,
+                    "stats": [
+                        0,
+                        0,
+                        -10,
+                        40,
+                        22,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "SSBR",
+                    "score": 118,
+                    "stats": [
+                        0,
+                        -10,
+                        0,
+                        55,
+                        20,
+                        0
+                    ],
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "rudder",
+            "details": [
+                {
+                    "name": "OKS",
+                    "score": 0,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "C"
+                },
+                {
+                    "name": "CAST",
+                    "score": 18,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        7,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "SVTX",
+                    "score": 23,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        7,
+                        2
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "LVLK",
+                    "score": 29,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        10,
+                        2
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "STRA",
+                    "score": 30,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        12,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "SVTK",
+                    "score": 44,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        10,
+                        10
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "DRWN",
+                    "score": 47,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        18,
+                        2
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "NIMB",
+                    "score": 54,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        22,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "HRPR",
+                    "score": 64,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        22,
+                        5
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "TORN",
+                    "score": 65,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        25,
+                        2
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "SVLY",
+                    "score": 111,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        28,
+                        22
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "TSLY",
+                    "score": 109,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        35,
+                        12
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "HURR",
+                    "score": 108,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        45,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "RSWR",
+                    "score": 119,
+                    "stats": [
+                        -15,
+                        0,
+                        0,
+                        -8,
+                        55,
+                        25
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "RSLU",
+                    "score": 119,
+                    "stats": [
+                        -8,
+                        0,
+                        0,
+                        -2,
+                        45,
+                        20
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "RSBE",
+                    "score": 122,
+                    "stats": [
+                        -2,
+                        0,
+                        0,
+                        -2,
+                        50,
+                        7
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "RSES",
+                    "score": 121,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        -12,
+                        40,
+                        25
+                    ],
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "hull",
+            "details": [
+                {
+                    "name": "QIQ",
+                    "score": 0,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "C"
+                },
+                {
+                    "name": "LING",
+                    "score": 16,
+                    "stats": [
+                        5,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "45P1",
+                    "score": 32,
+                    "stats": [
+                        10,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "8-TM",
+                    "score": 48,
+                    "stats": [
+                        7,
+                        0,
+                        5,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "YI",
+                    "score": 72,
+                    "stats": [
+                        15,
+                        0,
+                        5,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "8-TN",
+                    "score": 80,
+                    "stats": [
+                        10,
+                        0,
+                        10,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "P4RM",
+                    "score": 104,
+                    "stats": [
+                        25,
+                        0,
+                        5,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "ER",
+                    "score": 112,
+                    "stats": [
+                        20,
+                        0,
+                        10,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "8-TW",
+                    "score": 152,
+                    "stats": [
+                        25,
+                        0,
+                        15,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "SAN",
+                    "score": 156,
+                    "stats": [
+                        38,
+                        0,
+                        7,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "8UCK",
+                    "score": 156,
+                    "stats": [
+                        45,
+                        0,
+                        2,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "HSKO",
+                    "score": 182,
+                    "stats": [
+                        55,
+                        0,
+                        0,
+                        0,
+                        -8,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "HSAK",
+                    "score": 176,
+                    "stats": [
+                        42,
+                        -5,
+                        20,
+                        0,
+                        -15,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "HSBU",
+                    "score": 176,
+                    "stats": [
+                        38,
+                        -10,
+                        25,
+                        0,
+                        -10,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "HSBE",
+                    "score": 180,
+                    "stats": [
+                        48,
+                        -5,
+                        6,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "intercooler",
+            "details": [
+                {
+                    "name": "TLC",
+                    "score": 0,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "C"
+                },
+                {
+                    "name": "F850",
+                    "score": 20,
+                    "stats": [
+                        0,
+                        5,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "70W3",
+                    "score": 36,
+                    "stats": [
+                        5,
+                        5,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "TLUR",
+                    "score": 40,
+                    "stats": [
+                        0,
+                        10,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "TLGA",
+                    "score": 70,
+                    "stats": [
+                        0,
+                        18,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "F880",
+                    "score": 96,
+                    "stats": [
+                        5,
+                        20,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "K33P",
+                    "score": 108,
+                    "stats": [
+                        15,
+                        15,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "F980",
+                    "score": 116,
+                    "stats": [
+                        5,
+                        25,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "C457",
+                    "score": 164,
+                    "stats": [
+                        20,
+                        25,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "TLMI",
+                    "score": 170,
+                    "stats": [
+                        0,
+                        42,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "F990",
+                    "score": 168,
+                    "stats": [
+                        15,
+                        30,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "ISBE",
+                    "score": 190,
+                    "stats": [
+                        25,
+                        50,
+                        -20,
+                        -15,
+                        0,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "ISES",
+                    "score": 189,
+                    "stats": [
+                        18,
+                        38,
+                        -2,
+                        -2,
+                        0,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "ISKO",
+                    "score": 189,
+                    "stats": [
+                        22,
+                        48,
+                        -12,
+                        -12,
+                        0,
+                        0
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "ISBU",
+                    "score": 184,
+                    "stats": [
+                        5,
+                        55,
+                        -2,
+                        -20,
+                        0,
+                        0
+                    ],
+                    "class": "X"
+                }
+            ]
+        },
+        {
+            "type": "esc",
+            "details": [
+                {
+                    "name": "NBL",
+                    "score": 0,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "class": "C"
+                },
+                {
+                    "name": "TENGU",
+                    "score": 15,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        3,
+                        0,
+                        5
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "NUE",
+                    "score": 20,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        3,
+                        0,
+                        8
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "TH60",
+                    "score": 25,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        5,
+                        0,
+                        8
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "AGIZ",
+                    "score": 30,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        3,
+                        0,
+                        12
+                    ],
+                    "class": "B"
+                },
+                {
+                    "name": "AGIX",
+                    "score": 40,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        20
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "ET61",
+                    "score": 40,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        8,
+                        0,
+                        12
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "AGIK",
+                    "score": 55,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        3,
+                        0,
+                        25
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "ONI",
+                    "score": 55,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        5,
+                        0,
+                        22
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "SG69",
+                    "score": 55,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        10,
+                        0,
+                        18
+                    ],
+                    "class": "A"
+                },
+                {
+                    "name": "PI70",
+                    "score": 80,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        10,
+                        0,
+                        30
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "RYUU",
+                    "score": 85,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        5,
+                        0,
+                        38
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "AGIY",
+                    "score": 90,
+                    "stats": [
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        45
+                    ],
+                    "class": "S"
+                },
+                {
+                    "name": "ESLU",
+                    "score": 96,
+                    "stats": [
+                        -7,
+                        0,
+                        -2,
+                        15,
+                        0,
+                        45
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "ESKO",
+                    "score": 99,
+                    "stats": [
+                        0,
+                        0,
+                        -10,
+                        12,
+                        0,
+                        55
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "ESMA",
+                    "score": 95,
+                    "stats": [
+                        -15,
+                        0,
+                        -2,
+                        25,
+                        0,
+                        52
+                    ],
+                    "class": "X"
+                },
+                {
+                    "name": "ESAS",
+                    "score": 97,
+                    "stats": [
+                        -7,
+                        0,
+                        -7,
+                        25,
+                        0,
+                        48
+                    ],
+                    "class": "X"
+                }
+            ]
+        }
+    ]
+}

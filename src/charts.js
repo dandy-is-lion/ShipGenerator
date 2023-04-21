@@ -12,8 +12,8 @@ Chart.defaults.responsive = false;
 Chart.defaults.maintainAspectRatio = false;
 Chart.defaults.plugins.decimation = false;
 
-var dataComparison = [0, 0, 0, 0, 0, 0];
-var dataTarget = getQueryStats();
+let dataComparison = [0, 0, 0, 0, 0, 0];
+let dataTarget = getQueryStats();
 
 const chartLabels = ["Durability", "Thrust", "Top Speed", "Stability", "Steer", "Strafe"];
 
@@ -52,7 +52,7 @@ const chartData = [
 const ctxRadar = document.getElementById("chart-radar").getContext("2d");
 const ctxBars = document.getElementById("chart-bars").getContext("2d");
 
-var chartRadar = new Chart(ctxRadar, {
+let chartRadar = new Chart(ctxRadar, {
 	type: "radar",
 	data: {
 		labels: chartLabels,
@@ -79,14 +79,14 @@ var chartRadar = new Chart(ctxRadar, {
 					if (!(element === 0)) return false;
 				},
 				onDrag: function (e, datasetIndex, index, value) {
-					if (value < 1) return false;
 					if (!(datasetIndex === 0)) return false;
+					if (value < 1 || value > 100) return false;
 					e.target.style.cursor = "grabbing";
 				},
 				onDragEnd: function (e, datasetIndex, index, value) {
+					inputTargets[index].value = value;
 					dataTarget[index] = value;
 					chartBars.update();
-					document.getElementById("row-query").getElementsByTagName("th")[index + 9].getElementsByTagName("input")[0].value = value;
 				},
 				magnet: {
 					to: Math.round,
@@ -96,12 +96,14 @@ var chartRadar = new Chart(ctxRadar, {
 		scales: {
 			r: {
 				min: 0,
-				max: 100,
+				// max: 100,
+				suggestedMax: 60,
 				beginAtZero: true,
 				ticks: {
 					showLabelBackdrop: true,
 					backdropColor: "rgba(0,0,0,0.2)",
 					z: 0,
+					stepSize: 15,
 				},
 				pointLabels: {
 					centerPointLabels: false,
@@ -117,7 +119,7 @@ var chartRadar = new Chart(ctxRadar, {
 	},
 });
 
-var chartBars = new Chart(ctxBars, {
+let chartBars = new Chart(ctxBars, {
 	type: "bar",
 	data: {
 		labels: chartLabels,
@@ -127,8 +129,12 @@ var chartBars = new Chart(ctxBars, {
 		scales: {
 			y: {
 				min: 0,
-				max: 100,
+				suggestedMax: 100,
+				// max: 100,
 				beginAtZero: true,
+				ticks: {
+					stepSize: 15,
+				},
 			},
 		},
 		onHover: function (e) {
@@ -151,14 +157,14 @@ var chartBars = new Chart(ctxBars, {
 					if (!(element === 0)) return false;
 				},
 				onDrag: function (e, datasetIndex, index, value) {
-					if (value < 1) return false;
+					if (value < 1 || value > 100) return false;
 					if (!(datasetIndex === 0)) return false;
 					e.target.style.cursor = "grabbing";
 				},
 				onDragEnd: function (e, datasetIndex, index, value) {
+					inputTargets[index].value = value;
 					dataTarget[index] = value;
 					chartRadar.update();
-					document.getElementById("row-query").getElementsByTagName("th")[index + 9].getElementsByTagName("input")[0].value = value;
 				},
 				magnet: {
 					to: Math.round, // to: (value) => value + 5

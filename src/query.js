@@ -1,100 +1,189 @@
-// const supabaseUrl = "http://localhost:54321";
-// const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU";
-const supabaseUrl = "https://rijnlxwbcvnlmlwnagic.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpam5seHdiY3ZubG1sd25hZ2ljIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc5MzgxNDcsImV4cCI6MTk5MzUxNDE0N30.kphwi9awGU4U5CZgrZNpULj6jYH60-f5sXxHznKOt-M";
-const db = supabase.createClient(supabaseUrl, supabaseKey);
+const letterIndex = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J", "K"];
 
-async function getData(e) {
+// Read data.json and store it in redoutDB
+let redoutDB;
+fetch("./src/data.json")
+	.then((response) => response.json())
+	.then((json) => {
+		redoutDB = json;
+		let ships = "";
+		redoutDB.gliders.forEach((glider) => {
+			ships += `<option value='${glider.name}'><option value='${glider.short}'>`;
+		});
+		document.getElementById("ship").innerHTML += ships;
+		redoutDB.parts.forEach((partType) => {
+			partType.details.forEach((part, partIndex) => {
+				Object.assign(part, { id: letterIndex[partIndex] });
+			});
+		});
+	});
+
+let results = [];
+let query = [];
+async function querySubmit(e) {
 	e.preventDefault();
-	const start = Date.now();
 	buttonSave.disabled = true;
 	buttonQuery.disabled = true;
 	tableResults.disabled = true;
-	buttonQuery.innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
-	const dataID = document.getElementById("select-id").value;
-	const dataRange = document.getElementById("select-class").value.split("-");
-	const dataGlider = document.getElementById("select-ship").value;
-	const dataPropulsor = document.getElementById("select-propulsor").value;
-	const dataStabilizer = document.getElementById("select-stabilizer").value;
-	const dataRudder = document.getElementById("select-rudder").value;
-	const dataHull = document.getElementById("select-hull").value;
-	const dataIntercooler = document.getElementById("select-intercooler").value;
-	const dataESC = document.getElementById("select-esc").value;
-	let { data, error } = await db.rpc("get_dev", {
-		data_target: dataTarget,
-		data_glider: dataGlider,
-		data_range: dataRange,
-		data_parts: [dataPropulsor, dataStabilizer, dataRudder, dataHull, dataIntercooler, dataESC],
-		data_id: dataID,
-	});
-	runQuery(data, error, start);
+	buttonQuery.innerHTML = '<i class="fa-solid fa-cog fa-spin fa-fw"></i>';
+	const queryID = document.getElementById("select-id").value.split("-");
+	const queryGliders = queryID[0].toUpperCase();
+	let queryScores = document.getElementById("select-score").value.split("-");
+	let queryParts = [
+		document.getElementById("select-propulsor").value.split("-"),
+		document.getElementById("select-stabilizer").value.split("-"),
+		document.getElementById("select-rudder").value.split("-"),
+		document.getElementById("select-hull").value.split("-"),
+		document.getElementById("select-intercooler").value.split("-"),
+		document.getElementById("select-esc").value.split("-"),
+	];
+	if (queryID.length > 1 && queryID[queryID.length - 1].length === 6) {
+		queryScores = [200, 1200];
+		[...queryID[queryID.length - 1]].forEach((idChar, idCharIndex) => {
+			queryParts[idCharIndex] = [letterIndex.indexOf(idChar.toUpperCase()), letterIndex.indexOf(idChar.toUpperCase()) + 1];
+		});
+	}
 
-	buttonQuery.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i>';
+	query = [
+		redoutDB.gliders.filter((item) => !queryGliders || queryGliders === "ANY" || item.short === queryGliders || item.name.toUpperCase() === queryGliders),
+		redoutDB.parts[0].details.slice(...queryParts[0]),
+		redoutDB.parts[1].details.slice(...queryParts[1]),
+		redoutDB.parts[2].details.slice(...queryParts[2]),
+		redoutDB.parts[3].details.slice(...queryParts[3]),
+		redoutDB.parts[4].details.slice(...queryParts[4]),
+		redoutDB.parts[5].details.slice(...queryParts[5]),
+		{
+			stats: dataTarget,
+			scores: queryScores,
+		},
+	];
+	results = await runQuery(query);
+	let html = parseResults(results, query);
+	tableResults.innerHTML = html;
+	buttonSave.disabled = false;
+	buttonQuery.disabled = false;
+	buttonQuery.innerHTML = '<i class="fa-solid fa-magnifying-glass fa-fw"></i>';
 }
 
-function runQuery(data, error, start) {
-	if (data) {
-		if (data.length === 0) {
-			const end = Date.now();
-			console.error(`Query time: ${end - start} ms`);
-			alert("No results found!");
-			buttonSave.disabled = true;
-			buttonQuery.disabled = false;
-		} else {
-			let html = "";
-			for (const obj of data) {
-				html += "<tr onmouseover='rowHover(this)' onclick='rowClick(this, event)'>";
-				let i = 0;
-				for (const key in obj) {
-					let cellValue = obj[key];
-					let htmlAppend = "''>";
-					// Html to append to certain cells
-					switch (i) {
-						case 0: // ID column
-							htmlAppend = "'cell-id'>";
-							break;
-						case 1: // Ship column
-							cellValue = statsData["gliders"][cellValue - 1]["name"];
-							htmlAppend = `'border-left border-right cell-ship'><img src='./img/${cellValue}.webp'></img>`;
-							break;
-						case 8: // Score column
-							htmlAppend = "'border-left border-right cell-score'>";
-							break;
-						case 15: // Deviation column
-							htmlAppend = "'border-left'>";
-							break;
-						default: // Parts and stats columns
-							if (i > 1 && i < 8) {
-								htmlAppend = `'cell-class-${statsData.parts[i - 2].details[cellValue - 1].class}'>`;
-								cellValue = statsData.parts[i - 2].details[cellValue - 1].name;
-							}
-							if (i > 8 && i < 15) {
-								if (cellValue > dataTarget[i - 9] * 1.1) {
-									htmlAppend = "'cell-good'>";
-								} else if (cellValue < dataTarget[i - 9] * 0.9) {
-									htmlAppend = "'cell-bad'>";
-								}
-							}
-					}
-					html += `<td class=${htmlAppend}${cellValue}</td>`;
-					i++;
-				}
-				html += "</tr>";
-			}
-			tableResults.innerHTML = html;
-			buttonSave.disabled = false;
-			buttonQuery.disabled = false;
-			tableResults.disabled = false;
-			const end = Date.now();
-			console.log(`Query time: ${end - start} ms`);
+function addArrays(arrays) {
+	const numArrays = arrays.length;
+	const arrayLength = arrays[0].length;
+	const result = new Array(arrayLength).fill(0);
+
+	for (let i = 0; i < numArrays; i++) {
+		for (let j = 0; j < arrayLength; j++) {
+			result[j] += arrays[i][j];
 		}
+	}
+
+	return result;
+}
+
+function calculateDelta(arrays) {
+	const [arrayA, arrayB] = arrays;
+	let delta = 0;
+
+	for (let i = 0; i < arrayA.length; i++) {
+		delta += Math.abs(arrayA[i] - arrayB[i]);
+	}
+
+	return delta;
+}
+
+async function runQuery(query) {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			console.time("Query");
+			const count = query[0].length * query[6].length * query[4].length * query[5].length * query[1].length * query[3].length * query[2].length;
+			const candidateShipLimit = 100;
+			let delta = 0;
+			let maxDelta = 9999;
+			let maxDeltaIndex = 0;
+			let candidateStats = [0, 0, 0, 0, 0, 0];
+			let candidates = new Array(candidateShipLimit);
+			let candidateScore = 0;
+			let candidateRig = [];
+			let candidateID = "";
+			candidates.fill([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, maxDelta], 0, candidateShipLimit);
+			query[0].forEach((glider, gliderID) => {
+				query[6].forEach((esc, escID) => {
+					query[4].forEach((hull, hullID) => {
+						query[5].forEach((intercooler, intercoolerID) => {
+							query[1].forEach((propulsor, propulsorID) => {
+								query[3].forEach((rudder, rudderID) => {
+									query[2].forEach((stabilizer, stabilizerID) => {
+										candidateStats = addArrays([glider.stats, propulsor.stats, stabilizer.stats, rudder.stats, hull.stats, intercooler.stats, esc.stats]);
+										delta = calculateDelta([candidateStats, query[7].stats]);
+										if (delta <= maxDelta) {
+											candidateScore = glider.score + propulsor.score + stabilizer.score + rudder.score + hull.score + intercooler.score + esc.score;
+											if (candidateScore >= query[7].scores[0] && candidateScore <= query[7].scores[1]) {
+												candidateRig = [gliderID, propulsorID, stabilizerID, rudderID, hullID, intercoolerID, escID];
+												candidateID = `${glider.short}-${propulsor.id}${stabilizer.id}${rudder.id}${hull.id}${intercooler.id}${esc.id}`;
+												candidates[maxDeltaIndex] = [candidateID, ...candidateRig, candidateScore, ...candidateStats, delta];
+												maxDelta = 0;
+												for (i = 0; i < candidateShipLimit; i++) {
+													if (candidates[i][15] > maxDelta) {
+														maxDelta = candidates[i][15];
+														maxDeltaIndex = i;
+													}
+												}
+											}
+										}
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+			console.timeEnd("Query");
+			console.info(`Searched ${count.toLocaleString()} combinations`);
+			resolve(candidates.filter((item) => item[15] != 9999));
+		}, 1);
+	});
+}
+
+function parseResults(results, query) {
+	if (results.length === 0) {
+		alert("No results found!");
+		return null;
 	} else {
-		const end = Date.now();
-		console.error(`Query time: ${end - start} ms`);
-		alert(error.message);
-		buttonSave.disabled = true;
-		buttonQuery.disabled = false;
-		tableResults.disabled = false;
+		// Sort by delta from least to greatest
+		results.sort(function (a, b) {
+			return a[15] - b[15];
+		});
+		let html = "";
+		results.forEach((row, rowIndex) => {
+			let ifSelectedID = selectedID === row[0] ? "class=results-selected" : "";
+			html += `<tr ${ifSelectedID} onmouseover='rowHover(this)' onclick='rowClick(this, event)'>`;
+			row.forEach((column, columnIndex) => {
+				switch (columnIndex) {
+					case 0: // Ship ID column
+						let ship = query[0][row[1]];
+						html += `<td class='results-cell-bottom results-cell-right cell-ship' title='${ship.name}\n${[...ship.stats]}'><img src='./img/${ship.short}.webp'></img><span>${column}</span></td>`;
+						break;
+					case 8: // Score column
+						html += `<td class='results-cell-bottom results-cell-left results-cell-right cell-score'><span>${column}</span></td>`;
+						break;
+					default: // Parts and stats columns
+						if (columnIndex > 1 && columnIndex < 8) {
+							let part = query[columnIndex - 1][column];
+							html += `<td class='results-cell-bottom cell-class-${part.class}' title='${part.name} (${part.class})\n${[...part.stats]}'>${part.name}</td>`;
+						}
+						if (columnIndex > 8 && columnIndex < 15) {
+							if (column > dataTarget[columnIndex - 9] * 1.1) {
+								html += `<td class='results-cell-bottom cell-good'>${column}</td>`;
+							} else if (column < dataTarget[columnIndex - 9] * 0.9) {
+								html += `<td class='results-cell-bottom cell-bad'>${column}</td>`;
+							} else {
+								html += `<td class='results-cell-bottom cell-close'>${column}</td>`;
+							}
+						}
+				}
+			});
+			html += "</tr>";
+		});
+		return html;
 	}
 }
 
@@ -105,13 +194,18 @@ function rowHover(row) {
 	updateStatCharts(chartBars, 1, stats);
 }
 
-// Change the values of the Selection data to whatever row's been clicked
+let selectedID = "";
+
+// Change the values of the Target data to whatever row's been clicked
 function rowClick(row, e) {
+	selectedID = row.getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML;
 	let stats = getStats(row);
+	dataTarget = stats;
+	inputTargets.forEach((input, inputIndex) => {
+		input.value = stats[inputIndex];
+	});
 	updateStatCharts(chartRadar, 0, stats);
 	updateStatCharts(chartBars, 0, stats);
-	dataTarget = stats;
-	updateQueryTargets(stats);
 	// getData(e);
 	row.classList.add("results-selected");
 	let siblings = getSiblings(row);
@@ -140,16 +234,16 @@ function getSiblings(e) {
 	return siblings;
 }
 
-// Get stat values by reading columns 9 - 14 on the table and return it as an array
+// Get stat values by reading columns 8 to 13 on the table and return it as an array
 function getStats(row) {
 	let stats = [];
-	for (i = 9; i < 15; i++) {
-		stats.push(getCellValue(row, i));
+	for (i = 8; i < 14; i++) {
+		stats.push(getColumn(row, i));
 	}
 	return stats;
 }
 
-function getCellValue(row, cell) {
+function getColumn(row, cell) {
 	return Math.max(0, row.getElementsByTagName("td")[cell].innerHTML);
 }
 
