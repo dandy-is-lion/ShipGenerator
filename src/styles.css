@@ -44,7 +44,7 @@ body {
 	width: 100vw;
 	padding: 0;
 	margin: 0;
-	font-size: clamp(8px, 1.5vw, 16px);
+	font-size: clamp(8px, 1.75vw, 16px);
 }
 
 form {
@@ -180,7 +180,7 @@ form {
 	min-width: min-content;
 	display: grid;
 	grid-template-columns: min-content;
-	grid-template-rows: 6.125em auto 6.125em;
+	grid-template-rows: min-content auto min-content;
 	grid-template-areas:
 		"query"
 		"charts"
@@ -203,7 +203,8 @@ form {
 }
 
 .table-query > tbody > tr > td {
-	/* padding: 0 0.25em; */
+	font-size: 1.75em;
+	padding: 0.25em;
 	transition: var(--transition);
 	background-color: var(--panel-color);
 	border-bottom: var(--border-width) solid var(--border-color);
@@ -219,13 +220,15 @@ form {
 }
 
 .query-button {
+	font-size: 1em;
 	width: 100%;
 	height: 100%;
 	border: none;
 	background: none;
 	color: var(--foreground-color);
 	transition: var(--transition);
-	font-size: 1.5em;
+	margin: 0;
+	padding: 0;
 }
 
 .query-button:disabled {
@@ -255,6 +258,7 @@ form {
 	align-items: center;
 	flex-grow: 0;
 	flex-shrink: 0;
+	padding: 1em;
 }
 
 .logo > img {
@@ -291,7 +295,7 @@ form {
 	font-style: oblique;
 	text-transform: uppercase;
 	white-space: nowrap;
-	padding: 0 0.25em;
+	padding: 0.25em;
 	transition: var(--transition);
 	border-bottom: var(--border-width) solid var(--border-color);
 }
@@ -421,14 +425,14 @@ form {
 /*.column-ship > span {
 	 display: flex;
 	gap: 0.075em;
-	padding: 0.25em 1em !important;
+	padding: 0.25em 1em 0.125em;
 	justify-content: center;
 	align-items: center; 
 }*/
 
 /* .cell-id {
 	text-align: left !important;
-	padding: 0.25em 1em !important;
+	padding: 0.25em 1em 0.125em;
 } */
 
 /* .column-score {
@@ -443,7 +447,8 @@ form {
 	justify-content: left;
 	align-items: center;
 	gap: 0.075em;
-	padding: 0.25em 0.5em !important;
+	padding-left: 0.5em !important;
+	padding-right: 0.5em !important;
 }
 
 .cell-ship > img {
