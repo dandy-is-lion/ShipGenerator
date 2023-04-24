@@ -116,7 +116,6 @@
 					<table class="table-results" id="table-results">
 						<thead>
 							<tr>
-								<!-- <th title="ID"><i class="fa-solid fa-hashtag fa-fw"></i></th> -->
 								<th class="border-right column-ship">Ship ID</th>
 								<th title="Propulsor">
 									<i class="fa-solid fa-angles-right fa-fw"></i>
@@ -145,166 +144,73 @@
 								<th title="Strafe"><i class="fa-solid fa-left-right fa-fw"></i></th>
 							</tr>
 							<tr id="row-query">
-								<th title="Search ship(s) and ID" class="border-right column-ship">
-									<input list="ship" pattern="[A-Za-z0-9-]{3,14}" size="10" id="select-id" class="column-input" type="search" placeholder="ANY-XXXXXX" autocomplete="off" onkeyup="selectIDChange(event)" />
+								<th
+									title="Search ship(s) and ID&#013;Leave blank to search all ships.&#013;When a part code is given, it'll take priority over all other selections.&#013;If part code letter is invalid, it'll be ignored.&#013;&#013;Other valid inputs are:&#013;ANY-XXXXXX&#013;[Ship code, name or full name]-XXXXXX&#013;-XXXXXX&#013;ANY-&#013;[Ship code, name or full name]"
+									class="border-right column-ship"
+								>
+									<input list="ship" pattern="[A-Za-z0-9-]{3,20}" size="10" id="select-id" class="column-input" type="search" placeholder="ANY-XXXXXX" autocomplete="off" onkeyup="selectIDChange(event)" />
 									<datalist id="ship">
 										<option value="ANY"></option>
 									</datalist>
 								</th>
 								<th title="Select propulsor(s)">
 									<select name="select-propulsor" id="select-propulsor" class="column-select">
-										<option value="8-15" selected title="Signature and red parts">X°</option>
-										<option value="4-11" title="Red and yellow parts">S°</option>
-										<option value="1-8" title="Yellow and green parts">A°</option>
-										<option value="0-4" title="Green and base parts">B°</option>
+										<option value="8-15" selected title="Signature and red parts (SRRL)">X°</option>
+										<option value="4-11" title="Red and yellow parts (Class S)">S°</option>
+										<option value="1-8" title="Yellow and green parts (Class A)">A°</option>
+										<option value="0-4" title="Green and base parts (Class B)">B°</option>
 										<option value="0-15" title="All parts (slow!)">ANY</option>
-
-										<option value="14-15">PSCO</option>
-										<option value="13-14">PSLN</option>
-										<option value="12-13">PSBU</option>
-										<option value="11-12">PSSU</option>
-										<option value="10-11">F690</option>
-										<option value="9-10">IBV2</option>
-										<option value="8-9">8-TI</option>
-										<option value="7-8">F570</option>
-										<option value="6-7">IDV2</option>
-										<option value="5-6">IBV1</option>
-										<option value="4-5">8-TE</option>
-										<option value="3-4">F460</option>
-										<option value="2-3">IDV1</option>
-										<option value="1-2">8-TA</option>
-										<option value="0-1">OCT</option>
+										<option disabled>────</option>
 									</select>
 								</th>
 								<th title="Select stabilizer(s)">
 									<select name="select-stabilizer" id="select-stabilizer" class="column-select">
-										<option value="10-17" selected title="Signature and red parts">X°</option>
-										<option value="5-13" title="Red and yellow parts">S°</option>
-										<option value="1-10" title="Yellow and green parts">A°</option>
-										<option value="0-5" title="Green and base parts">B°</option>
+										<option value="10-17" selected title="Signature and red parts (SRRL)">X°</option>
+										<option value="5-13" title="Red and yellow parts (Class S)">S°</option>
+										<option value="1-10" title="Yellow and green parts (Class A)">A°</option>
+										<option value="0-5" title="Green and base parts (Class B)">B°</option>
 										<option value="0-17" title="All parts (slow!)">ANY</option>
-
-										<option value="16-17">SSBR</option>
-										<option value="15-16">SSES</option>
-										<option value="14-15">SSHE</option>
-										<option value="13-14">SSWR</option>
-										<option value="12-13">ZE70</option>
-										<option value="11-12">BTLG</option>
-										<option value="10-11">STRM</option>
-										<option value="9-10">CUMU</option>
-										<option value="8-9">MTKA</option>
-										<option value="7-8">GA60</option>
-										<option value="6-7">BLLX</option>
-										<option value="5-6">CIRR</option>
-										<option value="4-5">RIGL</option>
-										<option value="3-4">ALTO</option>
-										<option value="2-3">BE55</option>
-										<option value="1-2">AL55</option>
-										<option value="0-1">MGA</option>
+										<option disabled>────</option>
 									</select>
 								</th>
 								<th title="Select rudder(s)">
 									<select name="select-rudder" id="select-rudder" class="column-select">
-										<option value="10-17" selected title="Signature and red parts">X°</option>
-										<option value="5-13" title="Red and yellow parts">S°</option>
-										<option value="1-10" title="Yellow and green parts">A°</option>
-										<option value="0-5" title="Green and base parts">B°</option>
+										<option value="10-17" selected title="Signature and red parts (SRRL)">X°</option>
+										<option value="5-13" title="Red and yellow parts (Class S)">S°</option>
+										<option value="1-10" title="Yellow and green parts (Class A)">A°</option>
+										<option value="0-5" title="Green and base parts (Class B)">B°</option>
 										<option value="0-17" title="All parts (slow!)">ANY</option>
-
-										<option value="16-17">RSES</option>
-										<option value="15-16">RSBE</option>
-										<option value="14-15">RSLU</option>
-										<option value="13-14">RSWR</option>
-										<option value="12-13">HURR</option>
-										<option value="11-12">TSLY</option>
-										<option value="10-11">SVLY</option>
-										<option value="9-10">TORN</option>
-										<option value="8-9">HRPR</option>
-										<option value="7-8">NIMB</option>
-										<option value="6-7">DRWN</option>
-										<option value="5-6">SVTK</option>
-										<option value="4-5">STRA</option>
-										<option value="3-4">LVLK</option>
-										<option value="2-3">SVTX</option>
-										<option value="1-2">CAST</option>
-										<option value="0-1">OKS</option>
+										<option disabled>────</option>
 									</select>
 								</th>
 								<th title="Select hull(s)">
 									<select name="select-hull" id="select-hull" class="column-select">
-										<option value="8-15" selected title="Signature and red parts">X°</option>
-										<option value="4-11" title="Red and yellow parts">S°</option>
-										<option value="1-8" title="Yellow and green parts">A°</option>
-										<option value="0-4" title="Green and base parts">B°</option>
+										<option value="8-15" selected title="Signature and red parts (SRRL)">X°</option>
+										<option value="4-11" title="Red and yellow parts (Class S)">S°</option>
+										<option value="1-8" title="Yellow and green parts (Class A)">A°</option>
+										<option value="0-4" title="Green and base parts (Class B)">B°</option>
 										<option value="0-15" title="All parts (slow!)">ANY</option>
-
-										<option value="14-15">HSBE</option>
-										<option value="13-14">HSBU</option>
-										<option value="12-13">HSAK</option>
-										<option value="11-12">HSKO</option>
-										<option value="10-11">8UCK</option>
-										<option value="9-10">SAN</option>
-										<option value="8-9">8-TW</option>
-										<option value="7-8">ER</option>
-										<option value="6-7">P4RM</option>
-										<option value="5-6">8-TN</option>
-										<option value="4-5">YI</option>
-										<option value="3-4">8-TM</option>
-										<option value="2-3">45P1</option>
-										<option value="1-2">LING</option>
-										<option value="0-1">QIQ</option>
+										<option disabled>────</option>
 									</select>
 								</th>
 								<th title="Select intercooler(s)">
 									<select name="select-intercooler" id="select-intercooler" class="column-select">
-										<option value="8-15" selected title="Signature and red parts">X°</option>
-										<option value="4-11" title="Red and yellow parts">S°</option>
-										<option value="1-8" title="Yellow and green parts">A°</option>
-										<option value="0-4" title="Green and base parts">B°</option>
+										<option value="8-15" selected title="Signature and red parts (SRRL)">X°</option>
+										<option value="4-11" title="Red and yellow parts (Class S)">S°</option>
+										<option value="1-8" title="Yellow and green parts (Class A)">A°</option>
+										<option value="0-4" title="Green and base parts (Class B)">B°</option>
 										<option value="0-15" title="All parts (slow!)">ANY</option>
-
-										<option value="14-15">ISBU</option>
-										<option value="13-14">ISKO</option>
-										<option value="12-13">ISES</option>
-										<option value="11-12">ISBE</option>
-										<option value="10-11">F990</option>
-										<option value="9-10">TLMI</option>
-										<option value="8-9">C457</option>
-										<option value="7-8">F980</option>
-										<option value="6-7">K33P</option>
-										<option value="5-6">F880</option>
-										<option value="4-5">TLGA</option>
-										<option value="3-4">TLUR</option>
-										<option value="2-3">70W3</option>
-										<option value="1-2">F850</option>
-										<option value="0-1">TLC</option>
+										<option disabled>────</option>
 									</select>
 								</th>
 								<th title="Select electronic stability control(s)">
 									<select name="select-esc" id="select-esc" class="column-select">
-										<option value="10-17" selected title="Signature and red parts">X°</option>
-										<option value="5-13" title="Red and yellow parts">S°</option>
-										<option value="1-10" title="Yellow and green parts">A°</option>
-										<option value="0-5" title="Green and base parts">B°</option>
+										<option value="10-17" selected title="Signature and red parts (SRRL)">X°</option>
+										<option value="5-13" title="Red and yellow parts (Class S)">S°</option>
+										<option value="1-10" title="Yellow and green parts (Class A)">A°</option>
+										<option value="0-5" title="Green and base parts (Class B)">B°</option>
 										<option value="0-17" title="All parts (slow!)">ANY</option>
-
-										<option value="16-17">ESAS</option>
-										<option value="15-16">ESMA</option>
-										<option value="14-15">ESKO</option>
-										<option value="13-14">ESLU</option>
-										<option value="12-13">AGIY</option>
-										<option value="11-12">RYUU</option>
-										<option value="10-11">PI70</option>
-										<option value="9-10">SG69</option>
-										<option value="8-9">ONI</option>
-										<option value="7-8">AGIK</option>
-										<option value="6-7">ET61</option>
-										<option value="5-6">AGIX</option>
-										<option value="4-5">AGIZ</option>
-										<option value="3-4">TH60</option>
-										<option value="2-3">NUE</option>
-										<option value="1-2">TENGU</option>
-										<option value="0-1">NBL</option>
+										<option disabled>────</option>
 									</select>
 								</th>
 								<th title="Select score range" class="border-left border-right">
@@ -340,22 +246,22 @@
 									</select>
 								</th>
 								<th title="Select durability">
-									<input id="durability-input" size="3" class="column-input" onchange="targetInputChange(event, 0)" type="number" value="50" min="1" max="100" />
+									<input id="durability-input" size="2" class="column-input" onchange="targetInputChange(event, 0)" type="number" value="50" min="1" max="100" />
 								</th>
 								<th title="Select thrust">
-									<input id="thrust-input" size="3" class="column-input" onchange="targetInputChange(event, 1)" type="number" value="50" min="1" max="100" />
+									<input id="thrust-input" size="2" class="column-input" onchange="targetInputChange(event, 1)" type="number" value="50" min="1" max="100" />
 								</th>
 								<th title="Select top speed">
-									<input id="speed-input" size="3" class="column-input" onchange="targetInputChange(event, 2)" type="number" value="50" min="1" max="100" />
+									<input id="speed-input" size="2" class="column-input" onchange="targetInputChange(event, 2)" type="number" value="50" min="1" max="100" />
 								</th>
 								<th title="Select stability">
-									<input id="stability-input" size="3" class="column-input" onchange="targetInputChange(event, 3)" type="number" value="50" min="1" max="100" />
+									<input id="stability-input" size="2" class="column-input" onchange="targetInputChange(event, 3)" type="number" value="50" min="1" max="100" />
 								</th>
 								<th title="Select steer">
-									<input id="steer-input" size="3" class="column-input" onchange="targetInputChange(event, 4)" type="number" value="50" min="1" max="100" />
+									<input id="steer-input" size="2" class="column-input" onchange="targetInputChange(event, 4)" type="number" value="50" min="1" max="100" />
 								</th>
 								<th title="Select strafe">
-									<input id="strafe-input" size="3" class="column-input" onchange="targetInputChange(event, 5)" type="number" value="50" min="1" max="100" />
+									<input id="strafe-input" size="2" class="column-input" onchange="targetInputChange(event, 5)" type="number" value="50" min="1" max="100" />
 								</th>
 							</tr>
 						</thead>

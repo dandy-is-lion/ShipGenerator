@@ -97,7 +97,7 @@ let chartRadar = new Chart(ctxRadar, {
 			r: {
 				min: 0,
 				// max: 100,
-				suggestedMax: 60,
+				suggestedMax: 75,
 				beginAtZero: true,
 				ticks: {
 					showLabelBackdrop: true,

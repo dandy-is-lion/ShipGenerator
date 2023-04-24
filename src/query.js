@@ -1,5 +1,30 @@
 const letterIndex = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J", "K"];
 
+const buttonQuery = document.getElementById("button-query");
+const buttonSave = document.getElementById("button-save");
+const rowQuery = document.getElementById("row-query").getElementsByTagName("th");
+const tableResults = document.getElementById("tbody-results");
+
+buttonSave.disabled = true;
+
+let inputTargets = [
+	document.getElementById("durability-input"),
+	document.getElementById("thrust-input"),
+	document.getElementById("speed-input"),
+	document.getElementById("stability-input"),
+	document.getElementById("steer-input"),
+	document.getElementById("strafe-input"),
+];
+
+let inputParts = [
+	document.getElementById("select-propulsor"),
+	document.getElementById("select-stabilizer"),
+	document.getElementById("select-rudder"),
+	document.getElementById("select-hull"),
+	document.getElementById("select-intercooler"),
+	document.getElementById("select-esc"),
+];
+
 // Read data.json and store it in redoutDB
 let redoutDB;
 fetch("./src/data.json")
@@ -8,12 +33,13 @@ fetch("./src/data.json")
 		redoutDB = json;
 		let ships = "";
 		redoutDB.gliders.forEach((glider) => {
-			ships += `<option value='${glider.name}'><option value='${glider.short}'>`;
+			ships += `<option value='${glider.nick}'>`;
 		});
 		document.getElementById("ship").innerHTML += ships;
-		redoutDB.parts.forEach((partType) => {
+		redoutDB.parts.forEach((partType, partTypeIndex) => {
 			partType.details.forEach((part, partIndex) => {
 				Object.assign(part, { id: letterIndex[partIndex] });
+				inputParts[partTypeIndex].innerHTML += `<option value='${partIndex}-${partIndex + 1}' title="${part.name} (${part.class}) [${part.stats}]\n\n${part.desc}">${part.code}</option>`;
 			});
 		});
 	});
@@ -29,34 +55,32 @@ async function querySubmit(e) {
 	const queryID = document.getElementById("select-id").value.split("-");
 	const queryGliders = queryID[0].toUpperCase();
 	let queryScores = document.getElementById("select-score").value.split("-");
-	let queryParts = [
-		document.getElementById("select-propulsor").value.split("-"),
-		document.getElementById("select-stabilizer").value.split("-"),
-		document.getElementById("select-rudder").value.split("-"),
-		document.getElementById("select-hull").value.split("-"),
-		document.getElementById("select-intercooler").value.split("-"),
-		document.getElementById("select-esc").value.split("-"),
-	];
+	let queryParts = [];
+	inputParts.forEach((part) => {
+		queryParts.push(part.value.split("-"));
+	});
 	if (queryID.length > 1 && queryID[queryID.length - 1].length === 6) {
-		queryScores = [200, 1200];
+		queryScores = [0, 1200];
 		[...queryID[queryID.length - 1]].forEach((idChar, idCharIndex) => {
-			queryParts[idCharIndex] = [letterIndex.indexOf(idChar.toUpperCase()), letterIndex.indexOf(idChar.toUpperCase()) + 1];
+			if (letterIndex.includes(idChar.toUpperCase())) {
+				queryParts[idCharIndex] = [letterIndex.indexOf(idChar.toUpperCase()), letterIndex.indexOf(idChar.toUpperCase()) + 1];
+			}
 		});
 	}
 
-	query = [
-		redoutDB.gliders.filter((item) => !queryGliders || queryGliders === "ANY" || item.short === queryGliders || item.name.toUpperCase() === queryGliders),
-		redoutDB.parts[0].details.slice(...queryParts[0]),
-		redoutDB.parts[1].details.slice(...queryParts[1]),
-		redoutDB.parts[2].details.slice(...queryParts[2]),
-		redoutDB.parts[3].details.slice(...queryParts[3]),
-		redoutDB.parts[4].details.slice(...queryParts[4]),
-		redoutDB.parts[5].details.slice(...queryParts[5]),
-		{
-			stats: dataTarget,
-			scores: queryScores,
-		},
-	];
+	query = {
+		gliders: redoutDB.gliders.filter((item) => !queryGliders || queryGliders === "ANY" || item.code === queryGliders || item.nick.toUpperCase() === queryGliders || item.name.toUpperCase() === queryGliders),
+		parts: [
+			redoutDB.parts[0].details.slice(...queryParts[0]),
+			redoutDB.parts[1].details.slice(...queryParts[1]),
+			redoutDB.parts[2].details.slice(...queryParts[2]),
+			redoutDB.parts[3].details.slice(...queryParts[3]),
+			redoutDB.parts[4].details.slice(...queryParts[4]),
+			redoutDB.parts[5].details.slice(...queryParts[5]),
+		],
+		stats: dataTarget,
+		scores: queryScores,
+	};
 	results = await runQuery(query);
 	let html = parseResults(results, query);
 	tableResults.innerHTML = html;
@@ -94,7 +118,10 @@ async function runQuery(query) {
 	return new Promise((resolve) => {
 		setTimeout(() => {
 			console.time("Query");
-			const count = query[0].length * query[6].length * query[4].length * query[5].length * query[1].length * query[3].length * query[2].length;
+			let count = query.gliders.length;
+			query.parts.forEach((part) => {
+				count = count * part.length;
+			});
 			const candidateShipLimit = 100;
 			let delta = 0;
 			let maxDelta = 9999;
@@ -105,20 +132,20 @@ async function runQuery(query) {
 			let candidateRig = [];
 			let candidateID = "";
 			candidates.fill([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, maxDelta], 0, candidateShipLimit);
-			query[0].forEach((glider, gliderID) => {
-				query[6].forEach((esc, escID) => {
-					query[4].forEach((hull, hullID) => {
-						query[5].forEach((intercooler, intercoolerID) => {
-							query[1].forEach((propulsor, propulsorID) => {
-								query[3].forEach((rudder, rudderID) => {
-									query[2].forEach((stabilizer, stabilizerID) => {
-										candidateStats = addArrays([glider.stats, propulsor.stats, stabilizer.stats, rudder.stats, hull.stats, intercooler.stats, esc.stats]);
-										delta = calculateDelta([candidateStats, query[7].stats]);
-										if (delta <= maxDelta) {
-											candidateScore = glider.score + propulsor.score + stabilizer.score + rudder.score + hull.score + intercooler.score + esc.score;
-											if (candidateScore >= query[7].scores[0] && candidateScore <= query[7].scores[1]) {
+			query.gliders.forEach((glider, gliderID) => {
+				query.parts[0].forEach((propulsor, propulsorID) => {
+					query.parts[1].forEach((stabilizer, stabilizerID) => {
+						query.parts[2].forEach((rudder, rudderID) => {
+							query.parts[3].forEach((hull, hullID) => {
+								query.parts[4].forEach((intercooler, intercoolerID) => {
+									query.parts[5].forEach((esc, escID) => {
+										candidateScore = glider.score + propulsor.score + stabilizer.score + rudder.score + hull.score + intercooler.score + esc.score;
+										if (candidateScore >= query.scores[0] && candidateScore <= query.scores[1]) {
+											candidateStats = addArrays([glider.stats, propulsor.stats, stabilizer.stats, rudder.stats, hull.stats, intercooler.stats, esc.stats]);
+											delta = calculateDelta([candidateStats, query.stats]);
+											if (delta <= maxDelta) {
 												candidateRig = [gliderID, propulsorID, stabilizerID, rudderID, hullID, intercoolerID, escID];
-												candidateID = `${glider.short}-${propulsor.id}${stabilizer.id}${rudder.id}${hull.id}${intercooler.id}${esc.id}`;
+												candidateID = `${glider.code}-${propulsor.id}${stabilizer.id}${rudder.id}${hull.id}${intercooler.id}${esc.id}`;
 												candidates[maxDeltaIndex] = [candidateID, ...candidateRig, candidateScore, ...candidateStats, delta];
 												maxDelta = 0;
 												for (i = 0; i < candidateShipLimit; i++) {
@@ -143,6 +170,12 @@ async function runQuery(query) {
 	});
 }
 
+function calculatePartDelta(stat, target) {
+	delta = stat - target;
+	if (delta > 0) return `+${delta}`;
+	return delta;
+}
+
 function parseResults(results, query) {
 	if (results.length === 0) {
 		alert("No results found!");
@@ -159,24 +192,24 @@ function parseResults(results, query) {
 			row.forEach((column, columnIndex) => {
 				switch (columnIndex) {
 					case 0: // Ship ID column
-						let ship = query[0][row[1]];
-						html += `<td class='results-cell-bottom results-cell-right cell-ship' title='${ship.name}\n${[...ship.stats]}'><img src='./img/${ship.short}.webp'></img><span>${column}</span></td>`;
+						let ship = query.gliders[row[1]];
+						html += `<td class='results-cell-bottom results-cell-right cell-ship' title="${ship.name} (${ship.code}) [${ship.stats}]\n\n${ship.desc}"><img src='./img/${ship.code}.webp'></img><span>${column}</span></td>`;
 						break;
 					case 8: // Score column
 						html += `<td class='results-cell-bottom results-cell-left results-cell-right cell-score'><span>${column}</span></td>`;
 						break;
 					default: // Parts and stats columns
 						if (columnIndex > 1 && columnIndex < 8) {
-							let part = query[columnIndex - 1][column];
-							html += `<td class='results-cell-bottom cell-class-${part.class}' title='${part.name} (${part.class})\n${[...part.stats]}'>${part.name}</td>`;
+							let part = query.parts[columnIndex - 2][column];
+							html += `<td class='results-cell-bottom cell-class-${part.class}' title="${part.name} (${part.class}) [${part.stats}]\n\n${part.desc}">${part.code}</td>`;
 						}
 						if (columnIndex > 8 && columnIndex < 15) {
-							if (column > dataTarget[columnIndex - 9] * 1.1) {
-								html += `<td class='results-cell-bottom cell-good'>${column}</td>`;
-							} else if (column < dataTarget[columnIndex - 9] * 0.9) {
-								html += `<td class='results-cell-bottom cell-bad'>${column}</td>`;
+							if (column > query.stats[columnIndex - 9] * 1.1) {
+								html += `<td class='results-cell-bottom cell-good' title='${calculatePartDelta(column, query.stats[columnIndex - 9])}'>${column}</td>`;
+							} else if (column < query.stats[columnIndex - 9] * 0.9) {
+								html += `<td class='results-cell-bottom cell-bad' title='${calculatePartDelta(column, query.stats[columnIndex - 9])}'>${column}</td>`;
 							} else {
-								html += `<td class='results-cell-bottom cell-close'>${column}</td>`;
+								html += `<td class='results-cell-bottom cell-close' title='${calculatePartDelta(column, query.stats[columnIndex - 9])}'>${column}</td>`;
 							}
 						}
 				}

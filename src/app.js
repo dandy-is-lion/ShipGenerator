@@ -1,19 +1,3 @@
-const buttonQuery = document.getElementById("button-query");
-const buttonSave = document.getElementById("button-save");
-const rowQuery = document.getElementById("row-query").getElementsByTagName("th");
-const tableResults = document.getElementById("tbody-results");
-
-buttonSave.disabled = true;
-
-let inputTargets = [
-	document.getElementById("durability-input"),
-	document.getElementById("thrust-input"),
-	document.getElementById("speed-input"),
-	document.getElementById("stability-input"),
-	document.getElementById("steer-input"),
-	document.getElementById("strafe-input"),
-];
-
 function downloadTable(e) {
 	e.preventDefault();
 	if (results) {
@@ -54,10 +38,12 @@ function targetInputChange(e, i) {
 }
 
 function selectIDChange(e) {
-	if (e.target.value.length > 10 && e.target.value.length <= 14) {
+	if (e.target.value.length > 10 && e.target.value.length <= 20) {
 		e.target.size = e.target.value.length;
-	} else {
+	} else if (e.target.value.length <= 10) {
 		e.target.size = 10;
+	} else if (e.target.value.length > 20) {
+		e.target.size = 20;
 	}
 }
 

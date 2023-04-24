@@ -376,7 +376,8 @@ form {
 }
 
 .column-select:active {
-	background: var(--accent-color);
+	transition: none;
+	background: var(--panel-color-hover);
 }
 
 .column-select:disabled {
