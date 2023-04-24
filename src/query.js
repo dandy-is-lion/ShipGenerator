@@ -31,11 +31,9 @@ fetch("./src/data.json")
 	.then((response) => response.json())
 	.then((json) => {
 		redoutDB = json;
-		let ships = "";
 		redoutDB.gliders.forEach((glider) => {
-			ships += `<option value='${glider.nick}'>`;
+			document.getElementById("ship").innerHTML += `<option value='${glider.nick}'>`;
 		});
-		document.getElementById("ship").innerHTML += ships;
 		redoutDB.parts.forEach((partType, partTypeIndex) => {
 			partType.details.forEach((part, partIndex) => {
 				Object.assign(part, { id: letterIndex[partIndex] });
@@ -78,8 +76,8 @@ async function querySubmit(e) {
 			redoutDB.parts[4].details.slice(...queryParts[4]),
 			redoutDB.parts[5].details.slice(...queryParts[5]),
 		],
-		stats: dataTarget,
 		scores: queryScores,
+		stats: dataTarget,
 	};
 	results = await runQuery(query);
 	let html = parseResults(results, query);

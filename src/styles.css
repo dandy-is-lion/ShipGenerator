@@ -44,6 +44,7 @@ body {
 	width: 100vw;
 	padding: 0;
 	margin: 0;
+	font-size: clamp(8px, 1.5vw, 16px);
 }
 
 form {
@@ -93,19 +94,19 @@ form {
 	border: var(--border-width) solid var(--border-color);
 	color: var(--foreground-color);
 	background: var(--panel-color);
-	font-size: 2rem;
+	font-size: 2em;
 	font-weight: bolder;
 	font-style: oblique;
 	text-transform: uppercase;
 	text-align: center;
-	padding: 0.5rem 1rem;
+	padding: 0.5em 1em;
 	transition: var(--transition);
 }
 
 .button:hover {
 	background: var(--panel-color-hover);
 	border-color: var(--accent-color);
-	text-shadow: 0 0 1rem var(--accent-color);
+	text-shadow: 0 0 1em var(--accent-color);
 }
 
 .button:active {
@@ -129,8 +130,8 @@ form {
 	height: 100%;
 	display: grid;
 	grid-template-columns: auto min-content;
-	grid-template-rows: 100px auto;
-	gap: 0px 0px;
+	grid-template-rows: 6.125em auto;
+	gap: 0;
 	grid-auto-flow: row;
 	grid-template-areas:
 		"title social"
@@ -142,9 +143,9 @@ form {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 0 2rem;
+	padding: 0 2em;
 	overflow: hidden;
-	gap: 1.5rem;
+	gap: 1.5em;
 }
 
 .social {
@@ -153,7 +154,7 @@ form {
 	justify-content: space-between;
 	align-items: center;
 	overflow: hidden;
-	padding: 0 2rem;
+	padding: 0 2em;
 }
 
 .social > a {
@@ -165,7 +166,7 @@ form {
 }
 
 .social:hover > a:hover {
-	text-shadow: 0 0 1rem var(--accent-color);
+	text-shadow: 0 0 1em var(--accent-color);
 	color: var(--foreground-color-hover);
 	opacity: 1;
 }
@@ -174,10 +175,12 @@ form {
 	grid-area: stats;
 	margin: 0;
 	padding: 0;
-	overflow: hidden;
+	overflow-x: auto;
+	overflow-y: hidden;
+	min-width: min-content;
 	display: grid;
 	grid-template-columns: min-content;
-	grid-template-rows: 100px auto 100px;
+	grid-template-rows: 6.125em auto 6.125em;
 	grid-template-areas:
 		"query"
 		"charts"
@@ -200,7 +203,7 @@ form {
 }
 
 .table-query > tbody > tr > td {
-	padding: 0 0.5rem;
+	/* padding: 0 0.25em; */
 	transition: var(--transition);
 	background-color: var(--panel-color);
 	border-bottom: var(--border-width) solid var(--border-color);
@@ -222,7 +225,7 @@ form {
 	background: none;
 	color: var(--foreground-color);
 	transition: var(--transition);
-	font-size: 1.5rem;
+	font-size: 1.5em;
 }
 
 .query-button:disabled {
@@ -239,10 +242,10 @@ form {
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 1rem;
-	gap: 1rem;
-	overflow-y: auto;
+	padding: 1em;
+	gap: 1em;
 	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .logo {
@@ -255,7 +258,7 @@ form {
 }
 
 .logo > img {
-	width: 256px;
+	width: 16em;
 	margin-left: -3%;
 	margin-bottom: -3%;
 }
@@ -274,7 +277,7 @@ form {
 .table-results > thead {
 	position: sticky;
 	top: 0;
-	height: 100px;
+	height: 6.125em;
 }
 
 .table-results > tbody {
@@ -283,12 +286,12 @@ form {
 
 .table-results > thead > tr > th {
 	color: var(--foreground-color);
-	font-size: 1.75rem;
+	font-size: 1.75em;
 	font-weight: bolder;
 	font-style: oblique;
 	text-transform: uppercase;
 	white-space: nowrap;
-	padding: 0 0.5rem;
+	padding: 0 0.25em;
 	transition: var(--transition);
 	border-bottom: var(--border-width) solid var(--border-color);
 }
@@ -337,7 +340,7 @@ form {
 	font-size: 1.5em;
 	text-align: center;
 	white-space: nowrap;
-	padding: 0.25em 0.25em;
+	padding: 0.25em;
 	transition: var(--transition);
 }
 
@@ -440,7 +443,7 @@ form {
 	justify-content: left;
 	align-items: center;
 	gap: 0.075em;
-	padding: 0.25em 1em !important;
+	padding: 0.25em 0.5em !important;
 }
 
 .cell-ship > img {

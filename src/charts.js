@@ -11,6 +11,7 @@ Chart.defaults.color = foregroundColor;
 Chart.defaults.responsive = false;
 Chart.defaults.maintainAspectRatio = false;
 Chart.defaults.plugins.decimation = false;
+Chart.defaults.plugins.legend.display = true;
 
 let dataComparison = [0, 0, 0, 0, 0, 0];
 let dataTarget = getQueryStats();
