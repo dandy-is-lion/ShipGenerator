@@ -166,7 +166,7 @@ form {
 }
 
 .social:hover > a:hover {
-	text-shadow: 0 0 1em var(--accent-color);
+	text-shadow: 0 0 0.5em var(--accent-color);
 	color: var(--foreground-color-hover);
 	opacity: 1;
 }
