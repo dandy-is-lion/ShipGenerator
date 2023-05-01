@@ -120,6 +120,7 @@ async function runQuery(query) {
 			query.parts.forEach((part) => {
 				count = count * part.length;
 			});
+
 			const candidateShipLimit = 100;
 			let delta = 0;
 			let maxDelta = 9999;
