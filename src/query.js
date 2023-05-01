@@ -44,6 +44,7 @@ fetch("./src/data.json")
 
 let results = [];
 let query = [];
+
 async function querySubmit(e) {
 	e.preventDefault();
 	buttonSave.disabled = true;
@@ -51,23 +52,31 @@ async function querySubmit(e) {
 	tableResults.disabled = true;
 	buttonQuery.innerHTML = '<i class="fa-solid fa-cog fa-spin fa-fw"></i>';
 	const queryID = document.getElementById("select-id").value.split("-");
-	const queryGliders = queryID[0].toUpperCase();
+	let queryGliders = redoutDB.gliders;
 	let queryScores = document.getElementById("select-score").value.split("-");
 	let queryParts = [];
 	inputParts.forEach((part) => {
 		queryParts.push(part.value.split("-"));
 	});
-	if (queryID.length > 1 && queryID[queryID.length - 1].length === 6) {
-		queryScores = [0, 1200];
-		[...queryID[queryID.length - 1]].forEach((idChar, idCharIndex) => {
-			if (letterIndex.includes(idChar.toUpperCase())) {
-				queryParts[idCharIndex] = [letterIndex.indexOf(idChar.toUpperCase()), letterIndex.indexOf(idChar.toUpperCase()) + 1];
+	queryID.forEach((id) => {
+		if (id) {
+			if (id.length === 6 && [...id].every((idChar) => letterIndex.includes(idChar.toUpperCase()))) {
+				// Looks like an ID, set query parts accordingly and ignore score range
+				queryScores = [0, 1200];
+				[...id].forEach((idChar, idCharIndex) => {
+					if (letterIndex.includes(idChar.toUpperCase())) {
+						queryParts[idCharIndex] = [letterIndex.indexOf(idChar.toUpperCase()), letterIndex.indexOf(idChar.toUpperCase()) + 1];
+					}
+				});
+			} else if (queryGliders.length === redoutDB.gliders.length) {
+				// Might be a ship name instead
+				queryGliders = redoutDB.gliders.filter((item) => id.toUpperCase() === "ANY" || id.toUpperCase() === item.code || id.toUpperCase() === item.nick.toUpperCase() || id.toUpperCase() === item.name.toUpperCase());
 			}
-		});
-	}
+		}
+	});
 
 	query = {
-		gliders: redoutDB.gliders.filter((item) => !queryGliders || queryGliders === "ANY" || item.code === queryGliders || item.nick.toUpperCase() === queryGliders || item.name.toUpperCase() === queryGliders),
+		gliders: queryGliders,
 		parts: [
 			redoutDB.parts[0].details.slice(...queryParts[0]),
 			redoutDB.parts[1].details.slice(...queryParts[1]),
@@ -79,6 +88,7 @@ async function querySubmit(e) {
 		scores: queryScores,
 		stats: dataTarget,
 	};
+
 	results = await runQuery(query);
 	let html = parseResults(results, query);
 	tableResults.innerHTML = html;
