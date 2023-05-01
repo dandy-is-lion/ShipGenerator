@@ -67,7 +67,14 @@ function resetClick(e) {
 
 function randomTargets(e) {
 	e.preventDefault();
-	dataTarget = [getRandomInt(1, 100), getRandomInt(1, 100), getRandomInt(1, 100), getRandomInt(1, 100), getRandomInt(1, 100), getRandomInt(1, 100)];
+	dataTarget = [
+		getRandomInt(1, 50) + getRandomInt(0, 50),
+		getRandomInt(1, 50) + getRandomInt(0, 50),
+		getRandomInt(1, 50) + getRandomInt(0, 50),
+		getRandomInt(1, 50) + getRandomInt(0, 50),
+		getRandomInt(1, 50) + getRandomInt(0, 50),
+		getRandomInt(1, 50) + getRandomInt(0, 50),
+	];
 	inputTargets.forEach((input, inputIndex) => {
 		input.value = dataTarget[inputIndex];
 	});

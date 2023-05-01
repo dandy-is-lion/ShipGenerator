@@ -202,13 +202,15 @@ function parseResults(results, query) {
 							html += `<td class='results-cell-bottom cell-class-${part.class}' title="${part.name} (${part.class}) [${part.stats}]\n\n${part.desc}">${part.code}</td>`;
 						}
 						if (columnIndex > 8 && columnIndex < 15) {
+							html += "<td class='results-cell-bottom cell-";
 							if (column > query.stats[columnIndex - 9] * 1.1) {
-								html += `<td class='results-cell-bottom cell-good' title='${calculatePartDelta(column, query.stats[columnIndex - 9])}'>${column}</td>`;
+								html += "good";
 							} else if (column < query.stats[columnIndex - 9] * 0.9) {
-								html += `<td class='results-cell-bottom cell-bad' title='${calculatePartDelta(column, query.stats[columnIndex - 9])}'>${column}</td>`;
+								html += "bad";
 							} else {
-								html += `<td class='results-cell-bottom cell-close' title='${calculatePartDelta(column, query.stats[columnIndex - 9])}'>${column}</td>`;
+								html += "close";
 							}
+							html += `'title='${calculatePartDelta(column, query.stats[columnIndex - 9])}'>${column}</td>`;
 						}
 				}
 			});
