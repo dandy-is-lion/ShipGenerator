@@ -131,16 +131,18 @@ async function runQuery(query) {
 				count = count * part.length;
 			});
 
-			const candidateShipLimit = 100;
-			let delta = 0;
 			let maxDelta = 9999;
 			let maxDeltaIndex = 0;
-			let candidateStats = [0, 0, 0, 0, 0, 0];
-			let candidates = new Array(candidateShipLimit);
-			let candidateScore = 0;
-			let candidateRig = [];
-			let candidateID = "";
-			candidates.fill([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, maxDelta], 0, candidateShipLimit);
+			const candidateLimit = 100;
+			const candidates = new Array(candidateLimit).fill([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, maxDelta], 0, candidateLimit);
+			const candidate = {
+				id: "",
+				rig: [],
+				score: 0,
+				stats: [],
+				delta: 0,
+			};
+
 			query.gliders.forEach((glider, gliderID) => {
 				query.parts[0].forEach((propulsor, propulsorID) => {
 					query.parts[1].forEach((stabilizer, stabilizerID) => {
@@ -148,16 +150,16 @@ async function runQuery(query) {
 							query.parts[3].forEach((hull, hullID) => {
 								query.parts[4].forEach((intercooler, intercoolerID) => {
 									query.parts[5].forEach((esc, escID) => {
-										candidateScore = glider.score + propulsor.score + stabilizer.score + rudder.score + hull.score + intercooler.score + esc.score;
-										if (candidateScore >= query.scores[0] && candidateScore <= query.scores[1]) {
-											candidateStats = addArrays([glider.stats, propulsor.stats, stabilizer.stats, rudder.stats, hull.stats, intercooler.stats, esc.stats]);
-											delta = calculateDelta([candidateStats, query.stats]);
-											if (delta <= maxDelta) {
-												candidateRig = [gliderID, propulsorID, stabilizerID, rudderID, hullID, intercoolerID, escID];
-												candidateID = `${glider.code}-${propulsor.id}${stabilizer.id}${rudder.id}${hull.id}${intercooler.id}${esc.id}`;
-												candidates[maxDeltaIndex] = [candidateID, ...candidateRig, candidateScore, ...candidateStats, delta];
+										candidate.score = glider.score + propulsor.score + stabilizer.score + rudder.score + hull.score + intercooler.score + esc.score;
+										if (candidate.score >= query.scores[0] && candidate.score <= query.scores[1]) {
+											candidate.stats = addArrays([glider.stats, propulsor.stats, stabilizer.stats, rudder.stats, hull.stats, intercooler.stats, esc.stats]);
+											candidate.delta = calculateDelta([candidate.stats, query.stats]);
+											if (candidate.delta <= maxDelta) {
+												candidate.rig = [gliderID, propulsorID, stabilizerID, rudderID, hullID, intercoolerID, escID];
+												candidate.id = `${glider.code}-${propulsor.id}${stabilizer.id}${rudder.id}${hull.id}${intercooler.id}${esc.id}`;
+												candidates[maxDeltaIndex] = [candidate.id, ...candidate.rig, candidate.score, ...candidate.stats, candidate.delta];
 												maxDelta = 0;
-												for (i = 0; i < candidateShipLimit; i++) {
+												for (i = 0; i < candidateLimit; i++) {
 													if (candidates[i][15] > maxDelta) {
 														maxDelta = candidates[i][15];
 														maxDeltaIndex = i;
@@ -172,10 +174,86 @@ async function runQuery(query) {
 					});
 				});
 			});
+
 			console.timeEnd("Query");
 			console.info(`Searched ${count.toLocaleString()} combinations`);
 			resolve(candidates.filter((item) => item[15] != 9999));
-		}, 1);
+		}, 0);
+	});
+}
+
+async function runQueryThreaded(query) {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			console.time("Query");
+			let count = query.gliders.length;
+			query.parts.forEach((part) => {
+				count = count * part.length;
+			});
+			let arrayCount = 0;
+
+			let maxDelta = 9999;
+			let maxDeltaIndex = 0;
+			const candidateLimit = 100;
+			const candidates = new Array(candidateLimit).fill([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, maxDelta], 0, candidateLimit);
+			const candidate = {
+				id: "",
+				rig: [],
+				score: 0,
+				stats: [],
+				delta: 0,
+			};
+
+			query.gliders.forEach((glider, gliderID) => {
+				query.parts[0].forEach((propulsor, propulsorID) => {
+					query.parts[1].forEach((stabilizer, stabilizerID) => {
+						query.parts[2].forEach((rudder, rudderID) => {
+							query.parts[3].forEach((hull, hullID) => {
+								query.parts[4].forEach((intercooler, intercoolerID) => {
+									query.parts[5].forEach((esc, escID) => {
+										candidate.score = glider.score + propulsor.score + stabilizer.score + rudder.score + hull.score + intercooler.score + esc.score;
+										if (candidate.score >= query.scores[0] && candidate.score <= query.scores[1]) {
+											const arrayWorker = new Worker("./src/worker.js");
+											arrayWorker.postMessage([glider.stats, propulsor.stats, stabilizer.stats, rudder.stats, hull.stats, intercooler.stats, esc.stats]);
+											arrayWorker.onmessage = (e) => {
+												candidate.stats = e.data;
+												candidate.delta = calculateDelta([candidate.stats, query.stats]);
+												if (candidate.delta <= maxDelta) {
+													candidate.rig = [gliderID, propulsorID, stabilizerID, rudderID, hullID, intercoolerID, escID];
+													candidate.id = `${glider.code}-${propulsor.id}${stabilizer.id}${rudder.id}${hull.id}${intercooler.id}${esc.id}`;
+													candidates[maxDeltaIndex] = [candidate.id, ...candidate.rig, candidate.score, ...candidate.stats, candidate.delta];
+													maxDelta = 0;
+													for (i = 0; i < candidateLimit; i++) {
+														if (candidates[i][15] > maxDelta) {
+															maxDelta = candidates[i][15];
+															maxDeltaIndex = i;
+														}
+													}
+												}
+												arrayCount++;
+
+												// console.log(arrayCount, count);
+
+												if (arrayCount === count) {
+													console.timeEnd("Query");
+													console.info(`Searched ${count.toLocaleString()} combinations`);
+													resolve(candidates.filter((item) => item[15] != 9999));
+												}
+
+												// arrayWorker.terminate();
+											};
+										}
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+			// console.timeEnd("Query");
+			// console.info(`Searched ${count.toLocaleString()} combinations`);
+			// resolve(candidates.filter((item) => item[15] != 9999));
+		}, 0);
 	});
 }
 
