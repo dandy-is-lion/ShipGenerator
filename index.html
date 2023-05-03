@@ -21,8 +21,8 @@
 		<title>Ship Generator</title>
 	</head>
 	<body>
-		<form class="darkened border-left border-right" onsubmit="querySubmit(event)" id="form-query">
-			<div class="container">
+		<form id="form-query" onsubmit="querySubmit(event)">
+			<div class="container darkened border-left border-right">
 				<div class="border-bottom title">
 					<span class="header">Redout II Ship Generator</span><span class="header" title="Strafe more, steer less."><i class="fa-solid fa-fire-flame-simple fa-rotate-270"></i><i class="fa-solid fa-shuttle-space"></i></span>
 				</div>
@@ -145,11 +145,11 @@
 							</tr>
 							<tr id="row-query">
 								<th
-									title="Search ship(s) and ID&#013;&#013;Leave blank to search all ships.&#013;When a part code is given, it'll take priority over all other part selections.&#013;If a part code is invalid, it'll be ignored.&#013;You can also just enter the ship name or part code."
+									title="Search ship(s) and ID&#013;&#013;Leave blank to search all ships.&#013;When a part code is given, it'll take priority over all other part selections.&#013;If a part code is invalid, it'll be ignored.&#013;You can also just enter the ship name or part code.&#013;Multiple ships are allowed if they're comma separated."
 									class="border-right column-ship"
 								>
-									<input list="ship" pattern="[A-Za-z0-9-]{3,20}" size="10" id="select-id" class="column-input" type="search" placeholder="ANY-XXXXXX" autocomplete="off" onkeyup="selectIDChange(event)" />
-									<datalist id="ship">
+									<input list="ship-datalist" pattern="[a-zA-Z0-9,\-]{3,}" size="10" id="select-id" class="column-input" type="search" placeholder="ANY-XXXXXX" autocomplete="off" onchange="selectIDChange(event)" />
+									<datalist id="ship-datalist">
 										<option value="ANY"></option>
 									</datalist>
 								</th>

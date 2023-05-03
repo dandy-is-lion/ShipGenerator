@@ -85,7 +85,7 @@ let chartRadar = new Chart(ctxRadar, {
 					e.target.style.cursor = "grabbing";
 				},
 				onDragEnd: function (e, datasetIndex, index, value) {
-					inputTargets[index].value = value;
+					input.targets[index].value = value;
 					dataTarget[index] = value;
 					chartBars.update();
 				},
@@ -163,7 +163,7 @@ let chartBars = new Chart(ctxBars, {
 					e.target.style.cursor = "grabbing";
 				},
 				onDragEnd: function (e, datasetIndex, index, value) {
-					inputTargets[index].value = value;
+					input.targets[index].value = value;
 					dataTarget[index] = value;
 					chartRadar.update();
 				},

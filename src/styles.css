@@ -50,9 +50,6 @@ body {
 form {
 	width: 100%;
 	height: 100%;
-	padding: 0;
-	margin: 0 auto;
-	max-width: max-content;
 }
 
 .header {
@@ -126,6 +123,9 @@ form {
 } */
 
 .container {
+	padding: 0;
+	margin: 0 auto;
+	max-width: max-content;
 	width: 100%;
 	height: 100%;
 	display: grid;

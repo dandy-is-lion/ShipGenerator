@@ -1,21 +1,62 @@
-let selectedID = "";
+const input = {
+	table: document.getElementById("tbody-results"),
+	buttons: {
+		query: document.getElementById("button-query"),
+		save: document.getElementById("button-save"),
+	},
+	id: document.getElementById("select-id"),
+	score: document.getElementById("select-score"),
+	targets: [
+		document.getElementById("durability-input"),
+		document.getElementById("thrust-input"),
+		document.getElementById("speed-input"),
+		document.getElementById("stability-input"),
+		document.getElementById("steer-input"),
+		document.getElementById("strafe-input"),
+	],
+	parts: [
+		document.getElementById("select-propulsor"),
+		document.getElementById("select-stabilizer"),
+		document.getElementById("select-rudder"),
+		document.getElementById("select-hull"),
+		document.getElementById("select-intercooler"),
+		document.getElementById("select-esc"),
+	],
+	shipdatalist: document.getElementById("ship-datalist"),
+};
+
+// Read data.json and store it in redoutDB
+const partCode = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J", "K"];
+let redoutDB;
+fetch("./src/data.json")
+	.then((response) => response.json())
+	.then((json) => {
+		redoutDB = json;
+		redoutDB.gliders.forEach((glider) => {
+			input.shipdatalist.innerHTML += `<option value='${glider.nick}'>`;
+		});
+		redoutDB.parts.forEach((partType, partTypeIndex) => {
+			partType.details.forEach((part, partIndex) => {
+				Object.assign(part, { id: partCode[partIndex] });
+				input.parts[partTypeIndex].innerHTML += `<option value='${partIndex}-${partIndex + 1}' title="${part.name} (${part.class}) {${part.score}} [${part.stats}]\n\n${part.desc}">${part.code}</option>`;
+			});
+		});
+	});
 
 function downloadTable(e) {
 	e.preventDefault();
-	if (results) {
+	if (lastResults) {
 		const separator = ",";
 		let csv = ["ID, Ship, Propulsor, Stabilizer, Rudder, Hull, Intercooler, ESC, Score, Durability, Thrust, Top_Speed, Stability, Steer, Strafe, Delta"];
-		results.forEach((row, rowIndex) => {
+		lastResults.forEach((result) => {
 			let _row = [];
-			row.forEach((column, columnIndex) => {
-				if (columnIndex === 1) {
-					_row.push(query[0][column].name);
-				} else if (columnIndex >= 2 && columnIndex <= 7) {
-					_row.push(query[columnIndex - 1][column].name);
-				} else {
-					_row.push(column);
-				}
+			_row.push(result.id);
+			_row.push(result.glider.nick);
+			result.rig.forEach((part) => {
+				_row.push(part.code);
 			});
+			_row.push(result.score);
+			_row.push(...result.stats);
 			csv.push(_row.join(separator));
 		});
 		const file = `shipgen_${new Date().toLocaleDateString()}.csv`;
@@ -31,28 +72,20 @@ function downloadTable(e) {
 }
 
 function targetInputChange(e, i) {
-	if (e.target.value < 1 || e.target.value > 100) {
-		e.target.value = e.target.defaultValue;
-	}
+	if (!e.target.checkValidity()) e.target.value = e.target.defaultValue;
 	dataTarget[i] = e.target.value;
 	updateStatCharts(chartRadar, 0, dataTarget);
 	updateStatCharts(chartBars, 0, dataTarget);
 }
 
 function selectIDChange(e) {
-	if (e.target.value.length > 10 && e.target.value.length <= 20) {
-		e.target.size = e.target.value.length;
-	} else if (e.target.value.length <= 10) {
-		e.target.size = 10;
-	} else if (e.target.value.length > 20) {
-		e.target.size = 20;
-	}
+	if (!e.target.checkValidity()) e.target.value = "";
 }
 
 function getQueryStats() {
 	let stats = [];
-	inputTargets.forEach((input, inputIndex) => {
-		stats.push(input.value);
+	input.targets.forEach((_input) => {
+		stats.push(_input.value);
 	});
 	return stats;
 }
@@ -75,8 +108,8 @@ function randomTargets(e) {
 		getRandomInt(1, 50) + getRandomInt(0, 50),
 		getRandomInt(1, 50) + getRandomInt(0, 50),
 	];
-	inputTargets.forEach((input, inputIndex) => {
-		input.value = dataTarget[inputIndex];
+	input.targets.forEach((_input, _inputIndex) => {
+		_input.value = dataTarget[_inputIndex];
 	});
 	updateStatCharts(chartRadar, 0, dataTarget);
 	updateStatCharts(chartBars, 0, dataTarget);
@@ -90,9 +123,9 @@ function getRandomInt(min, max) {
 
 function decreaseTargets(e) {
 	e.preventDefault();
-	inputTargets.forEach((input, inputIndex) => {
-		dataTarget[inputIndex] = Math.round(Math.max(1, dataTarget[inputIndex] * 0.9));
-		input.value = dataTarget[inputIndex];
+	input.targets.forEach((_input, _inputIndex) => {
+		dataTarget[_inputIndex] = Math.round(Math.max(1, dataTarget[_inputIndex] * 0.9));
+		_input.value = dataTarget[_inputIndex];
 	});
 	updateStatCharts(chartRadar, 0, dataTarget);
 	updateStatCharts(chartBars, 0, dataTarget);
@@ -100,9 +133,9 @@ function decreaseTargets(e) {
 
 function increaseTargets(e) {
 	e.preventDefault();
-	inputTargets.forEach((input, inputIndex) => {
-		dataTarget[inputIndex] = Math.round(Math.min(100, dataTarget[inputIndex] * 1.1));
-		input.value = dataTarget[inputIndex];
+	input.targets.forEach((_input, _inputIndex) => {
+		dataTarget[_inputIndex] = Math.round(Math.min(100, dataTarget[_inputIndex] * 1.1));
+		_input.value = dataTarget[_inputIndex];
 	});
 	updateStatCharts(chartRadar, 0, dataTarget);
 	updateStatCharts(chartBars, 0, dataTarget);
@@ -110,13 +143,13 @@ function increaseTargets(e) {
 
 function rotateTargetsRight(e) {
 	let newTargets = new Array(6);
-	inputTargets.forEach((input, inputIndex) => {
-		if (inputIndex === 0) {
-			newTargets[inputIndex] = dataTarget[inputTargets.length - 1];
+	input.targets.forEach((_input, _inputIndex) => {
+		if (_inputIndex === 0) {
+			newTargets[_inputIndex] = dataTarget[input.targets.length - 1];
 		} else {
-			newTargets[inputIndex] = dataTarget[inputIndex - 1];
+			newTargets[_inputIndex] = dataTarget[_inputIndex - 1];
 		}
-		input.value = newTargets[inputIndex];
+		_input.value = newTargets[_inputIndex];
 	});
 	dataTarget = newTargets;
 	updateStatCharts(chartRadar, 0, dataTarget);
@@ -125,13 +158,13 @@ function rotateTargetsRight(e) {
 
 function rotateTargetsLeft(e) {
 	let newTargets = new Array(6);
-	inputTargets.forEach((input, inputIndex) => {
-		if (inputIndex === inputTargets.length - 1) {
-			newTargets[inputIndex] = dataTarget[0];
+	input.targets.forEach((_input, _inputIndex) => {
+		if (_inputIndex === input.targets.length - 1) {
+			newTargets[_inputIndex] = dataTarget[0];
 		} else {
-			newTargets[inputIndex] = dataTarget[inputIndex + 1];
+			newTargets[_inputIndex] = dataTarget[_inputIndex + 1];
 		}
-		input.value = newTargets[inputIndex];
+		_input.value = newTargets[_inputIndex];
 	});
 	dataTarget = newTargets;
 	updateStatCharts(chartRadar, 0, dataTarget);
@@ -145,13 +178,14 @@ function rowHover(row) {
 	updateStatCharts(chartBars, 1, stats);
 }
 
+let selectedID;
 // Change the values of the Target data to whatever row's been clicked
 function rowClick(row, e) {
 	selectedID = row.getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML;
 	let stats = getStats(row);
 	dataTarget = stats;
-	inputTargets.forEach((input, inputIndex) => {
-		input.value = stats[inputIndex];
+	input.targets.forEach((_input, _inputIndex) => {
+		_input.value = stats[_inputIndex];
 	});
 	updateStatCharts(chartRadar, 0, stats);
 	updateStatCharts(chartBars, 0, stats);
