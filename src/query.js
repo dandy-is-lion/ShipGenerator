@@ -37,12 +37,12 @@ async function querySubmit(e) {
 
 	// If browser supports Web Workers, run threaded; but user can force single thread if Ctrl is held
 	let results = window.Worker ? await runQueryThreaded(query) : await runQuery(query);
-	input.table.innerHTML = parseResults(results, query);
+	if (results) input.table.innerHTML = parseResults(results, query);
+	lastResults = results;
+	lastQuery = query;
 	input.buttons.save.disabled = false;
 	input.buttons.query.disabled = false;
 	input.buttons.query.innerHTML = '<i class="fa-solid fa-magnifying-glass fa-fw"></i>';
-	lastResults = results;
-	lastQuery = query;
 }
 
 function addArrays(arrays) {
@@ -71,7 +71,7 @@ function calculateDelta(arrays) {
 }
 
 async function runQuery(query) {
-	return new Promise((resolve) => {
+	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			console.time("Query");
 
@@ -120,15 +120,23 @@ async function runQuery(query) {
 				count = count * part.length;
 			});
 
+			const mergedResults = candidates.filter((_candidate) => _candidate.delta != 9999);
 			console.timeEnd("Query");
 			console.warn(`Searched ${count.toLocaleString()} combinations on a single thread`);
-			resolve(candidates.filter((_candidate) => _candidate.delta != 9999));
+			if (mergedResults.length === 0) {
+				reject("No results found!");
+			} else {
+				console.info(`Showing top ${mergedResults.length} result(s)`);
+				resolve(mergedResults);
+			}
 		}, 0);
+	}).catch((e) => {
+		alert(e);
 	});
 }
 
 async function runQueryThreaded(query) {
-	return new Promise((resolve) => {
+	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			console.time("Query");
 
@@ -153,13 +161,19 @@ async function runQueryThreaded(query) {
 
 						console.timeEnd("Query");
 						console.info(`Searched ${count.toLocaleString()} combinations with ${workers.count} thread(s)`);
-						console.info(`Showing top ${mergedResults.length} result(s)`);
-						resolve(mergedResults);
+						if (mergedResults.length === 0) {
+							reject("No results found!");
+						} else {
+							console.info(`Showing top ${mergedResults.length} result(s)`);
+							resolve(mergedResults);
+						}
 					}
 					arrayWorker.terminate();
 				};
 			});
 		}, 0);
+	}).catch((e) => {
+		alert(e);
 	});
 }
 
@@ -236,33 +250,28 @@ function calculatePartDelta(stat, target) {
 }
 
 function parseResults(candidates, query) {
-	if (candidates.length === 0) {
-		alert("No results found!");
-		return null;
-	} else {
-		// Sort by delta from least to greatest
-		candidates.sort(function (a, b) {
-			return a.delta - b.delta;
+	// Sort by delta from least to greatest
+	candidates.sort(function (a, b) {
+		return a.delta - b.delta;
+	});
+	let html = "";
+	candidates.forEach((candidate) => {
+		html += `<tr ${candidate.id === selectedID ? "class=results-selected" : ""} onmouseover='rowHover(this)' onclick='rowClick(this, event)'>`;
+		html += `<td class='results-cell-bottom results-cell-right cell-ship' title="${candidate.glider.name} (${candidate.glider.code}) {${candidate.glider.score}} [${candidate.glider.stats}]\n\n${candidate.glider.desc}"><img src='./img/${candidate.glider.code}.webp'></img><span>${candidate.id}</span></td>`;
+		candidate.rig.forEach((part) => {
+			html += `<td class='results-cell-bottom cell-class-${part.class}' title="${part.name} (${part.class}) {${part.score}} [${part.stats}]\n\n${part.desc}">${part.code}</td>`;
 		});
-		let html = "";
-		candidates.forEach((candidate) => {
-			html += `<tr ${candidate.id === selectedID ? "class=results-selected" : ""} onmouseover='rowHover(this)' onclick='rowClick(this, event)'>`;
-			html += `<td class='results-cell-bottom results-cell-right cell-ship' title="${candidate.glider.name} (${candidate.glider.code}) {${candidate.glider.score}} [${candidate.glider.stats}]\n\n${candidate.glider.desc}"><img src='./img/${candidate.glider.code}.webp'></img><span>${candidate.id}</span></td>`;
-			candidate.rig.forEach((part) => {
-				html += `<td class='results-cell-bottom cell-class-${part.class}' title="${part.name} (${part.class}) {${part.score}} [${part.stats}]\n\n${part.desc}">${part.code}</td>`;
-			});
-			html += `<td class='results-cell-bottom results-cell-left results-cell-right cell-score' title='Stat delta: ${candidate.delta}'><span>${candidate.score}</span></td>`;
-			candidate.stats.forEach((stat, statIndex) => {
-				let statType = "";
-				if (stat > query.stats[statIndex] * 1.1) {
-					statType = "cell-good";
-				} else if (stat < query.stats[statIndex] * 0.9) {
-					statType = "cell-bad";
-				}
-				html += `<td class='results-cell-bottom ${statType}' title='${calculatePartDelta(stat, query.stats[statIndex])}'>${stat}</td>`;
-			});
-			html += "</tr>";
+		html += `<td class='results-cell-bottom results-cell-left results-cell-right cell-score' title='Stat delta: ${candidate.delta}'><span>${candidate.score}</span></td>`;
+		candidate.stats.forEach((stat, statIndex) => {
+			let statType = "";
+			if (stat > query.stats[statIndex] * 1.1) {
+				statType = "cell-good";
+			} else if (stat < query.stats[statIndex] * 0.9) {
+				statType = "cell-bad";
+			}
+			html += `<td class='results-cell-bottom ${statType}' title='${calculatePartDelta(stat, query.stats[statIndex])}'>${stat}</td>`;
 		});
-		return html;
-	}
+		html += "</tr>";
+	});
+	return html;
 }
