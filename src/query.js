@@ -9,9 +9,9 @@ async function querySubmit(e) {
 	let query = {
 		id: input.id.value.split("-"),
 		scores: input.score.value.split("-"),
-		gliders: [],
-		parts: [],
-		stats: [],
+		gliders: redoutDB.gliders,
+		parts: Array.from(input.parts, (part, partIndex) => redoutDB.parts[partIndex].details.slice(...part.value.split("-"))),
+		stats: Array.from(input.targets, (target) => target.value),
 	};
 
 	query.id.forEach((id) => {
@@ -21,25 +21,18 @@ async function querySubmit(e) {
 				query.scores = [0, 1200];
 				[...id].forEach((idChar, idCharIndex) => {
 					if (partCode.includes(idChar.toUpperCase())) {
-						query.parts[idCharIndex] = [partCode.indexOf(idChar.toUpperCase()), partCode.indexOf(idChar.toUpperCase()) + 1];
+						query.parts[idCharIndex] = redoutDB.parts[idCharIndex].details.slice(...[partCode.indexOf(idChar.toUpperCase()), partCode.indexOf(idChar.toUpperCase()) + 1]);
 					}
 				});
-			} else {
+			} else if (query.gliders.length === redoutDB.gliders.length) {
 				// Might be a ship name instead
-				id.split(",").forEach((glider) => {
-					query.gliders.push(...redoutDB.gliders.filter((item) => glider.toUpperCase() === "ANY" || glider.toUpperCase() === item.code || glider.toUpperCase() === item.nick.toUpperCase() || glider.toUpperCase() === item.name.toUpperCase()));
-				});
+				query.gliders = [].concat(
+					...Array.from(id.split(","), (glider) =>
+						redoutDB.gliders.filter((item) => glider.toUpperCase() === "ANY" || glider.toUpperCase() === item.code || glider.toUpperCase() === item.nick.toUpperCase() || glider.toUpperCase() === item.name.toUpperCase())
+					)
+				);
 			}
 		}
-	});
-	if (query.gliders.length === 0) query.gliders = redoutDB.gliders;
-
-	input.parts.forEach((part, partIndex) => {
-		query.parts.push(redoutDB.parts[partIndex].details.slice(...part.value.split("-")));
-	});
-
-	input.targets.forEach((target) => {
-		query.stats.push(target.value);
 	});
 
 	// If browser supports Web Workers, run threaded; but user can force single thread if Ctrl is held
@@ -139,25 +132,28 @@ async function runQueryThreaded(query) {
 		setTimeout(() => {
 			console.time("Query");
 
-			let results = [];
-			let workersDone = 0;
+			let workers = {
+				count: query.gliders.length,
+				results: [],
+				done: 0,
+			};
 
 			query.gliders.forEach((glider) => {
 				let arrayWorker = new Worker("./src/worker.js");
-				arrayWorker.postMessage([query, glider]);
+				arrayWorker.postMessage([query, glider, workers.count]);
 				arrayWorker.onmessage = (e) => {
-					results.push(e.data);
-					workersDone++;
-					if (workersDone === query.gliders.length) {
-						const mergedResults = [].concat(...results);
-
+					workers.results.push(e.data);
+					workers.done++;
+					if (workers.done === workers.count) {
+						const mergedResults = [].concat(...workers.results);
 						let count = query.gliders.length;
 						query.parts.forEach((part) => {
 							count = count * part.length;
 						});
 
 						console.timeEnd("Query");
-						console.info(`Searched ${count.toLocaleString()} combinations with ${results.length} thread(s)`);
+						console.info(`Searched ${count.toLocaleString()} combinations with ${workers.count} thread(s)`);
+						console.info(`Showing top ${mergedResults.length} result(s)`);
 						resolve(mergedResults);
 					}
 					arrayWorker.terminate();
@@ -166,6 +162,72 @@ async function runQueryThreaded(query) {
 		}, 0);
 	});
 }
+
+// async function runQueryThreaded(query) {
+// 	return new Promise((resolve) => {
+// 		setTimeout(() => {
+// 			console.time("Query");
+
+// 			let count = query.gliders.length;
+// 			query.parts.forEach((part) => {
+// 				count = count * part.length;
+// 			});
+
+// 			let maxDelta = 9999;
+
+// 			let workers = {
+// 				count: window.navigator.hardwareConcurrency || 4,
+// 				threads: [],
+// 				results: [],
+// 				done: [],
+// 				totalDone: 0,
+// 				maxDeltas: [],
+// 				candidateLimit: Math.round(100 / workers.count),
+// 			};
+
+// 			for (let i = 0; i < workers.count; i++) {
+// 				const worker = new Worker("./src/worker.js");
+// 				worker.onmessage = (e) => {
+// 					workers.results.push(e.data);
+// 					workers.totalDone++;
+// 					if (workers.totalDone === workers.count) {
+// 						const mergedResults = [].concat(...workers.results);
+// 						console.timeEnd("Query");
+// 						console.info(`Searched ${count.toLocaleString()} combinations with ${workers.count} thread(s)`);
+// 						resolve(mergedResults.filter((result) => result.delta != 9999));
+// 					}
+// 					worker.terminate();
+// 				};
+// 				workers.threads.push(worker);
+// 				workers.results.push(null);
+// 				workers.done.push(false);
+// 				workers.maxDeltas.push(maxDelta);
+// 			}
+
+// 			console.log(workers);
+
+// 			let index = 0;
+// 			query.gliders.forEach((glider) => {
+// 				query.parts[0].forEach((propulsor) => {
+// 					query.parts[1].forEach((stabilizer) => {
+// 						query.parts[2].forEach((rudder) => {
+// 							query.parts[3].forEach((hull) => {
+// 								query.parts[4].forEach((intercooler) => {
+// 									query.parts[5].forEach((esc) => {
+// 										if (!workers.done[index % workers.count]) {
+// 											workers.threads[index % workers.count].postMessage([query, workers.count, glider, propulsor, stabilizer, rudder, hull, intercooler, esc]);
+// 										}
+// 										index++;
+// 									});
+// 								});
+// 							});
+// 						});
+// 					});
+// 				});
+// 			});
+// 		}, 0);
+// 	});
+// }
 
 function calculatePartDelta(stat, target) {
 	delta = stat - target;
