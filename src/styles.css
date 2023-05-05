@@ -44,7 +44,7 @@ body {
 	width: 100vw;
 	padding: 0;
 	margin: 0;
-	font-size: clamp(8px, 1.75vw, 16px);
+	font-size: clamp(0.25em, min(2vw, 2.5vh), 1em);
 }
 
 form {
@@ -151,6 +151,7 @@ form {
 .social {
 	grid-area: social;
 	display: flex;
+	gap: 0.5em;
 	justify-content: space-between;
 	align-items: center;
 	overflow: hidden;
@@ -179,7 +180,7 @@ form {
 	overflow-y: hidden;
 	min-width: min-content;
 	display: grid;
-	grid-template-columns: min-content;
+	grid-template-columns: auto;
 	grid-template-rows: min-content auto min-content;
 	grid-template-areas:
 		"query"
@@ -245,11 +246,16 @@ form {
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 1em;
-	gap: 1em;
+	padding: 0.5em;
+	gap: 0.5em;
 	overflow-x: hidden;
 	overflow-y: auto;
+	/* touch-action: pan-y; */
 }
+
+/* .chart-container {
+	touch-action: pan-y;
+} */
 
 .logo {
 	grid-area: logo;

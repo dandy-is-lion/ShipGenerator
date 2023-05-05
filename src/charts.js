@@ -8,22 +8,23 @@ const comparisonColorA = comparisonColor.replace(/rgb/i, "rgba").replace(/\)/i, 
 
 Chart.defaults.borderColor = borderColor;
 Chart.defaults.color = foregroundColor;
-Chart.defaults.responsive = false;
-Chart.defaults.maintainAspectRatio = false;
+Chart.defaults.responsive = true;
+Chart.defaults.maintainAspectRatio = true;
+Chart.defaults.aspectRatio = 1;
 Chart.defaults.plugins.decimation = false;
-Chart.defaults.plugins.legend.display = true;
+Chart.defaults.plugins.legend.display = false;
 
 let dataComparison = [0, 0, 0, 0, 0, 0];
 let dataTarget = getQueryStats();
 
-const chartLabels = ["Durability", "Thrust", "Top Speed", "Stability", "Steer", "Strafe"];
+const chartLabels = ["DUR", "THR", "SPD", "STB", "STR", "STF"];
 
 const chartData = [
 	{
 		label: "Target",
 		data: dataTarget,
 		fill: true,
-		borderWidth: 3,
+		borderWidth: 2,
 		backgroundColor: targetColorA,
 		borderColor: targetColor,
 		pointHitRadius: 25,
@@ -38,7 +39,7 @@ const chartData = [
 		data: dataComparison,
 		fill: true,
 		hidden: true,
-		borderWidth: 3,
+		borderWidth: 2,
 		backgroundColor: comparisonColorA,
 		borderColor: comparisonColor,
 		pointHitRadius: 25,
@@ -81,7 +82,7 @@ let chartRadar = new Chart(ctxRadar, {
 				},
 				onDrag: function (e, datasetIndex, index, value) {
 					if (!(datasetIndex === 0)) return false;
-					if (value < 1 || value > 100) return false;
+					if (value < 0 || value > 100) return false;
 					e.target.style.cursor = "grabbing";
 				},
 				onDragEnd: function (e, datasetIndex, index, value) {
@@ -97,22 +98,20 @@ let chartRadar = new Chart(ctxRadar, {
 		scales: {
 			r: {
 				min: 0,
-				// max: 100,
 				suggestedMax: 75,
 				beginAtZero: true,
 				ticks: {
+					display: !window.mobileCheck(),
 					showLabelBackdrop: true,
 					backdropColor: "rgba(0,0,0,0.2)",
 					z: 0,
 					stepSize: 15,
 				},
 				pointLabels: {
+					display: !window.mobileCheck(),
 					centerPointLabels: false,
-					padding: 0,
-					display: true,
 					font: {
-						weight: 600,
-						size: 11,
+						size: 12,
 					},
 				},
 			},
@@ -127,14 +126,20 @@ let chartBars = new Chart(ctxBars, {
 		datasets: chartData,
 	},
 	options: {
+		indexAxis: "y",
 		scales: {
-			y: {
+			x: {
 				min: 0,
 				suggestedMax: 100,
-				// max: 100,
 				beginAtZero: true,
 				ticks: {
+					display: !window.mobileCheck(),
 					stepSize: 15,
+				},
+			},
+			y: {
+				ticks: {
+					display: !window.mobileCheck(),
 				},
 			},
 		},
@@ -158,7 +163,7 @@ let chartBars = new Chart(ctxBars, {
 					if (!(element === 0)) return false;
 				},
 				onDrag: function (e, datasetIndex, index, value) {
-					if (value < 1 || value > 100) return false;
+					if (value < 0 || value > 100) return false;
 					if (!(datasetIndex === 0)) return false;
 					e.target.style.cursor = "grabbing";
 				},
@@ -168,7 +173,7 @@ let chartBars = new Chart(ctxBars, {
 					chartRadar.update();
 				},
 				magnet: {
-					to: Math.round, // to: (value) => value + 5
+					to: Math.round,
 				},
 			},
 		},

@@ -101,12 +101,12 @@ function resetClick(e) {
 function randomTargets(e) {
 	e.preventDefault();
 	dataTarget = [
-		getRandomInt(1, 50) + getRandomInt(0, 50),
-		getRandomInt(1, 50) + getRandomInt(0, 50),
-		getRandomInt(1, 50) + getRandomInt(0, 50),
-		getRandomInt(1, 50) + getRandomInt(0, 50),
-		getRandomInt(1, 50) + getRandomInt(0, 50),
-		getRandomInt(1, 50) + getRandomInt(0, 50),
+		getRandomInt(0, 50) + getRandomInt(0, 50),
+		getRandomInt(0, 50) + getRandomInt(0, 50),
+		getRandomInt(0, 50) + getRandomInt(0, 50),
+		getRandomInt(0, 50) + getRandomInt(0, 50),
+		getRandomInt(0, 50) + getRandomInt(0, 50),
+		getRandomInt(0, 50) + getRandomInt(0, 50),
 	];
 	input.targets.forEach((_input, _inputIndex) => {
 		_input.value = dataTarget[_inputIndex];
@@ -171,25 +171,29 @@ function rotateTargetsLeft(e) {
 	updateStatCharts(chartBars, 0, dataTarget);
 }
 
-// Change the values of the Comparison data to whatever row's hovered
+// Set Comparison to row hovered
 function rowHover(row) {
 	let stats = getStats(row);
 	updateStatCharts(chartRadar, 1, stats);
 	updateStatCharts(chartBars, 1, stats);
 }
 
+// Set Comparison to row clicked, and Target if ID already selected
 let selectedID;
-// Change the values of the Target data to whatever row's been clicked
 function rowClick(row, e) {
-	selectedID = row.getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML;
 	let stats = getStats(row);
-	dataTarget = stats;
-	input.targets.forEach((_input, _inputIndex) => {
-		_input.value = stats[_inputIndex];
-	});
-	updateStatCharts(chartRadar, 0, stats);
-	updateStatCharts(chartBars, 0, stats);
-	// getData(e);
+	let rowID = row.getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML;
+	updateStatCharts(chartRadar, 1, stats);
+	updateStatCharts(chartBars, 1, stats);
+	if (rowID === selectedID) {
+		dataTarget = stats;
+		input.targets.forEach((_input, _inputIndex) => {
+			_input.value = stats[_inputIndex];
+		});
+		updateStatCharts(chartRadar, 0, stats);
+		updateStatCharts(chartBars, 0, stats);
+	}
+	selectedID = rowID;
 	row.classList.add("results-selected");
 	let siblings = getSiblings(row);
 	for (i = 0; i < siblings.length; i++) {
