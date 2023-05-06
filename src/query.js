@@ -183,6 +183,17 @@ function calculatePartDelta(stat, target) {
 	return delta;
 }
 
+function topSpeed(percentage) {
+	const topSpeedPercentage = Math.max(0, percentage);
+	const topSpeedBounds = getIndexesBound(redoutDB.graphs.top_speed.x, topSpeedPercentage);
+	const topSpeedX = redoutDB.graphs.top_speed.x.slice(...topSpeedBounds);
+	const topSpeedY = redoutDB.graphs.top_speed.y.slice(...topSpeedBounds);
+	const topSpeedXDiff = topSpeedX[1] - topSpeedX[0];
+	const topSpeedYDiff = topSpeedY[1] - topSpeedY[0];
+	const topSpeedDiff = topSpeedPercentage - topSpeedX[0];
+	return Math.round(topSpeedY[0] + (topSpeedYDiff / topSpeedXDiff) * topSpeedDiff);
+}
+
 function parseResults(candidates, query) {
 	// Sort by delta from least to greatest
 	candidates.sort(function (a, b) {
@@ -203,7 +214,11 @@ function parseResults(candidates, query) {
 			} else if (stat < query.stats[statIndex] * 0.9) {
 				statType = "cell-bad";
 			}
-			html += `<td class='results-cell-bottom ${statType}' title='${calculatePartDelta(stat, query.stats[statIndex])}'>${stat}</td>`;
+			let statEstimation = "";
+			if (statIndex === 2) {
+				statEstimation = `\n\n~${topSpeed(candidate.stats[statIndex])} km/h`;
+			}
+			html += `<td class='results-cell-bottom ${statType}' title='${calculatePartDelta(stat, query.stats[statIndex])}${statEstimation}'>${stat}</td>`;
 		});
 		html += "</tr>";
 	});

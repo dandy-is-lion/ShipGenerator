@@ -43,6 +43,17 @@ fetch("./src/data.json")
 		});
 	});
 
+const getIndexesBound = (arr, avg) => {
+	const index = arr.findIndex((num) => avg < num);
+	if (index < 0) {
+		// when index 0 means first element
+		// when index -1, can not find num
+		return "Can not find indexes bound";
+	} else {
+		return [index - 1, index + 1];
+	}
+};
+
 function downloadTable(e) {
 	e.preventDefault();
 	if (lastResults) {
