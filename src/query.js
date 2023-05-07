@@ -35,8 +35,8 @@ async function querySubmit(e, ignoreID = false) {
 		}
 	});
 
-	// If browser supports Web Workers, run threaded; but user can force single thread if Ctrl is held
-	let results = window.Worker ? await runQueryThreaded(query) : await runQuery(query);
+	// If browser supports Web Workers and we're searching for more than one ship, run threaded
+	let results = window.Worker && query.gliders.length > 1 ? await runQueryThreaded(query) : await runQuery(query);
 	if (results) input.table.innerHTML = parseResults(results, query);
 	lastResults = results;
 	lastQuery = query;
@@ -122,7 +122,7 @@ async function runQuery(query) {
 
 			const mergedResults = candidates.filter((_candidate) => _candidate.delta != 9999);
 			console.timeEnd("Query");
-			console.warn(`Searched ${count.toLocaleString()} combinations on a single thread`);
+			console.warn(`Searched ${count.toLocaleString()} combination(s) on a single thread`);
 			if (mergedResults.length === 0) {
 				reject("No results found!");
 			} else {
@@ -160,7 +160,7 @@ async function runQueryThreaded(query) {
 						});
 
 						console.timeEnd("Query");
-						console.info(`Searched ${count.toLocaleString()} combinations with ${workers.count} thread(s)`);
+						console.info(`Searched ${count.toLocaleString()} combination(s) with ${workers.count} thread(s)`);
 						if (mergedResults.length === 0) {
 							reject("No results found!");
 						} else {

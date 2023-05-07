@@ -85,8 +85,7 @@ function downloadTable(e) {
 function targetInputChange(e, i) {
 	if (!e.target.checkValidity()) e.target.value = e.target.defaultValue;
 	dataTarget[i] = e.target.value;
-	updateStatCharts(chartRadar, 0, dataTarget);
-	updateStatCharts(chartBars, 0, dataTarget);
+	updateStatCharts(0, dataTarget);
 }
 
 function selectIDChange(e) {
@@ -97,8 +96,7 @@ function resetClick(e) {
 	e.preventDefault();
 	document.getElementById("form-query").reset();
 	dataTarget = Array.from(input.targets, (target) => target.value);
-	updateStatCharts(chartRadar, 0, dataTarget);
-	updateStatCharts(chartBars, 0, dataTarget);
+	updateStatCharts(0, dataTarget);
 }
 
 function randomTargets(e) {
@@ -114,8 +112,7 @@ function randomTargets(e) {
 	input.targets.forEach((_input, _inputIndex) => {
 		_input.value = dataTarget[_inputIndex];
 	});
-	updateStatCharts(chartRadar, 0, dataTarget);
-	updateStatCharts(chartBars, 0, dataTarget);
+	updateStatCharts(0, dataTarget);
 }
 
 function getRandomInt(min, max) {
@@ -130,8 +127,7 @@ function decreaseTargets(e) {
 		dataTarget[_inputIndex] = Math.round(Math.max(1, dataTarget[_inputIndex] * 0.9));
 		_input.value = dataTarget[_inputIndex];
 	});
-	updateStatCharts(chartRadar, 0, dataTarget);
-	updateStatCharts(chartBars, 0, dataTarget);
+	updateStatCharts(0, dataTarget);
 }
 
 function increaseTargets(e) {
@@ -140,11 +136,11 @@ function increaseTargets(e) {
 		dataTarget[_inputIndex] = Math.round(Math.min(100, dataTarget[_inputIndex] * 1.1));
 		_input.value = dataTarget[_inputIndex];
 	});
-	updateStatCharts(chartRadar, 0, dataTarget);
-	updateStatCharts(chartBars, 0, dataTarget);
+	updateStatCharts(0, dataTarget);
 }
 
 function rotateTargetsRight(e) {
+	e.preventDefault();
 	let newTargets = new Array(6);
 	input.targets.forEach((_input, _inputIndex) => {
 		if (_inputIndex === 0) {
@@ -155,11 +151,11 @@ function rotateTargetsRight(e) {
 		_input.value = newTargets[_inputIndex];
 	});
 	dataTarget = newTargets;
-	updateStatCharts(chartRadar, 0, dataTarget);
-	updateStatCharts(chartBars, 0, dataTarget);
+	updateStatCharts(0, dataTarget);
 }
 
 function rotateTargetsLeft(e) {
+	e.preventDefault();
 	let newTargets = new Array(6);
 	input.targets.forEach((_input, _inputIndex) => {
 		if (_inputIndex === input.targets.length - 1) {
@@ -170,32 +166,29 @@ function rotateTargetsLeft(e) {
 		_input.value = newTargets[_inputIndex];
 	});
 	dataTarget = newTargets;
-	updateStatCharts(chartRadar, 0, dataTarget);
-	updateStatCharts(chartBars, 0, dataTarget);
+	updateStatCharts(0, dataTarget);
 }
 
 // Set Comparison to row hovered
 function rowHover(row) {
 	let stats = getStats(row);
 	let rowID = row.getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML;
-	updateStatCharts(chartRadar, 1, stats, rowID);
-	updateStatCharts(chartBars, 1, stats, rowID);
+	updateStatCharts(1, stats, rowID);
 }
 
 // Set Comparison to row clicked, and Target if ID already selected
 let selectedID;
 function rowClick(row, e) {
+	e.preventDefault();
 	let stats = getStats(row);
 	let rowID = row.getElementsByTagName("td")[0].getElementsByTagName("span")[0].innerHTML;
-	updateStatCharts(chartRadar, 1, stats, rowID);
-	updateStatCharts(chartBars, 1, stats, rowID);
+	updateStatCharts(1, stats, rowID);
 	if (rowID === selectedID) {
 		dataTarget = stats;
 		input.targets.forEach((_input, _inputIndex) => {
 			_input.value = stats[_inputIndex];
 		});
-		updateStatCharts(chartRadar, 0, stats, rowID);
-		updateStatCharts(chartBars, 0, stats, rowID);
+		updateStatCharts(0, stats, rowID);
 		navigator.clipboard.writeText(rowID);
 		querySubmit(null, true);
 	}
@@ -240,9 +233,13 @@ function getColumn(row, cell) {
 	return Math.max(0, row.getElementsByTagName("td")[cell].innerHTML);
 }
 
-function updateStatCharts(chart, dataset, data, label = "Query") {
-	chart.data.datasets[dataset].data = data;
-	chart.data.datasets[dataset].label = label;
-	chart.data.datasets[dataset].hidden = false;
-	chart.update();
+function updateStatCharts(dataset, data, label = "Query") {
+	chartRadar.data.datasets[dataset].data = data;
+	chartRadar.data.datasets[dataset].label = label;
+	chartRadar.data.datasets[dataset].hidden = false;
+	chartBars.data.datasets[dataset].data = data;
+	chartBars.data.datasets[dataset].label = label;
+	chartBars.data.datasets[dataset].hidden = false;
+	chartRadar.update();
+	chartBars.update();
 }
