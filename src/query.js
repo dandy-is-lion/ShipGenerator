@@ -1,8 +1,8 @@
 let lastResults;
 let lastQuery;
 
-async function querySubmit(e) {
-	e.preventDefault();
+async function querySubmit(e, ignoreID = false) {
+	if (e) e.preventDefault();
 	input.buttons.query.disabled = true;
 	input.buttons.query.innerHTML = '<i class="fa-solid fa-cog fa-spin fa-fw"></i>';
 
@@ -15,7 +15,7 @@ async function querySubmit(e) {
 	};
 
 	query.id.forEach((id) => {
-		if (id) {
+		if (id && !ignoreID) {
 			if (id.length === 6 && [...id].every((idChar) => partCode.includes(idChar.toUpperCase()) || idChar.toUpperCase() === "X")) {
 				// Looks like an ID, set query parts accordingly and ignore score range
 				query.scores = [0, 1200];
