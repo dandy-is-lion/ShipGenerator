@@ -12,16 +12,16 @@ Chart.defaults.responsive = true;
 Chart.defaults.maintainAspectRatio = true;
 Chart.defaults.aspectRatio = 1;
 Chart.defaults.plugins.decimation = false;
-Chart.defaults.plugins.legend.display = false;
+Chart.defaults.plugins.legend.display = !window.mobileCheck();
 
 let dataComparison = [0, 0, 0, 0, 0, 0];
-let dataTarget = getQueryStats();
+let dataTarget = Array.from(input.targets, (target) => target.value);
 
 const chartLabels = ["DUR", "THR", "SPD", "STB", "STR", "STF"];
 
 const chartData = [
 	{
-		label: "Target",
+		label: "Query",
 		data: dataTarget,
 		fill: true,
 		borderWidth: 2,
@@ -88,6 +88,8 @@ let chartRadar = new Chart(ctxRadar, {
 				onDragEnd: function (e, datasetIndex, index, value) {
 					input.targets[index].value = value;
 					dataTarget[index] = value;
+					chartData[datasetIndex].label = "Query";
+					chartRadar.update();
 					chartBars.update();
 				},
 				magnet: {
@@ -170,7 +172,9 @@ let chartBars = new Chart(ctxBars, {
 				onDragEnd: function (e, datasetIndex, index, value) {
 					input.targets[index].value = value;
 					dataTarget[index] = value;
+					chartData[datasetIndex].label = "Query";
 					chartRadar.update();
+					chartBars.update();
 				},
 				magnet: {
 					to: Math.round,
