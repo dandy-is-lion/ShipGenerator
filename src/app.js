@@ -196,6 +196,7 @@ function rowClick(row, e) {
 		});
 		updateStatCharts(chartRadar, 0, stats, rowID);
 		updateStatCharts(chartBars, 0, stats, rowID);
+		navigator.clipboard.writeText(rowID);
 		querySubmit(null, true);
 	}
 	selectedID = rowID;
