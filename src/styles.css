@@ -17,7 +17,7 @@
 	--bad-color-shadow: rgba(229, 43, 80, 0.5);
 	--border-width: 2px;
 	--anti-border: -2px;
-	--transition: background-color 400ms ease,  color 400ms ease, opacity 400ms ease, text-shadow 400ms ease;
+	--transition: background-color 400ms ease,  color 400ms ease, opacity 400ms ease, text-shadow 400ms ease, background 400ms ease, border-bottom 400ms ease;
 }
 
 * {
