@@ -1,906 +1,903 @@
 {
-	"graphs": {
-		"top_speed": {
-			"x": [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105],
-			"y": [899, 916, 933, 946, 951, 969, 996, 1029, 1068, 1107, 1146, 1177, 1191, 1202, 1212, 1222, 1228, 1235, 1239, 1244, 1248, 1248]
-		}
-	},
-	"gliders": [
-		{
-			"name": "Lunare Scuderia",
-			"nick": "Lunare",
-			"code": "LUN",
-			"desc": "A sporty platform with excellent performance for building a strong Engine.",
-			"score": 184,
-			"stats": [5, 8, 12, 8, 20, 8]
-		},
-		{
-			"name": "Conqueror",
-			"nick": "Conq",
-			"code": "CNQ",
-			"desc": "Raw power and strong strafing. A stubborn-handling ship that can take a hit.",
-			"score": 184,
-			"stats": [10, 8, 17, 2, 0, 17]
-		},
-		{
-			"name": "Helix",
-			"nick": "Helix",
-			"code": "HEL",
-			"desc": "A competitive engine package with solid driveability.",
-			"score": 184,
-			"stats": [8, 12, 12, 10, 8, 5]
-		},
-		{
-			"name": "Asera",
-			"nick": "Asera",
-			"code": "ASE",
-			"desc": "'I AM AN ALIEN'. Asera ships boost like no other.",
-			"score": 184,
-			"stats": [12, 20, 5, 8, 2, 10]
-		},
-		{
-			"name": "ESA-AGR",
-			"nick": "ESA",
-			"code": "ESA",
-			"desc": "It's all about balance. A true jack of all trades.",
-			"score": 184,
-			"stats": [10, 10, 10, 10, 10, 10]
-		},
-		{
-			"name": "Wallace-RG",
-			"nick": "Wallace",
-			"code": "WRG",
-			"desc": "A thoroughbred racing machine at its core, WALLACE-RG ships handle like no other.",
-			"score": 184,
-			"stats": [10, 5, 10, 10, 20, 8]
-		},
-		{
-			"name": "Sulha",
-			"nick": "Sulha",
-			"code": "SUL",
-			"desc": "Fearsome engine capabilities and a bare-bones chassis. A true glass cannon.",
-			"score": 184,
-			"stats": [2, 15, 20, 2, 2, 5]
-		},
-		{
-			"name": "Mantis",
-			"nick": "Mantis",
-			"code": "MAN",
-			"desc": "A mean engine that stays agile but has subpar durability.",
-			"score": 184,
-			"stats": [5, 17, 10, 8, 10, 5]
-		},
-		{
-			"name": "Akhal-Tech",
-			"nick": "Akhal",
-			"code": "AKT",
-			"desc": "A fragile but stable ship that sure goes fast!",
-			"score": 184,
-			"stats": [0, 5, 20, 20, 8, 5]
-		},
-		{
-			"name": "Koeniggswerth",
-			"nick": "Koen",
-			"code": "KGW",
-			"desc": "The OG masters of the tank, a really stable platform.",
-			"score": 184,
-			"stats": [15, 5, 5, 20, 10, 15]
-		},
-		{
-			"name": "Behemoth",
-			"nick": "Bmoth",
-			"code": "BEH",
-			"desc": "The tank among tanks, made on Io to weather any condition.",
-			"score": 184,
-			"stats": [20, 10, 8, 2, 2, 17]
-		},
-		{
-			"name": "Buran",
-			"nick": "Buran",
-			"code": "BRN",
-			"desc": "Sturdy, with strong Thrust, and rapid up-to-speed times, but low in driveability.",
-			"score": 184,
-			"stats": [20, 15, 5, 5, 5, 8]
-		}
-	],
-	"parts": [
-		{
-			"type": "propulsor",
-			"details": [
-				{
-					"name": "BASE",
-					"code": "OCT",
-					"desc": "Upgrading your Propulsor will increase your maximum speed while also boosting power and acceleration.",
-					"score": 0,
-					"stats": [0, 0, 0, 0, 0, 0],
-					"class": "C"
-				},
-				{
-					"name": "8-TA",
-					"code": "8-TA",
-					"desc": "The OCTONIC 8-TA, the step-in Propulsor model.",
-					"score": 24,
-					"stats": [0, 0, 5, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "Draper v1",
-					"code": "IDV1",
-					"desc": "Icaro prefers to go all-in on Top Speed where they can.",
-					"score": 48,
-					"stats": [0, 0, 10, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "F460",
-					"code": "F460",
-					"desc": "Ferox Propulsors grant not only Top Speed, but also acceleration and Boost power.",
-					"score": 66,
-					"stats": [0, 7, 7, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "8-TE",
-					"code": "8-TE",
-					"desc": "OCTONIC provides the classic Propulsor experience. Good Top Speed and decent Thrust.",
-					"score": 102,
-					"stats": [0, 7, 15, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "Breda v1",
-					"code": "IBV1",
-					"desc": "The new Breda model from Icaro now provides a minimal Thrust enhancement.",
-					"score": 106,
-					"stats": [0, 2, 20, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "Draper v2",
-					"code": "IDV2",
-					"desc": "The Draper v2 leaves nothing on the table when it comes to Top Speed in A-Class!",
-					"score": 144,
-					"stats": [0, 0, 30, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "F570",
-					"code": "F570",
-					"desc": "The F570 provides the most balanced Propulsor platform in Class A.",
-					"score": 148,
-					"stats": [0, 10, 22, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "8-TI",
-					"code": "8-TI",
-					"desc": "The 8-TI is the benchmark Class S Propulsor, balanced all-around.",
-					"score": 228,
-					"stats": [0, 15, 35, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "Breda v2",
-					"code": "IBV2",
-					"desc": "Icaro's Breda v2 model is the ultimate Top Speed Propulsor of its class. To the stars and beyond!",
-					"score": 226,
-					"stats": [0, 2, 45, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "F690",
-					"code": "F690",
-					"desc": "Ferox's F690 is their best-balanced Propulsor, maximizing both ship stats!",
-					"score": 224,
-					"stats": [0, 20, 30, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "Signature Sulha",
-					"code": "PSSU",
-					"desc": "The embodiment of Sulha's philosophy of going fast, avoiding walls, and overheating easily.",
-					"score": 237,
-					"stats": [-15, 12, 50, 0, 0, -2],
-					"class": "X"
-				},
-				{
-					"name": "Signature Mantis",
-					"code": "PSBU",
-					"desc": "The custom Mantis Propulsor provides the most balanced Propulsor of its class.",
-					"score": 237,
-					"stats": [-2, 25, 35, 0, 0, -18],
-					"class": "X"
-				},
-				{
-					"name": "Signature Lunare",
-					"code": "PSLN",
-					"desc": "Fragile and light, but with mighty Top Speed & Thrust bite. A-la Lunare glass cannon.",
-					"score": 238,
-					"stats": [-12, 20, 55, 0, 0, -15],
-					"class": "X"
-				},
-				{
-					"name": "Signature Conqueror",
-					"code": "PSCO",
-					"desc": "An all or nothing Propulsor by Conqueror. Lots of Thrust is for chumps!",
-					"score": 237,
-					"stats": [-10, 5, 55, 0, 0, -7],
-					"class": "X"
-				}
-			]
-		},
-		{
-			"type": "stabilizer",
-			"details": [
-				{
-					"name": "BASE",
-					"code": "MGA",
-					"desc": "Stabilizers increase steering and magnetic grip.",
-					"score": 0,
-					"stats": [0, 0, 0, 0, 0, 0],
-					"class": "C"
-				},
-				{
-					"name": "Alfa55",
-					"code": "AL55",
-					"desc": "Stability means grip, and you'll find the pinnacle of Stability in Magna products.",
-					"score": 10,
-					"stats": [0, 0, 0, 5, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "Beta55",
-					"code": "BE55",
-					"desc": "The Beta55, a tuned version of Alfa55. Provides twice the grip.",
-					"score": 20,
-					"stats": [0, 0, 0, 10, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "Alto",
-					"code": "ALTO",
-					"desc": "The best balance of Stability & Steering can be found in Airbender products.",
-					"score": 22,
-					"stats": [0, 0, 0, 5, 5, 0],
-					"class": "B"
-				},
-				{
-					"name": "Rigel",
-					"code": "RIGL",
-					"desc": "Orion Stabilizers are the benchmark Stabilizers. Good grip without sacrificing much Steering.",
-					"score": 32,
-					"stats": [0, 0, 0, 10, 5, 0],
-					"class": "B"
-				},
-				{
-					"name": "Cirrus",
-					"code": "CIRR",
-					"desc": "The Cirrus is the step-in Class A Stabilizer model. A definite upgrade from everything Class B.",
-					"score": 54,
-					"stats": [0, 0, 0, 15, 10, 0],
-					"class": "A"
-				},
-				{
-					"name": "Bellatrix",
-					"code": "BLLX",
-					"desc": "The Orion Bellatrix is Orion's benchmark Class A Stabilizer. Solid performance in both stats.",
-					"score": 52,
-					"stats": [0, 0, 0, 20, 5, 0],
-					"class": "A"
-				},
-				{
-					"name": "Gamma60",
-					"code": "GA60",
-					"desc": "With the Gamma60, Magna provides the ultimate grip in its class.",
-					"score": 60,
-					"stats": [0, 0, 0, 30, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "Mintaka",
-					"code": "MTKA",
-					"desc": "The Mintaka is an upgraded version of the Bellatrix. Now with grip that rivals Magna!",
-					"score": 62,
-					"stats": [0, 0, 0, 25, 5, 0],
-					"class": "A"
-				},
-				{
-					"name": "Cumulus",
-					"code": "CUMU",
-					"desc": "The Cumulus is an upgraded Cirrus. The fluxcoil design got adjusted to provide a boost in steering.",
-					"score": 66,
-					"stats": [0, 0, 0, 15, 15, 0],
-					"class": "A"
-				},
-				{
-					"name": "Storm",
-					"code": "STRM",
-					"desc": "The Airbender Storm provides the ultimate balanced between Stability and Steering!",
-					"score": 110,
-					"stats": [0, 0, 0, 25, 25, 0],
-					"class": "S"
-				},
-				{
-					"name": "Betelgeuse",
-					"code": "BTLG",
-					"desc": "The Betelgeuse is Orion's answer to 'perfection.' Great Stability and Steering all in one package!",
-					"score": 106,
-					"stats": [0, 0, 0, 35, 15, 0],
-					"class": "S"
-				},
-				{
-					"name": "Zeta70",
-					"code": "ZE70",
-					"desc": "Unparalleled Stability with the pinnacle product from Magna: the Magna Zeta70.",
-					"score": 102,
-					"stats": [0, 0, 0, 45, 5, 0],
-					"class": "S"
-				},
-				{
-					"name": "Signature Wallace",
-					"code": "SSWR",
-					"desc": "All of WRC's ship control knowledge poured into one package. Unparalleled performance.",
-					"score": 121,
-					"stats": [0, -5, -5, 52, 25, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature Helix",
-					"code": "SSHE",
-					"desc": "Helix has kept deficits as low as possible. Providing massive performance without much sacrifice.",
-					"score": 120,
-					"stats": [0, -2, -2, 50, 18, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature ESA-AGR",
-					"code": "SSES",
-					"desc": "'Perfectly balanced, as all things should be.' The mantra ESA-AGR goes by. No exceptions.",
-					"score": 122,
-					"stats": [0, 0, -10, 40, 22, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature Buran",
-					"code": "SSBR",
-					"desc": "With this Stabilizer, Buran seeks to offer the best grip without sacrificing Top Speed.",
-					"score": 118,
-					"stats": [0, -10, 0, 55, 20, 0],
-					"class": "X"
-				}
-			]
-		},
-		{
-			"type": "rudder",
-			"details": [
-				{
-					"name": "BASE",
-					"code": "OKS",
-					"desc": "Rudders control steering and strafing.",
-					"score": 0,
-					"stats": [0, 0, 0, 0, 0, 0],
-					"class": "C"
-				},
-				{
-					"name": "Castellanus",
-					"code": "CAST",
-					"desc": "Airbender's oldest Rudder model. Before Strafe upgrades on Rudders.",
-					"score": 18,
-					"stats": [0, 0, 0, 0, 7, 0],
-					"class": "B"
-				},
-				{
-					"name": "Svelto X",
-					"code": "SVTX",
-					"desc": "Nimblelab's Rudders strives to provide the best balance between Steering and Strafing.",
-					"score": 23,
-					"stats": [0, 0, 0, 0, 7, 2],
-					"class": "B"
-				},
-				{
-					"name": "Lovelock",
-					"code": "LVLK",
-					"desc": "Plagiarized from Nimblelab's Svelto X? Maybe, but Oikos squeezed out a bit more Steering performance.",
-					"score": 29,
-					"stats": [0, 0, 0, 0, 10, 2],
-					"class": "B"
-				},
-				{
-					"name": "Stratus",
-					"code": "STRA",
-					"desc": "Airbender lives by POWER Steering in their Rudder products. It's Steer or bust.",
-					"score": 30,
-					"stats": [0, 0, 0, 0, 12, 0],
-					"class": "B"
-				},
-				{
-					"name": "Svelto K",
-					"code": "SVTK",
-					"desc": "The Svelto K has the perfect stat balance for entering a new classification.",
-					"score": 44,
-					"stats": [0, 0, 0, 0, 10, 10],
-					"class": "A"
-				},
-				{
-					"name": "Darwin",
-					"code": "DRWN",
-					"desc": "A supercharged Class-B Lovelock. Steering power is almost doubled, good enough for Class-A.",
-					"score": 47,
-					"stats": [0, 0, 0, 0, 18, 2],
-					"class": "A"
-				},
-				{
-					"name": "Nimbus",
-					"code": "NIMB",
-					"desc": "Another prime example of Airbenders' commitment to Steering prowess.",
-					"score": 54,
-					"stats": [0, 0, 0, 0, 22, 0],
-					"class": "A"
-				},
-				{
-					"name": "Harper",
-					"code": "HRPR",
-					"desc": "Unlike the Nimbus, the Harper has a little bit of Strafe power.",
-					"score": 64,
-					"stats": [0, 0, 0, 0, 22, 5],
-					"class": "A"
-				},
-				{
-					"name": "Tornado",
-					"code": "TORN",
-					"desc": "The Tornado, Airbender's answer to Oikos, has best-in-class Steering.",
-					"score": 65,
-					"stats": [0, 0, 0, 0, 25, 2],
-					"class": "A"
-				},
-				{
-					"name": "Svelto Y",
-					"code": "SVLY",
-					"desc": "The Svelto Y, Nimblelab's best attempt at merging Steering & Strafing into one.",
-					"score": 111,
-					"stats": [0, 0, 0, 0, 28, 22],
-					"class": "S"
-				},
-				{
-					"name": "Tansley",
-					"code": "TSLY",
-					"desc": "The benchmark Rudder for Class S. Great stat distribution with focus on Steering.",
-					"score": 109,
-					"stats": [0, 0, 0, 0, 35, 12],
-					"class": "S"
-				},
-				{
-					"name": "Hurricane",
-					"code": "HURR",
-					"desc": "Nothing is left to chance. Full 'PLUS ULTRA' in the Steering department!",
-					"score": 108,
-					"stats": [0, 0, 0, 0, 45, 0],
-					"class": "S"
-				},
-				{
-					"name": "Signature Wallace",
-					"code": "RSWR",
-					"desc": "By sacrificing Durability, WRC pulls the ultimate Steering & Strafing power out of their Rudder.",
-					"score": 119,
-					"stats": [-15, 0, 0, -8, 55, 25],
-					"class": "X"
-				},
-				{
-					"name": "Signature Lunare",
-					"code": "RSLU",
-					"desc": "The Lunare Rudder strives for the best Steer/Strafe stats while sacrificing as little as possible.",
-					"score": 119,
-					"stats": [-8, 0, 0, -2, 45, 20],
-					"class": "X"
-				},
-				{
-					"name": "Signature Behemoth",
-					"code": "RSBE",
-					"desc": "Behemoth's answer to ESA's Rudder. No strafing power, but less stat sacrifice overall.",
-					"score": 122,
-					"stats": [-2, 0, 0, -2, 50, 7],
-					"class": "X"
-				},
-				{
-					"name": "Signature ESA-AGR",
-					"code": "RSES",
-					"desc": "ESA-AGR again strives for best stat balance distribution, but had to sacrifice Stability.",
-					"score": 121,
-					"stats": [0, 0, 0, -12, 40, 25],
-					"class": "X"
-				}
-			]
-		},
-		{
-			"type": "hull",
-			"details": [
-				{
-					"name": "BASE",
-					"code": "QIQ",
-					"desc": "Stronger and lighter Hulls incrase max speed, damage resistance, and Heat dissipation.",
-					"score": 0,
-					"stats": [0, 0, 0, 0, 0, 0],
-					"class": "C"
-				},
-				{
-					"name": "Lìng",
-					"code": "LÌNG",
-					"desc": "Durability means impact resistance, but also Heat dissipation, and QiQi know that very well.",
-					"score": 16,
-					"stats": [5, 0, 0, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "45P15",
-					"code": "45P1",
-					"desc": "Armoden Hulls provide unparalleled Durability compared to competitors.",
-					"score": 32,
-					"stats": [10, 0, 0, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "8-TM",
-					"code": "8-TM",
-					"desc": "OCTONIC Hulls focus on attaining the best balance between Top Speed and Durability.",
-					"score": 48,
-					"stats": [7, 0, 5, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "Yi",
-					"code": "YI",
-					"desc": "The benchmark Class A Hull provided by QiQi. Good Durability coupled with decent Top Speed power.",
-					"score": 72,
-					"stats": [15, 0, 5, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "8-TN",
-					"code": "8-TN",
-					"desc": "A perfected 8-TM. The 8-TN has flawless stat balance vs. base model.",
-					"score": 80,
-					"stats": [10, 0, 10, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "P4RM4",
-					"code": "P4RM",
-					"desc": "Looking for the best Durability in its class? Look no further than the P4RM4.",
-					"score": 104,
-					"stats": [25, 0, 5, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "Èr",
-					"code": "ÈR",
-					"desc": "The top-shelf Class A Hull by QiQi. Solid Durability coupled with good Top Speed.",
-					"score": 112,
-					"stats": [20, 0, 10, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "8-TW",
-					"code": "8-TW",
-					"desc": "Lightweight materials and superb aerodynamics give the 8-TW outstanding Top Speed capabilities.",
-					"score": 152,
-					"stats": [25, 0, 15, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "Sàn",
-					"code": "SÀN",
-					"desc": "QiQi spared nothing to set the bar for Class S Hulls with the Sàn.",
-					"score": 156,
-					"stats": [38, 0, 7, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "8UCKL3R",
-					"code": "8UCK",
-					"desc": "Putting the 'T' in Tank. When you are afraid of taking damage. Arm yourself with a 8UCKL3R!",
-					"score": 156,
-					"stats": [45, 0, 2, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "Signature Koeniggswerth",
-					"code": "HSKO",
-					"desc": "Complete protection as expected from the armor pioneers at Koeniggswerth!",
-					"score": 182,
-					"stats": [55, 0, 0, 0, -8, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature Akhal-Tech",
-					"code": "HSAK",
-					"desc": "This beauty by AKHAL is the best mid-range Hull in its class.",
-					"score": 176,
-					"stats": [42, -5, 20, 0, -15, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature Buran",
-					"code": "HSBU",
-					"desc": "The lightest materials guarantee the best Top Speed. Worst-in-class Durability though.",
-					"score": 176,
-					"stats": [38, -10, 25, 0, -10, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature Behemoth",
-					"code": "HSBE",
-					"desc": "Behemoth is new in the Durability market. They built this Hull as an alternative to Koeniggswerth.",
-					"score": 180,
-					"stats": [48, -5, 6, 0, 0, 0],
-					"class": "X"
-				}
-			]
-		},
-		{
-			"type": "intercooler",
-			"details": [
-				{
-					"name": "BASE",
-					"code": "TLC",
-					"desc": "Intercoolers dissipate Heat and improve Boost power.",
-					"score": 0,
-					"stats": [0, 0, 0, 0, 0, 0],
-					"class": "C"
-				},
-				{
-					"name": "F850",
-					"code": "F850",
-					"desc": "The F850 is the step-in Intercooler model for Class B ships.",
-					"score": 20,
-					"stats": [0, 5, 0, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "70W3R",
-					"code": "70W3",
-					"desc": "Armoden Intercoolers balance Thrust with good Durability.",
-					"score": 36,
-					"stats": [5, 5, 0, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "Uriel",
-					"code": "TLUR",
-					"desc": "ThrustLance Intercoolers invest heavily in Thrust. You want pure acceleration? Look no further.",
-					"score": 40,
-					"stats": [0, 10, 0, 0, 0, 0],
-					"class": "B"
-				},
-				{
-					"name": "Gabriel",
-					"code": "TLGA",
-					"desc": "The Gabriel sets the bar for the Intercoolers in Class A.",
-					"score": 70,
-					"stats": [0, 18, 0, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "F880",
-					"code": "F880",
-					"desc": "The F880 is the 'new normal' for Class A Intercoolers. Outpacing the older Gabriel model.",
-					"score": 96,
-					"stats": [5, 20, 0, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "K33P",
-					"code": "K33P",
-					"desc": "Another case of perfect Intercooler stat balance, achieved by Armoden.",
-					"score": 108,
-					"stats": [15, 15, 0, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "F980",
-					"code": "F980",
-					"desc": "The F980 is the improved F880 model by Ferox. Increasing its Thrust performance.",
-					"score": 116,
-					"stats": [5, 25, 0, 0, 0, 0],
-					"class": "A"
-				},
-				{
-					"name": "C457L3",
-					"code": "C457",
-					"desc": "The C457L3 is as close to perfect stat balance as Armoden could hustle for Class S.",
-					"score": 164,
-					"stats": [20, 25, 0, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "Michael",
-					"code": "TLMI",
-					"desc": "Thrust or bust. The ThrustLance Michael.",
-					"score": 170,
-					"stats": [0, 42, 0, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "F990",
-					"code": "F990",
-					"desc": "With the F990, Ferox achieves a masterful balance between great Thrust and good Durability.",
-					"score": 168,
-					"stats": [15, 30, 0, 0, 0, 0],
-					"class": "S"
-				},
-				{
-					"name": "Signature Behemoth",
-					"code": "ISBE",
-					"desc": "'A massive kick in the neck when you hit the gas' is Behemoth's tagline for this module.",
-					"score": 190,
-					"stats": [25, 50, -20, -15, 0, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature ESA-AGR",
-					"code": "ISES",
-					"desc": "ESA has achieved the perfect stat balance with minimal sacrifice. Good for jack-of-all-trades builds.",
-					"score": 189,
-					"stats": [18, 38, -2, -2, 0, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature Koeniggswerth",
-					"code": "ISKO",
-					"desc": "Great Thrust and good Durability with minimal sacrifice. The benchmark intercooler.",
-					"score": 189,
-					"stats": [22, 48, -12, -12, 0, 0],
-					"class": "X"
-				},
-				{
-					"name": "Signature Buran",
-					"code": "ISBU",
-					"desc": "Buran resorts again to lightweight materials. Achieves great Thrust, but has to let go of Durability.",
-					"score": 184,
-					"stats": [5, 55, -2, -20, 0, 0],
-					"class": "X"
-				}
-			]
-		},
-		{
-			"type": "esc",
-			"details": [
-				{
-					"name": "BASE",
-					"code": "NBL",
-					"desc": "The Electronic Stability Control influences grip and strafing.",
-					"score": 0,
-					"stats": [0, 0, 0, 0, 0, 0],
-					"class": "C"
-				},
-				{
-					"name": "Tengu",
-					"code": "TENGU",
-					"desc": "The Tengu is the baseline E.S.C. module by Gozu.",
-					"score": 15,
-					"stats": [0, 0, 0, 3, 0, 5],
-					"class": "B"
-				},
-				{
-					"name": "Nue",
-					"code": "NUE",
-					"desc": "The Goza Nue is a slight upgrade over its Tengu predecessor.",
-					"score": 20,
-					"stats": [0, 0, 0, 3, 0, 8],
-					"class": "B"
-				},
-				{
-					"name": "Theta60",
-					"code": "TH60",
-					"desc": "Magna E.S.Cs tend to be quite balanced in their stats. Good for balanced build seekers.",
-					"score": 25,
-					"stats": [0, 0, 0, 5, 0, 8],
-					"class": "B"
-				},
-				{
-					"name": "AgileZ",
-					"code": "AGIZ",
-					"desc": "The AgileZ is the first in Nimblelabs quest for total Strafe performance.",
-					"score": 30,
-					"stats": [0, 0, 0, 3, 0, 12],
-					"class": "B"
-				},
-				{
-					"name": "AgileX",
-					"code": "AGIX",
-					"desc": "Nimblelab held nothing back with this class-A E.S.C. Strafing in its purest form.",
-					"score": 40,
-					"stats": [0, 0, 0, 0, 0, 20],
-					"class": "A"
-				},
-				{
-					"name": "Eta61",
-					"code": "ET61",
-					"desc": "The benchmark class-A E.S.C. module by Magna. Provides solid stats on both ends.",
-					"score": 40,
-					"stats": [0, 0, 0, 8, 0, 12],
-					"class": "A"
-				},
-				{
-					"name": "AgileK",
-					"code": "AGIK",
-					"desc": "The AgileK provides ultimate-in-class Strafing prowess, whilst still keeping a pip of Stability!",
-					"score": 55,
-					"stats": [0, 0, 0, 3, 0, 25],
-					"class": "A"
-				},
-				{
-					"name": "Oni",
-					"code": "ONI",
-					"desc": "A solid alternative to the AgileK. Slightly less Strafing power but more Stability.",
-					"score": 55,
-					"stats": [0, 0, 0, 5, 0, 22],
-					"class": "A"
-				},
-				{
-					"name": "Sigma69",
-					"code": "SG69",
-					"desc": "Magna's best class-A work. The Sigma69 combines great Strafing with solid Grip. Nice!",
-					"score": 55,
-					"stats": [0, 0, 0, 10, 0, 18],
-					"class": "A"
-				},
-				{
-					"name": "Phi70",
-					"code": "PI70",
-					"desc": "The Phi70 is a modified Sigma69. Maximized Strafe potential and Stability that's... stable.",
-					"score": 80,
-					"stats": [0, 0, 0, 10, 0, 30],
-					"class": "S"
-				},
-				{
-					"name": "Ryuu",
-					"code": "RYUU",
-					"desc": "The ultimate E.S.C. module by Gozu. Maximizes Strafing while holding on to a bit of Stability.",
-					"score": 85,
-					"stats": [0, 0, 0, 5, 0, 38],
-					"class": "S"
-				},
-				{
-					"name": "AgileY",
-					"code": "AGIY",
-					"desc": "Zigzag like a snake. With the AgileY, this won't be a problem!",
-					"score": 90,
-					"stats": [0, 0, 0, 0, 0, 45],
-					"class": "S"
-				},
-				{
-					"name": "Signature Lunare",
-					"code": "ESLU",
-					"desc": "Lunare made minimal stat sacrifices to get this mix of Stability/Strafing power.",
-					"score": 96,
-					"stats": [-7, 0, -2, 15, 0, 45],
-					"class": "X"
-				},
-				{
-					"name": "Signature Koeniggswerth",
-					"code": "ESKO",
-					"desc": "No Durability compromise. Top Speed takes a hit, other stats remain strong. A competitive package.",
-					"score": 99,
-					"stats": [0, 0, -10, 12, 0, 55],
-					"class": "X"
-				},
-				{
-					"name": "Signature Mantis",
-					"code": "ESMA",
-					"desc": "A minimal sacrifice of Top Speed to maximize everything else. That was Mantis's vision.",
-					"score": 95,
-					"stats": [-15, 0, -2, 25, 0, 52],
-					"class": "X"
-				},
-				{
-					"name": "Signature Asera",
-					"code": "ESAS",
-					"desc": "Maximized Strafing & Stability while balancing out the disadvantages.",
-					"score": 97,
-					"stats": [-7, 0, -7, 25, 0, 48],
-					"class": "X"
-				}
-			]
-		}
-	]
+  "graphs": {
+    "speed": [900, 908, 917, 926, 934, 941, 947, 950, 952, 959, 969, 981, 996, 1013, 1031, 1049, 1069, 1088, 1108, 1127, 1145, 1162, 1178, 1185, 1191, 1198, 1203, 1208, 1213, 1218, 1222, 1226, 1229, 1233, 1236, 1238, 1241, 1243, 1245, 1246, 1248]
+  },
+  "gliders": [
+    {
+      "name": "Lunare Scuderia",
+      "nick": "Lunare",
+      "code": "LUN",
+      "desc": "A sporty platform with excellent performance for building a strong Engine.",
+      "score": 184,
+      "stats": [2, 3, 5, 3, 8, 3]
+    },
+    {
+      "name": "Conqueror",
+      "nick": "Conq",
+      "code": "CNQ",
+      "desc": "Raw power and strong strafing. A stubborn-handling ship that can take a hit.",
+      "score": 184,
+      "stats": [4, 3, 7, 1, 0, 7]
+    },
+    {
+      "name": "Helix",
+      "nick": "Helix",
+      "code": "HEL",
+      "desc": "A competitive engine package with solid driveability.",
+      "score": 184,
+      "stats": [3, 5, 5, 4, 3, 2]
+    },
+    {
+      "name": "Asera",
+      "nick": "Asera",
+      "code": "ASE",
+      "desc": "'I AM AN ALIEN'. Asera ships boost like no other.",
+      "score": 184,
+      "stats": [5, 8, 2, 3, 1, 4]
+    },
+    {
+      "name": "ESA-AGR",
+      "nick": "ESA",
+      "code": "ESA",
+      "desc": "It's all about balance. A true jack of all trades.",
+      "score": 184,
+      "stats": [4, 4, 4, 4, 4, 4]
+    },
+    {
+      "name": "Wallace-RG",
+      "nick": "Wallace",
+      "code": "WRG",
+      "desc": "A thoroughbred racing machine at its core, WALLACE-RG ships handle like no other.",
+      "score": 184,
+      "stats": [4, 2, 4, 4, 8, 3]
+    },
+    {
+      "name": "Sulha",
+      "nick": "Sulha",
+      "code": "SUL",
+      "desc": "Fearsome engine capabilities and a bare-bones chassis. A true glass cannon.",
+      "score": 184,
+      "stats": [1, 6, 8, 1, 1, 2]
+    },
+    {
+      "name": "Mantis",
+      "nick": "Mantis",
+      "code": "MAN",
+      "desc": "A mean engine that stays agile but has subpar durability.",
+      "score": 184,
+      "stats": [2, 7, 4, 3, 4, 2]
+    },
+    {
+      "name": "Akhal-Tech",
+      "nick": "Akhal",
+      "code": "AKT",
+      "desc": "A fragile but stable ship that sure goes fast!",
+      "score": 184,
+      "stats": [0, 2, 8, 8, 3, 2]
+    },
+    {
+      "name": "Koeniggswerth",
+      "nick": "Koen",
+      "code": "KGW",
+      "desc": "The OG masters of the tank, a really stable platform.",
+      "score": 184,
+      "stats": [6, 2, 2, 8, 4, 6]
+    },
+    {
+      "name": "Behemoth",
+      "nick": "Bmoth",
+      "code": "BEH",
+      "desc": "The tank among tanks, made on Io to weather any condition.",
+      "score": 184,
+      "stats": [8, 4, 3, 1, 1, 7]
+    },
+    {
+      "name": "Buran",
+      "nick": "Buran",
+      "code": "BRN",
+      "desc": "Sturdy, with strong Thrust, and rapid up-to-speed times, but low in driveability.",
+      "score": 184,
+      "stats": [8, 6, 2, 2, 2, 3]
+    }
+  ],
+  "parts": [
+    {
+      "type": "propulsor",
+      "details": [
+        {
+          "name": "BASE",
+          "code": "OCT",
+          "desc": "Upgrading your Propulsor will increase your maximum speed while also boosting power and acceleration.",
+          "score": 0,
+          "stats": [0, 0, 0, 0, 0, 0],
+          "class": "C"
+        },
+        {
+          "name": "8-TA",
+          "code": "8-TA",
+          "desc": "The OCTONIC 8-TA, the step-in Propulsor model.",
+          "score": 24,
+          "stats": [0, 0, 2, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "Draper v1",
+          "code": "IDV1",
+          "desc": "Icaro prefers to go all-in on Top Speed where they can.",
+          "score": 48,
+          "stats": [0, 0, 4, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "F460",
+          "code": "F460",
+          "desc": "Ferox Propulsors grant not only Top Speed, but also acceleration and Boost power.",
+          "score": 66,
+          "stats": [0, 3, 3, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "8-TE",
+          "code": "8-TE",
+          "desc": "OCTONIC provides the classic Propulsor experience. Good Top Speed and decent Thrust.",
+          "score": 102,
+          "stats": [0, 3, 6, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "Breda v1",
+          "code": "IBV1",
+          "desc": "The new Breda model from Icaro now provides a minimal Thrust enhancement.",
+          "score": 106,
+          "stats": [0, 1, 8, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "Draper v2",
+          "code": "IDV2",
+          "desc": "The Draper v2 leaves nothing on the table when it comes to Top Speed in A-Class!",
+          "score": 144,
+          "stats": [0, 0, 12, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "F570",
+          "code": "F570",
+          "desc": "The F570 provides the most balanced Propulsor platform in Class A.",
+          "score": 148,
+          "stats": [0, 4, 9, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "8-TI",
+          "code": "8-TI",
+          "desc": "The 8-TI is the benchmark Class S Propulsor, balanced all-around.",
+          "score": 228,
+          "stats": [0, 6, 14, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "Breda v2",
+          "code": "IBV2",
+          "desc": "Icaro's Breda v2 model is the ultimate Top Speed Propulsor of its class. To the stars and beyond!",
+          "score": 226,
+          "stats": [0, 1, 18, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "F690",
+          "code": "F690",
+          "desc": "Ferox's F690 is their best-balanced Propulsor, maximizing both ship stats!",
+          "score": 224,
+          "stats": [0, 8, 12, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "Signature Sulha",
+          "code": "PSSU",
+          "desc": "The embodiment of Sulha's philosophy of going fast, avoiding walls, and overheating easily.",
+          "score": 237,
+          "stats": [-6, 5, 20, 0, 0, -1],
+          "class": "X"
+        },
+        {
+          "name": "Signature Mantis",
+          "code": "PSBU",
+          "desc": "The custom Mantis Propulsor provides the most balanced Propulsor of its class.",
+          "score": 237,
+          "stats": [-1, 10, 14, 0, 0, -7],
+          "class": "X"
+        },
+        {
+          "name": "Signature Lunare",
+          "code": "PSLN",
+          "desc": "Fragile and light, but with mighty Top Speed & Thrust bite. A-la Lunare glass cannon.",
+          "score": 238,
+          "stats": [-5, 8, 22, 0, 0, -6],
+          "class": "X"
+        },
+        {
+          "name": "Signature Conqueror",
+          "code": "PSCO",
+          "desc": "An all or nothing Propulsor by Conqueror. Lots of Thrust is for chumps!",
+          "score": 237,
+          "stats": [-4, 2, 22, 0, 0, -3],
+          "class": "X"
+        }
+      ]
+    },
+    {
+      "type": "stabilizer",
+      "details": [
+        {
+          "name": "BASE",
+          "code": "MGA",
+          "desc": "Stabilizers increase steering and magnetic grip.",
+          "score": 0,
+          "stats": [0, 0, 0, 0, 0, 0],
+          "class": "C"
+        },
+        {
+          "name": "Alfa55",
+          "code": "AL55",
+          "desc": "Stability means grip, and you'll find the pinnacle of Stability in Magna products.",
+          "score": 10,
+          "stats": [0, 0, 0, 2, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "Beta55",
+          "code": "BE55",
+          "desc": "The Beta55, a tuned version of Alfa55. Provides twice the grip.",
+          "score": 20,
+          "stats": [0, 0, 0, 4, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "Alto",
+          "code": "ALTO",
+          "desc": "The best balance of Stability & Steering can be found in Airbender products.",
+          "score": 22,
+          "stats": [0, 0, 0, 2, 2, 0],
+          "class": "B"
+        },
+        {
+          "name": "Rigel",
+          "code": "RIGL",
+          "desc": "Orion Stabilizers are the benchmark Stabilizers. Good grip without sacrificing much Steering.",
+          "score": 32,
+          "stats": [0, 0, 0, 4, 2, 0],
+          "class": "B"
+        },
+        {
+          "name": "Cirrus",
+          "code": "CIRR",
+          "desc": "The Cirrus is the step-in Class A Stabilizer model. A definite upgrade from everything Class B.",
+          "score": 54,
+          "stats": [0, 0, 0, 6, 4, 0],
+          "class": "A"
+        },
+        {
+          "name": "Bellatrix",
+          "code": "BLLX",
+          "desc": "The Orion Bellatrix is Orion's benchmark Class A Stabilizer. Solid performance in both stats.",
+          "score": 52,
+          "stats": [0, 0, 0, 8, 2, 0],
+          "class": "A"
+        },
+        {
+          "name": "Gamma60",
+          "code": "GA60",
+          "desc": "With the Gamma60, Magna provides the ultimate grip in its class.",
+          "score": 60,
+          "stats": [0, 0, 0, 12, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "Mintaka",
+          "code": "MTKA",
+          "desc": "The Mintaka is an upgraded version of the Bellatrix. Now with grip that rivals Magna!",
+          "score": 62,
+          "stats": [0, 0, 0, 10, 2, 0],
+          "class": "A"
+        },
+        {
+          "name": "Cumulus",
+          "code": "CUMU",
+          "desc": "The Cumulus is an upgraded Cirrus. The fluxcoil design got adjusted to provide a boost in steering.",
+          "score": 66,
+          "stats": [0, 0, 0, 6, 6, 0],
+          "class": "A"
+        },
+        {
+          "name": "Storm",
+          "code": "STRM",
+          "desc": "The Airbender Storm provides the ultimate balanced between Stability and Steering!",
+          "score": 110,
+          "stats": [0, 0, 0, 10, 10, 0],
+          "class": "S"
+        },
+        {
+          "name": "Betelgeuse",
+          "code": "BTLG",
+          "desc": "The Betelgeuse is Orion's answer to 'perfection.' Great Stability and Steering all in one package!",
+          "score": 106,
+          "stats": [0, 0, 0, 14, 6, 0],
+          "class": "S"
+        },
+        {
+          "name": "Zeta70",
+          "code": "ZE70",
+          "desc": "Unparalleled Stability with the pinnacle product from Magna: the Magna Zeta70.",
+          "score": 102,
+          "stats": [0, 0, 0, 18, 2, 0],
+          "class": "S"
+        },
+        {
+          "name": "Signature Wallace",
+          "code": "SSWR",
+          "desc": "All of WRC's ship control knowledge poured into one package. Unparalleled performance.",
+          "score": 121,
+          "stats": [0, -2, -2, 21, 10, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature Helix",
+          "code": "SSHE",
+          "desc": "Helix has kept deficits as low as possible. Providing massive performance without much sacrifice.",
+          "score": 120,
+          "stats": [0, -1, -1, 20, 7, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature ESA-AGR",
+          "code": "SSES",
+          "desc": "'Perfectly balanced, as all things should be.' The mantra ESA-AGR goes by. No exceptions.",
+          "score": 122,
+          "stats": [0, 0, -4, 16, 9, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature Buran",
+          "code": "SSBR",
+          "desc": "With this Stabilizer, Buran seeks to offer the best grip without sacrificing Top Speed.",
+          "score": 118,
+          "stats": [0, -4, 0, 22, 8, 0],
+          "class": "X"
+        }
+      ]
+    },
+    {
+      "type": "rudder",
+      "details": [
+        {
+          "name": "BASE",
+          "code": "OKS",
+          "desc": "Rudders control steering and strafing.",
+          "score": 0,
+          "stats": [0, 0, 0, 0, 0, 0],
+          "class": "C"
+        },
+        {
+          "name": "Castellanus",
+          "code": "CAST",
+          "desc": "Airbender's oldest Rudder model. Before Strafe upgrades on Rudders.",
+          "score": 18,
+          "stats": [0, 0, 0, 0, 3, 0],
+          "class": "B"
+        },
+        {
+          "name": "Svelto X",
+          "code": "SVTX",
+          "desc": "Nimblelab's Rudders strives to provide the best balance between Steering and Strafing.",
+          "score": 23,
+          "stats": [0, 0, 0, 0, 3, 1],
+          "class": "B"
+        },
+        {
+          "name": "Lovelock",
+          "code": "LVLK",
+          "desc": "Plagiarized from Nimblelab's Svelto X? Maybe, but Oikos squeezed out a bit more Steering performance.",
+          "score": 29,
+          "stats": [0, 0, 0, 0, 4, 1],
+          "class": "B"
+        },
+        {
+          "name": "Stratus",
+          "code": "STRA",
+          "desc": "Airbender lives by POWER Steering in their Rudder products. It's Steer or bust.",
+          "score": 30,
+          "stats": [0, 0, 0, 0, 5, 0],
+          "class": "B"
+        },
+        {
+          "name": "Svelto K",
+          "code": "SVTK",
+          "desc": "The Svelto K has the perfect stat balance for entering a new classification.",
+          "score": 44,
+          "stats": [0, 0, 0, 0, 4, 4],
+          "class": "A"
+        },
+        {
+          "name": "Darwin",
+          "code": "DRWN",
+          "desc": "A supercharged Class-B Lovelock. Steering power is almost doubled, good enough for Class-A.",
+          "score": 47,
+          "stats": [0, 0, 0, 0, 7, 1],
+          "class": "A"
+        },
+        {
+          "name": "Nimbus",
+          "code": "NIMB",
+          "desc": "Another prime example of Airbenders' commitment to Steering prowess.",
+          "score": 54,
+          "stats": [0, 0, 0, 0, 9, 0],
+          "class": "A"
+        },
+        {
+          "name": "Harper",
+          "code": "HRPR",
+          "desc": "Unlike the Nimbus, the Harper has a little bit of Strafe power.",
+          "score": 64,
+          "stats": [0, 0, 0, 0, 9, 2],
+          "class": "A"
+        },
+        {
+          "name": "Tornado",
+          "code": "TORN",
+          "desc": "The Tornado, Airbender's answer to Oikos, has best-in-class Steering.",
+          "score": 65,
+          "stats": [0, 0, 0, 0, 10, 1],
+          "class": "A"
+        },
+        {
+          "name": "Svelto Y",
+          "code": "SVLY",
+          "desc": "The Svelto Y, Nimblelab's best attempt at merging Steering & Strafing into one.",
+          "score": 111,
+          "stats": [0, 0, 0, 0, 11, 9],
+          "class": "S"
+        },
+        {
+          "name": "Tansley",
+          "code": "TSLY",
+          "desc": "The benchmark Rudder for Class S. Great stat distribution with focus on Steering.",
+          "score": 109,
+          "stats": [0, 0, 0, 0, 14, 5],
+          "class": "S"
+        },
+        {
+          "name": "Hurricane",
+          "code": "HURR",
+          "desc": "Nothing is left to chance. Full 'PLUS ULTRA' in the Steering department!",
+          "score": 108,
+          "stats": [0, 0, 0, 0, 18, 0],
+          "class": "S"
+        },
+        {
+          "name": "Signature Wallace",
+          "code": "RSWR",
+          "desc": "By sacrificing Durability, WRC pulls the ultimate Steering & Strafing power out of their Rudder.",
+          "score": 119,
+          "stats": [-6, 0, 0, -3, 22, 10],
+          "class": "X"
+        },
+        {
+          "name": "Signature Lunare",
+          "code": "RSLU",
+          "desc": "The Lunare Rudder strives for the best Steer/Strafe stats while sacrificing as little as possible.",
+          "score": 119,
+          "stats": [-3, 0, 0, -1, 18, 8],
+          "class": "X"
+        },
+        {
+          "name": "Signature Behemoth",
+          "code": "RSBE",
+          "desc": "Behemoth's answer to ESA's Rudder. No strafing power, but less stat sacrifice overall.",
+          "score": 122,
+          "stats": [-1, 0, 0, -1, 20, 3],
+          "class": "X"
+        },
+        {
+          "name": "Signature ESA-AGR",
+          "code": "RSES",
+          "desc": "ESA-AGR again strives for best stat balance distribution, but had to sacrifice Stability.",
+          "score": 121,
+          "stats": [0, 0, 0, -5, 16, 10],
+          "class": "X"
+        }
+      ]
+    },
+    {
+      "type": "hull",
+      "details": [
+        {
+          "name": "BASE",
+          "code": "QIQ",
+          "desc": "Stronger and lighter Hulls increase max speed, damage resistance, and Heat dissipation.",
+          "score": 0,
+          "stats": [0, 0, 0, 0, 0, 0],
+          "class": "C"
+        },
+        {
+          "name": "Lìng",
+          "code": "LÌNG",
+          "desc": "Durability means impact resistance, but also Heat dissipation, and QiQi know that very well.",
+          "score": 16,
+          "stats": [2, 0, 0, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "45P15",
+          "code": "45P1",
+          "desc": "Armoden Hulls provide unparalleled Durability compared to competitors.",
+          "score": 32,
+          "stats": [4, 0, 0, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "8-TM",
+          "code": "8-TM",
+          "desc": "OCTONIC Hulls focus on attaining the best balance between Top Speed and Durability.",
+          "score": 48,
+          "stats": [3, 0, 2, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "Yi",
+          "code": "YI",
+          "desc": "The benchmark Class A Hull provided by QiQi. Good Durability coupled with decent Top Speed power.",
+          "score": 72,
+          "stats": [6, 0, 2, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "8-TN",
+          "code": "8-TN",
+          "desc": "A perfected 8-TM. The 8-TN has flawless stat balance vs. base model.",
+          "score": 80,
+          "stats": [4, 0, 4, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "P4RM4",
+          "code": "P4RM",
+          "desc": "Looking for the best Durability in its class? Look no further than the P4RM4.",
+          "score": 104,
+          "stats": [10, 0, 2, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "Èr",
+          "code": "ÈR",
+          "desc": "The top-shelf Class A Hull by QiQi. Solid Durability coupled with good Top Speed.",
+          "score": 112,
+          "stats": [8, 0, 4, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "8-TW",
+          "code": "8-TW",
+          "desc": "Lightweight materials and superb aerodynamics give the 8-TW outstanding Top Speed capabilities.",
+          "score": 152,
+          "stats": [10, 0, 6, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "Sàn",
+          "code": "SÀN",
+          "desc": "QiQi spared nothing to set the bar for Class S Hulls with the Sàn.",
+          "score": 156,
+          "stats": [15, 0, 3, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "8UCKL3R",
+          "code": "8UCK",
+          "desc": "Putting the 'T' in Tank. When you are afraid of taking damage. Arm yourself with a 8UCKL3R!",
+          "score": 156,
+          "stats": [18, 0, 1, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "Signature Koeniggswerth",
+          "code": "HSKO",
+          "desc": "Complete protection as expected from the armor pioneers at Koeniggswerth!",
+          "score": 182,
+          "stats": [22, 0, 0, 0, -3, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature Akhal-Tech",
+          "code": "HSAK",
+          "desc": "This beauty by AKHAL is the best mid-range Hull in its class.",
+          "score": 176,
+          "stats": [17, -2, 8, 0, -6, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature Buran",
+          "code": "HSBU",
+          "desc": "The lightest materials guarantee the best Top Speed. Worst-in-class Durability though.",
+          "score": 176,
+          "stats": [15, -4, 10, 0, -4, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature Behemoth",
+          "code": "HSBE",
+          "desc": "Behemoth is new in the Durability market. They built this Hull as an alternative to Koeniggswerth.",
+          "score": 180,
+          "stats": [19, -2, 3, 0, 0, 0],
+          "class": "X"
+        }
+      ]
+    },
+    {
+      "type": "intercooler",
+      "details": [
+        {
+          "name": "BASE",
+          "code": "TLC",
+          "desc": "Intercoolers dissipate Heat and improve Boost power.",
+          "score": 0,
+          "stats": [0, 0, 0, 0, 0, 0],
+          "class": "C"
+        },
+        {
+          "name": "F850",
+          "code": "F850",
+          "desc": "The F850 is the step-in Intercooler model for Class B ships.",
+          "score": 20,
+          "stats": [0, 2, 0, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "70W3R",
+          "code": "70W3",
+          "desc": "Armoden Intercoolers balance Thrust with good Durability.",
+          "score": 36,
+          "stats": [2, 2, 0, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "Uriel",
+          "code": "TLUR",
+          "desc": "ThrustLance Intercoolers invest heavily in Thrust. You want pure acceleration? Look no further.",
+          "score": 40,
+          "stats": [0, 4, 0, 0, 0, 0],
+          "class": "B"
+        },
+        {
+          "name": "Gabriel",
+          "code": "TLGA",
+          "desc": "The Gabriel sets the bar for the Intercoolers in Class A.",
+          "score": 70,
+          "stats": [0, 7, 0, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "F880",
+          "code": "F880",
+          "desc": "The F880 is the 'new normal' for Class A Intercoolers. Outpacing the older Gabriel model.",
+          "score": 96,
+          "stats": [2, 8, 0, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "K33P",
+          "code": "K33P",
+          "desc": "Another case of perfect Intercooler stat balance, achieved by Armoden.",
+          "score": 108,
+          "stats": [6, 6, 0, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "F980",
+          "code": "F980",
+          "desc": "The F980 is the improved F880 model by Ferox. Increasing its Thrust performance.",
+          "score": 116,
+          "stats": [2, 10, 0, 0, 0, 0],
+          "class": "A"
+        },
+        {
+          "name": "C457L3",
+          "code": "C457",
+          "desc": "The C457L3 is as close to perfect stat balance as Armoden could hustle for Class S.",
+          "score": 164,
+          "stats": [8, 10, 0, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "Michael",
+          "code": "TLMI",
+          "desc": "Thrust or bust. The ThrustLance Michael.",
+          "score": 170,
+          "stats": [0, 17, 0, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "F990",
+          "code": "F990",
+          "desc": "With the F990, Ferox achieves a masterful balance between great Thrust and good Durability.",
+          "score": 168,
+          "stats": [6, 12, 0, 0, 0, 0],
+          "class": "S"
+        },
+        {
+          "name": "Signature Behemoth",
+          "code": "ISBE",
+          "desc": "'A massive kick in the neck when you hit the gas' is Behemoth's tagline for this module.",
+          "score": 190,
+          "stats": [10, 20, -8, -6, 0, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature ESA-AGR",
+          "code": "ISES",
+          "desc": "ESA has achieved the perfect stat balance with minimal sacrifice. Good for jack-of-all-trades builds.",
+          "score": 189,
+          "stats": [7, 15, -1, -1, 0, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature Koeniggswerth",
+          "code": "ISKO",
+          "desc": "Great Thrust and good Durability with minimal sacrifice. The benchmark intercooler.",
+          "score": 189,
+          "stats": [9, 19, -5, -5, 0, 0],
+          "class": "X"
+        },
+        {
+          "name": "Signature Buran",
+          "code": "ISBU",
+          "desc": "Buran resorts again to lightweight materials. Achieves great Thrust, but has to let go of Durability.",
+          "score": 184,
+          "stats": [2, 22, -1, -8, 0, 0],
+          "class": "X"
+        }
+      ]
+    },
+    {
+      "type": "esc",
+      "details": [
+        {
+          "name": "BASE",
+          "code": "NBL",
+          "desc": "The Electronic Stability Control influences grip and strafing.",
+          "score": 0,
+          "stats": [0, 0, 0, 0, 0, 0],
+          "class": "C"
+        },
+        {
+          "name": "Tengu",
+          "code": "TENGU",
+          "desc": "The Tengu is the baseline E.S.C. module by Gozu.",
+          "score": 15,
+          "stats": [0, 0, 0, 1, 0, 2],
+          "class": "B"
+        },
+        {
+          "name": "Nue",
+          "code": "NUE",
+          "desc": "The Goza Nue is a slight upgrade over its Tengu predecessor.",
+          "score": 20,
+          "stats": [0, 0, 0, 1, 0, 3],
+          "class": "B"
+        },
+        {
+          "name": "Theta60",
+          "code": "TH60",
+          "desc": "Magna E.S.Cs tend to be quite balanced in their stats. Good for balanced build seekers.",
+          "score": 25,
+          "stats": [0, 0, 0, 2, 0, 3],
+          "class": "B"
+        },
+        {
+          "name": "AgileZ",
+          "code": "AGIZ",
+          "desc": "The AgileZ is the first in Nimblelabs quest for total Strafe performance.",
+          "score": 30,
+          "stats": [0, 0, 0, 1, 0, 5],
+          "class": "B"
+        },
+        {
+          "name": "AgileX",
+          "code": "AGIX",
+          "desc": "Nimblelab held nothing back with this class-A E.S.C. Strafing in its purest form.",
+          "score": 40,
+          "stats": [0, 0, 0, 0, 0, 8],
+          "class": "A"
+        },
+        {
+          "name": "Eta61",
+          "code": "ET61",
+          "desc": "The benchmark class-A E.S.C. module by Magna. Provides solid stats on both ends.",
+          "score": 40,
+          "stats": [0, 0, 0, 3, 0, 5],
+          "class": "A"
+        },
+        {
+          "name": "AgileK",
+          "code": "AGIK",
+          "desc": "The AgileK provides ultimate-in-class Strafing prowess, whilst still keeping a pip of Stability!",
+          "score": 55,
+          "stats": [0, 0, 0, 1, 0, 10],
+          "class": "A"
+        },
+        {
+          "name": "Oni",
+          "code": "ONI",
+          "desc": "A solid alternative to the AgileK. Slightly less Strafing power but more Stability.",
+          "score": 55,
+          "stats": [0, 0, 0, 2, 0, 9],
+          "class": "A"
+        },
+        {
+          "name": "Sigma69",
+          "code": "SG69",
+          "desc": "Magna's best class-A work. The Sigma69 combines great Strafing with solid Grip. Nice!",
+          "score": 55,
+          "stats": [0, 0, 0, 4, 0, 7],
+          "class": "A"
+        },
+        {
+          "name": "Phi70",
+          "code": "PI70",
+          "desc": "The Phi70 is a modified Sigma69. Maximized Strafe potential and Stability that's... stable.",
+          "score": 80,
+          "stats": [0, 0, 0, 4, 0, 12],
+          "class": "S"
+        },
+        {
+          "name": "Ryuu",
+          "code": "RYUU",
+          "desc": "The ultimate E.S.C. module by Gozu. Maximizes Strafing while holding on to a bit of Stability.",
+          "score": 85,
+          "stats": [0, 0, 0, 2, 0, 15],
+          "class": "S"
+        },
+        {
+          "name": "AgileY",
+          "code": "AGIY",
+          "desc": "Zigzag like a snake. With the AgileY, this won't be a problem!",
+          "score": 90,
+          "stats": [0, 0, 0, 0, 0, 18],
+          "class": "S"
+        },
+        {
+          "name": "Signature Lunare",
+          "code": "ESLU",
+          "desc": "Lunare made minimal stat sacrifices to get this mix of Stability/Strafing power.",
+          "score": 96,
+          "stats": [-3, 0, -1, 6, 0, 18],
+          "class": "X"
+        },
+        {
+          "name": "Signature Koeniggswerth",
+          "code": "ESKO",
+          "desc": "No Durability compromise. Top Speed takes a hit, other stats remain strong. A competitive package.",
+          "score": 99,
+          "stats": [0, 0, -4, 5, 0, 22],
+          "class": "X"
+        },
+        {
+          "name": "Signature Mantis",
+          "code": "ESMA",
+          "desc": "A minimal sacrifice of Top Speed to maximize everything else. That was Mantis's vision.",
+          "score": 95,
+          "stats": [-6, 0, -1, 10, 0, 21],
+          "class": "X"
+        },
+        {
+          "name": "Signature Asera",
+          "code": "ESAS",
+          "desc": "Maximized Strafing & Stability while balancing out the disadvantages.",
+          "score": 97,
+          "stats": [-3, 0, -3, 10, 0, 19],
+          "class": "X"
+        }
+      ]
+    }
+  ]
 }
