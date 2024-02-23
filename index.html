@@ -39,7 +39,7 @@
     <script defer src="./src/app.js"></script>
     <script defer src="./src/query.js"></script>
     <script defer src="./src/charts.js"></script>
-    <title>Ship Generator v1.0.1-beta</title>
+    <title>Ship Generator v1.0.2-beta</title>
   </head>
   <body>
     <form id="form-query" onsubmit="querySubmit(event)">
@@ -131,7 +131,11 @@
               <label for="check-greaterOnly">Search only greater builds</label>
             </div>
             <canvas id="chart-radar"></canvas>
+            <span id="span-target"></span>
+            <span id="span-comparison"></span>
             <canvas id="chart-bars"></canvas>
+            <!-- <canvas id="chart-radar" style="display: block; box-sizing: border-box; height: 500px; width: 350px;" height="500" width="350"></canvas>
+            <canvas id="chart-bars" style="display: block; box-sizing: border-box; height: 400px; width: 350px;" height="400" width="350"></canvas> -->
           </div>
         </div>
         <div class="results">
@@ -176,7 +180,7 @@
                   </datalist>
                 </th>
                 <th
-                  title="Select propulsor(s)&#013;&#013;Influence Thrust and Top Speed.&#013;Signature parts negatively influence Durability and Strafe.&#013;&#013;&#34;Upgrading your Propulsor will increase your maximum speed while also boosting power and acceleration.&#34;"
+                  title="Select Propulsor(s)&#013;&#013;Influence Thrust and Top Speed.&#013;Signature parts negatively influence Durability and Strafe.&#013;&#013;&#34;Upgrading your Propulsor will increase your maximum speed while also boosting power and acceleration.&#34;"
                 >
                   <select name="select-propulsor" id="select-propulsor" class="column-select">
                     <option value="8-15" selected title="Purple and red parts (Class X)">X</option>
@@ -187,7 +191,7 @@
                     <option disabled>─</option>
                   </select>
                 </th>
-                <th title="Select stabilizer(s)&#013;&#013;Influence Stability and Steer.&#013;Signature parts negatively influence Thrust and Top Speed.&#013;&#013;&#34;Stabilizers increase steering and magnetic grip.&#34;">
+                <th title="Select Stabilizer(s)&#013;&#013;Influence Stability and Steer.&#013;Signature parts negatively influence Thrust and Top Speed.&#013;&#013;&#34;Stabilizers increase steering and magnetic grip.&#34;">
                   <select name="select-stabilizer" id="select-stabilizer" class="column-select">
                     <option value="10-17" selected title="Purple and red parts (Class X)">X</option>
                     <option value="5-13" title="Red and yellow parts (Class S)">S</option>
@@ -197,7 +201,7 @@
                     <option disabled>─</option>
                   </select>
                 </th>
-                <th title="Select rudder(s)&#013;&#013;Influence Steer and Strafe.&#013;Signature parts negatively influence Durability and Stability.&#013;&#013;&#34;Rudders control steering and strafing.&#34;">
+                <th title="Select Rudder(s)&#013;&#013;Influence Steer and Strafe.&#013;Signature parts negatively influence Durability and Stability.&#013;&#013;&#34;Rudders control steering and strafing.&#34;">
                   <select name="select-rudder" id="select-rudder" class="column-select">
                     <option value="10-17" selected title="Purple and red parts (Class X)">X</option>
                     <option value="5-13" title="Red and yellow parts (Class S)">S</option>
@@ -208,7 +212,7 @@
                   </select>
                 </th>
                 <th
-                  title="Select hull(s)&#013;&#013;Influence Durability and Top Speed.&#013;Signature parts negatively influence Thrust and Steering.&#013;&#013;&#34;Stronger and lighter Hulls increase max speed, damage resistance, and Heat dissipation.&#34;"
+                  title="Select Hull(s)&#013;&#013;Influence Durability and Top Speed.&#013;Signature parts negatively influence Thrust and Steering.&#013;&#013;&#34;Stronger and lighter Hulls increase max speed, damage resistance, and Heat dissipation.&#34;"
                 >
                   <select name="select-hull" id="select-hull" class="column-select">
                     <option value="8-15" selected title="Purple and red parts (Class X)">X</option>
@@ -219,7 +223,7 @@
                     <option disabled>─</option>
                   </select>
                 </th>
-                <th title="Select intercooler(s)&#013;&#013;Influence Durability and Thrust.&#013;Signature parts negatively influence Top Speed and Stability.&#013;&#013;&#34;Intercoolers dissipate Heat and improve Boost power.&#34;">
+                <th title="Select Intercooler(s)&#013;&#013;Influence Durability and Thrust.&#013;Signature parts negatively influence Top Speed and Stability.&#013;&#013;&#34;Intercoolers dissipate Heat and improve Boost power.&#34;">
                   <select name="select-intercooler" id="select-intercooler" class="column-select">
                     <option value="8-15" selected title="Purple and red parts (Class X)">X</option>
                     <option value="4-11" title="Red and yellow parts (Class S)">S</option>
@@ -230,7 +234,7 @@
                   </select>
                 </th>
                 <th
-                  title="Select electronic stability control(s)&#013;&#013;Influence Stability and Strafe.&#013;Signature parts negatively influence Durability and Top Speed.&#013;&#013;&#34;The Electronic Stability Control influences grip and strafing.&#34;"
+                  title="Select Electronic Stability Control(s)&#013;&#013;Influence Stability and Strafe.&#013;Signature parts negatively influence Durability and Top Speed.&#013;&#013;&#34;The Electronic Stability Control influences grip and strafing.&#34;"
                 >
                   <select name="select-esc" id="select-esc" class="column-select">
                     <option value="10-17" selected title="Purple and red parts (Class X)">X</option>
@@ -274,7 +278,7 @@
                   </select>
                 </th>
                 <th
-                  title="Select Durability (0-40)&#013;&#013;Durability determines how long you can boost and your resistance to overheat damage. The higher your durability the faster you cool down, the slower you heat up, and the slower you take overheat damage."
+                  title="Select Durability (0-40)&#013;&#013;Durability determines how long you can boost and your resistance to overheat damage. The higher your Durability the faster you cool down, the slower you heat up, and the slower you take overheat damage."
                 >
                   <input id="durability-input" size="2" maxlength="2" class="column-input" onchange="targetInputChange(event, 0)" type="number" value="20" min="0" max="40" />
                 </th>
@@ -284,7 +288,7 @@
                   <input id="thrust-input" size="2" maxlength="2" class="column-input" onchange="targetInputChange(event, 1)" type="number" value="20" min="0" max="40" />
                 </th>
                 <th
-                  title="Select Top Speed (0-40)&#013;&#013;Top Speed determines your acceleration and deceleration by being the asymptote to those curves. The higher your Top Speed the faster you'll get up to speed, the higher that speed will be, and the slower your speed will drop when decelerating. Overall it'll positively influence your average speed throughout a lap. Coupled with high Thrust and you can get up to some mind-boggling speeds."
+                  title="Select Top Speed (0-40)&#013;&#013;Top Speed determines your acceleration and deceleration by being the asymptote to those curves. The higher your Top Speed the faster you'll get up to speed, the higher that speed will be, and the slower your speed will drop when decelerating. It'll positively influence your average speed throughout a lap. Coupled with high Thrust and you can get up to some mind-boggling speeds."
                 >
                   <input id="speed-input" size="2" maxlength="2" class="column-input" onchange="targetInputChange(event, 2)" type="number" value="20" min="0" max="40" />
                 </th>
@@ -296,7 +300,7 @@
                 <th title="Select Steering (0-40)&#013;&#013;Steering determines your speed around corners. The higher your Steering, the faster you can make turns. Steering always slows you down, so it's best to pair this stat with Strafe and Stability to improve your speed when steering and overall handling.">
                   <input id="steer-input" size="2" maxlength="2" class="column-input" onchange="targetInputChange(event, 4)" type="number" value="20" min="0" max="40" />
                 </th>
-                <th title="Select Strafe (0-40)&#013;&#013;Strafe determines how fast you move horizontally. The higher your Strafing, the quicker and easier you can dodge and maneuver along straights, and the better you can drift around turns (by counter-strafing), improving your speed. Strafing doesn't slow you down, so it's generally recommended to strafe more than you steer.">
+                <th title="Select Strafe (0-40)&#013;&#013;Strafe determines how fast you move horizontally. The higher your Strafe, the quicker and easier you can dodge and maneuver along straights, and the better you can drift around turns (by counter-strafing), improving your speed. Strafing doesn't slow you down, so it's generally recommended to strafe more than you steer.">
                   <input id="strafe-input" size="2" maxlength="2" class="column-input" onchange="targetInputChange(event, 5)" type="number" value="20" min="0" max="40" />
                 </th>
               </tr>

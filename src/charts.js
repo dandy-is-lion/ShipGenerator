@@ -1,28 +1,40 @@
 const borderColor = getComputedStyle(document.documentElement).getPropertyValue("--border-color");
 const foregroundColor = getComputedStyle(document.documentElement).getPropertyValue("--foreground-color");
-const targetColor = getComputedStyle(document.documentElement).getPropertyValue("--good-color");
-const comparisonColor = getComputedStyle(document.documentElement).getPropertyValue("--bad-color");
+const targetColor = getComputedStyle(document.documentElement).getPropertyValue("--bad-color");
+const comparisonColor = getComputedStyle(document.documentElement).getPropertyValue("--good-color");
 
 const targetColorA = targetColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
 const comparisonColorA = comparisonColor.replace(/rgb/i, "rgba").replace(/\)/i, ",0.15)");
 
+// Chart.defaults.animation = false;
 Chart.defaults.borderColor = borderColor;
 Chart.defaults.color = foregroundColor;
 Chart.defaults.responsive = true;
 Chart.defaults.maintainAspectRatio = true;
-Chart.defaults.aspectRatio = 1;
+// Chart.defaults.aspectRatio = 1;
 Chart.defaults.plugins.decimation = false;
 Chart.defaults.plugins.legend.display = !window.mobileCheck();
-Chart.defaults.plugins.tooltip.multiKeyBackground = "#000";
+Chart.defaults.plugins.tooltip.multiKeyBackground = "black";
 
 // console.log(Chart.defaults.plugins.tooltip);
 
-let dataComparison = [0, 0, 0, 0, 0, 0];
+let dataComparison = new Array(6).fill(-1);
 let dataTarget = Array.from(input.targets, (target) => target.value);
+// let chartTitle = "XXXX";
 
+const chartAspectRatio = 0.93;
 const chartIcons = ["\u002b", "\uf5b0", "\uf625", "\uf076", "\uf021", "\uf337"];
 const chartLabels = ["Durability", "Thrust", "Top Speed", "Stability", "Steer", "Strafe"];
-const chartShort = ["DUR", "THR", "SPD", "STB", "STR", "STF"];
+const chartLabelColors = new Array(6).fill(foregroundColor);
+const chartRadarLabels = new Array(6).fill("");
+const chartBarsLabels = [
+  ["DUR", ""],
+  ["THR", ""],
+  ["SPD", ""],
+  ["STB", ""],
+  ["STR", ""],
+  ["STF", ""],
+];
 
 const chartData = [
   {
@@ -32,6 +44,7 @@ const chartData = [
     borderWidth: 2,
     backgroundColor: targetColorA,
     borderColor: targetColor,
+    borderDash: [6, 6],
     pointHitRadius: 25,
     pointBorderWidth: 0,
     pointBackgroundColor: targetColorA,
@@ -45,8 +58,8 @@ const chartData = [
     fill: true,
     hidden: true,
     borderWidth: 2,
-    backgroundColor: comparisonColorA,
     borderColor: comparisonColor,
+    backgroundColor: comparisonColorA,
     pointHitRadius: 25,
     pointBorderWidth: 0,
     pointBackgroundColor: comparisonColorA,
@@ -62,10 +75,11 @@ const ctxBars = document.getElementById("chart-bars").getContext("2d");
 let chartRadar = new Chart(ctxRadar, {
   type: "radar",
   data: {
-    labels: chartLabels,
+    labels: chartRadarLabels,
     datasets: chartData,
   },
   options: {
+    aspectRatio: chartAspectRatio,
     onHover: function (e) {
       const point = e.chart.getElementsAtEventForMode(
         e,
@@ -79,6 +93,11 @@ let chartRadar = new Chart(ctxRadar, {
       else e.native.target.style.cursor = "default";
     },
     plugins: {
+      // title: {
+      //   display: true,
+      //   position: "bottom",
+      //   text: chartTitle,
+      // },
       tooltip: {
         callbacks: {
           // labelColor: function (context) {
@@ -93,6 +112,9 @@ let chartRadar = new Chart(ctxRadar, {
           // labelTextColor: function (context) {
           //   return "#543453";
           // },
+          title: function (tooltipItem) {
+            return chartLabels[tooltipItem[0].dataIndex];
+          },
           label: function (context) {
             let label = context.dataset.label || "";
 
@@ -113,6 +135,7 @@ let chartRadar = new Chart(ctxRadar, {
         round: 1,
         onDragStart: function (e, element) {
           if (!(element === 0)) return false;
+          // console.log(element);
         },
         onDrag: function (e, datasetIndex, index, value) {
           if (!(datasetIndex === 0)) return false;
@@ -120,11 +143,14 @@ let chartRadar = new Chart(ctxRadar, {
           e.target.style.cursor = "grabbing";
         },
         onDragEnd: function (e, datasetIndex, index, value) {
-          input.targets[index].value = value;
           dataTarget[index] = value;
-          chartData[datasetIndex].label = "Target";
-          chartRadar.update();
-          chartBars.update();
+          input.targets[index].value = value;
+          input.span.target.innerHTML = "";
+
+          updateStatCharts(0, chartData[0].data);
+          // chartData[datasetIndex].label = "Target";
+          // chartRadar.update();
+          // chartBars.update();
         },
         magnet: {
           to: Math.round,
@@ -133,20 +159,37 @@ let chartRadar = new Chart(ctxRadar, {
     },
     scales: {
       r: {
+        // callbacks: {
+        //   afterUpdate: function (axis) {
+        //     console.log(axis);
+        //   },
+        // },
         min: 0,
         suggestedMax: 30,
         beginAtZero: true,
         ticks: {
           display: !window.mobileCheck(),
-          showLabelBackdrop: true,
-          backdropColor: "rgba(0,0,0,0.5)",
-          z: 0,
+          showLabelBackdrop: false,
+          textStrokeColor: "black",
+          textStrokeWidth: 2,
           stepSize: 6,
+          z: 0,
+          // padding: -100,
+          // padding: {
+          //   top: 10,
+          // },
+          // major: {
+          //   enabled: true,
+          // },
         },
         pointLabels: {
-          // display: !window.mobileCheck(),
-          display: false,
+          display: !window.mobileCheck(),
           centerPointLabels: false,
+          padding: -3,
+          backdropPadding: 0,
+          // backdropColor: "black",
+          // borderRadius: 5,
+          color: chartLabelColors,
           font: {
             // family: '"Font Awesome 6 Free"',
             weight: "bold",
@@ -161,10 +204,11 @@ let chartRadar = new Chart(ctxRadar, {
 let chartBars = new Chart(ctxBars, {
   type: "bar",
   data: {
-    labels: chartShort,
+    labels: chartBarsLabels,
     datasets: chartData,
   },
   options: {
+    aspectRatio: chartAspectRatio,
     indexAxis: "y",
     scales: {
       x: {
@@ -179,6 +223,7 @@ let chartBars = new Chart(ctxBars, {
       y: {
         ticks: {
           display: !window.mobileCheck(),
+          color: chartLabelColors,
           font: {
             // family: '"Font Awesome 6 Free"',
             weight: "bold",
@@ -234,11 +279,14 @@ let chartBars = new Chart(ctxBars, {
           e.target.style.cursor = "grabbing";
         },
         onDragEnd: function (e, datasetIndex, index, value) {
-          input.targets[index].value = value;
           dataTarget[index] = value;
-          chartData[datasetIndex].label = "Target";
-          chartRadar.update();
-          chartBars.update();
+          input.targets[index].value = value;
+          input.span.target.innerHTML = "";
+
+          updateStatCharts(0, chartData[0].data);
+          // chartData[datasetIndex].label = "Target";
+          // chartRadar.update();
+          // chartBars.update();
         },
         magnet: {
           to: Math.round,

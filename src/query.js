@@ -1,49 +1,49 @@
-function levenshteinDistance(str1, str2) {
-  const m = str1.length;
-  const n = str2.length;
+// function levenshteinDistance(str1, str2) {
+//   const m = str1.length;
+//   const n = str2.length;
 
-  // Create a 2D array to store the distances
-  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+//   // Create a 2D array to store the distances
+//   const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
 
-  // Initialize the first row and column
-  for (let i = 0; i <= m; i++) {
-    dp[i][0] = i;
-  }
+//   // Initialize the first row and column
+//   for (let i = 0; i <= m; i++) {
+//     dp[i][0] = i;
+//   }
 
-  for (let j = 0; j <= n; j++) {
-    dp[0][j] = j;
-  }
+//   for (let j = 0; j <= n; j++) {
+//     dp[0][j] = j;
+//   }
 
-  // Fill in the rest of the array
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
-      dp[i][j] = Math.min(
-        dp[i - 1][j] + 1, // Deletion
-        dp[i][j - 1] + 1, // Insertion
-        dp[i - 1][j - 1] + cost // Substitution
-      );
-    }
-  }
+//   // Fill in the rest of the array
+//   for (let i = 1; i <= m; i++) {
+//     for (let j = 1; j <= n; j++) {
+//       const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+//       dp[i][j] = Math.min(
+//         dp[i - 1][j] + 1, // Deletion
+//         dp[i][j - 1] + 1, // Insertion
+//         dp[i - 1][j - 1] + cost // Substitution
+//       );
+//     }
+//   }
 
-  // Return the Levenshtein distance
-  return dp[m][n];
-}
+//   // Return the Levenshtein distance
+//   return dp[m][n];
+// }
 
-function getBestMatch(inputStr, stringArray) {
-  let bestMatch = null;
-  let bestScore = Infinity; // Initialize with a high value
+// function getBestMatch(inputStr, stringArray) {
+//   let bestMatch = null;
+//   let bestScore = Infinity; // Initialize with a high value
 
-  stringArray.forEach((candidate) => {
-    const score = levenshteinDistance(inputStr, candidate);
-    if (score < bestScore) {
-      bestScore = score;
-      bestMatch = candidate;
-    }
-  });
+//   stringArray.forEach((candidate) => {
+//     const score = levenshteinDistance(inputStr, candidate);
+//     if (score < bestScore) {
+//       bestScore = score;
+//       bestMatch = candidate;
+//     }
+//   });
 
-  return [bestMatch];
-}
+//   return [bestMatch];
+// }
 
 let lastResults;
 let lastQuery;
@@ -63,8 +63,8 @@ async function querySubmit(e, ignoreID = false) {
   };
 
   query.id.forEach((id) => {
-    if (id && !ignoreID) {
-      if (id.length === 6 && [...id].every((idChar) => partCode.includes(idChar.toUpperCase()) || idChar.toUpperCase() === "X")) {
+    if (id) {
+      if (!ignoreID && id.length === 6 && [...id].every((idChar) => partCode.includes(idChar.toUpperCase()) || idChar.toUpperCase() === "X")) {
         // Looks like an ID, set query parts accordingly and ignore score range
         query.scores = [0, 1200];
         [...id].forEach((idChar, idCharIndex) => {
@@ -81,6 +81,7 @@ async function querySubmit(e, ignoreID = false) {
             redoutDB.gliders.filter((item) => glider.toUpperCase() === "ANY" || glider.toUpperCase() === item.code || glider.toUpperCase() === item.name.toUpperCase() || glider.toUpperCase() === item.nick.toUpperCase())
           )
         );
+        if (query.gliders.length === 0) query.gliders = redoutDB.gliders;
         // console.log(redoutDB.gliders.filter((gliderDB) => gliderDB.name.toLowerCase()));
         // query.gliders = [].concat(...Array.from(id.split(","), (glider) => redoutDB.gliders.filter((gliderDB) => gliderDB.name.toLowerCase())));
         // query.gliders = [].concat(...Array.from(id.split(","), (glider) => redoutDB.gliders.filter((gliderDB) => gliderDB.name.toUpperCase().match(new RegExp(`/${glider.toUpperCase()}/`)).count === 1)));
@@ -273,7 +274,7 @@ function parseResults(candidates, query) {
   });
   let html = "";
   candidates.forEach((candidate) => {
-    html += `<tr ${selectedID === `${candidate.glider.code}-${candidate.id}` ? "class=results-selected" : ""} onmouseover='rowHover(this)' onclick='rowClick(this, event)'>`;
+    html += `<tr ${`${selectedRig.glider.code}-${selectedRig.id}` === `${candidate.glider.code}-${candidate.id}` ? "class=results-selected" : ""} onmouseover='rowHover(this)' onclick='rowClick(this, event)'>`;
     html += `<td class='results-cell-bottom results-cell-right cell-ship' title="${candidate.glider.name} (${candidate.glider.code}) {${candidate.glider.score}} [${candidate.glider.stats}]\n\n${candidate.glider.desc}"><img src='./img/${candidate.glider.code}.webp'></img><span>${candidate.glider.code} - ${candidate.id}</span></td>`;
     candidate.rig.forEach((part) => {
       html += `<td class='results-cell-bottom cell-class-${part.class}' title="${part.name} (${part.class}) {${part.score}} [${part.stats}]\n\n${part.desc}">${part.code}</td>`;
@@ -302,7 +303,7 @@ function parseResults(candidates, query) {
         minimumFractionDigits: 0,
       }).format(delta / 40)})${statEstimation}'>${stat}</td>`;
     });
-    html += "</tr>";
+    html += `</tr>`;
   });
   return html;
 }
