@@ -1,77 +1,81 @@
 onmessage = (e) => {
-  self.postMessage(runQuery(...e.data));
+    self.postMessage(runQuery(...e.data));
 };
 
 function addArrays(arrays) {
-  const numArrays = arrays.length;
-  const arrayLength = arrays[0].length;
-  const result = new Array(arrayLength).fill(0);
+    const numArrays = arrays.length;
+    const arrayLength = arrays[0].length;
+    const result = new Array(arrayLength).fill(0);
 
-  for (let i = 0; i < numArrays; i++) {
-    for (let j = 0; j < arrayLength; j++) {
-      result[j] += arrays[i][j];
+    for (let i = 0; i < numArrays; i++) {
+        for (let j = 0; j < arrayLength; j++) {
+            result[j] += arrays[i][j];
+        }
     }
-  }
 
-  return result;
+    // Prevent negative arrays
+    for (let j = 0; j < arrayLength; j++) {
+        result[j] = Math.max(0, result[j]);
+    }
+
+    return result;
 }
 
 function calculateDelta(candidate, query, greaterOnly = false) {
-  let delta = 0;
+    let delta = 0;
 
-  for (let i = 0; i < candidate.length; i++) {
-    if (greaterOnly && candidate[i] < query[i]) return 9999;
-    delta += Math.abs(candidate[i] - query[i]);
-  }
+    for (let i = 0; i < candidate.length; i++) {
+        // Skip targets with 0 value
+        if (query[i] != 0) {
+            if (greaterOnly && candidate[i] < query[i]) return 9999;
+            delta += Math.abs(candidate[i] - query[i]);
+        }
+    }
 
-  return delta;
+    return delta;
 }
 
-function runQuery(query, glider, count) {
-  let maxDelta = 9999;
-  let maxDeltaIndex = 0;
+function runQuery(query, glider, parts, count) {
+    let worst = 0;
+    let maxDelta = 9999;
+    let candidates = new Array(Math.round(query.limit / count)).fill({ id: "", delta: maxDelta }, 0, query.limit);
 
-  const candidateLimit = Math.round(100 / count);
-  const candidates = new Array(candidateLimit).fill({ id: "", glider: {}, rig: [], score: 0, stats: [], delta: maxDelta }, 0, candidateLimit);
-
-  query.parts[0].forEach((propulsor) => {
-    query.parts[1].forEach((stabilizer) => {
-      query.parts[2].forEach((rudder) => {
-        query.parts[3].forEach((hull) => {
-          query.parts[4].forEach((intercooler) => {
-            query.parts[5].forEach((esc) => {
-              const candidate = {
-                id: "",
-                glider: {},
-                rig: [],
-                score: 0,
-                stats: [],
-                delta: maxDelta,
-              };
-              candidate.score = glider.score + propulsor.score + stabilizer.score + rudder.score + hull.score + intercooler.score + esc.score;
-              if (candidate.score >= query.scores[0] && candidate.score <= query.scores[1]) {
-                candidate.stats = addArrays([glider.stats, propulsor.stats, stabilizer.stats, rudder.stats, hull.stats, intercooler.stats, esc.stats]);
-                candidate.delta = calculateDelta(candidate.stats, query.stats, query.greaterOnly);
-                if (candidate.delta <= maxDelta) {
-                  candidate.glider = glider;
-                  candidate.rig = [propulsor, stabilizer, rudder, hull, intercooler, esc];
-                  candidate.id = `${propulsor.id}${stabilizer.id}${rudder.id}${hull.id}${intercooler.id}${esc.id}`;
-                  candidates[maxDeltaIndex] = candidate;
-                  maxDelta = 0;
-                  candidates.forEach((_candidate, _candidateIndex) => {
-                    if (_candidate.delta > maxDelta) {
-                      maxDelta = _candidate.delta;
-                      maxDeltaIndex = _candidateIndex;
-                    }
-                  });
-                }
-              }
+    parts[0].forEach((propulsor) => {
+        parts[1].forEach((stabilizer) => {
+            parts[2].forEach((rudder) => {
+                parts[3].forEach((hull) => {
+                    parts[4].forEach((intercooler) => {
+                        parts[5].forEach((esc) => {
+                            const rig = [propulsor, stabilizer, rudder, hull, intercooler, esc];
+                            let power = glider.power;
+                            rig.forEach((part) => (power += part.power));
+                            if (query.power[0] <= power && power <= query.power[1]) {
+                                const stats = addArrays([
+                                    glider.stats,
+                                    ...Array.from(rig, (part) => part.stats),
+                                ]);
+                                const delta = calculateDelta(stats, query.stats, query.greaterOnly);
+                                if (delta <= maxDelta) {
+                                    maxDelta = 0;
+                                    const candidate = {
+                                        id: `${glider.code}-${Array.from(rig, (part) => part.id).join("")}`,
+                                        delta: delta,
+                                    };
+                                    candidates[worst] = candidate;
+                                    candidates.forEach((candidate, i) => {
+                                        if (candidate.delta > maxDelta) {
+                                            maxDelta = candidate.delta;
+                                            worst = i;
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
             });
-          });
         });
-      });
     });
-  });
 
-  return candidates.filter((_candidate) => _candidate.delta != 9999);
+    return candidates.filter((candidate) => candidate.delta != 9999);
 }

@@ -1,309 +1,307 @@
-// function levenshteinDistance(str1, str2) {
-//   const m = str1.length;
-//   const n = str2.length;
+let queries = {
+    inputs: [],
+    results: [],
+    current: -1,
+};
 
-//   // Create a 2D array to store the distances
-//   const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+function parseResult(id, delta = 0) {
+    id = id.split("-");
+    const glider = redoutDB.gliders.filter((glider) => glider.code === id[0]);
+    const rig = [].concat(
+        ...Array.from(id[1].split(""), (char, i) => redoutDB.parts[i].details.filter((part) => part.id === char))
+    );
+    let power = glider[0].power;
+    rig.forEach((part) => (power += part.power));
+    const stats = addArrays([glider[0].stats, ...Array.from(rig, (part) => part.stats)]);
+    return { id: id.join("-"), glider: glider[0], rig: rig, power: power, stats: stats, delta: delta };
+}
 
-//   // Initialize the first row and column
-//   for (let i = 0; i <= m; i++) {
-//     dp[i][0] = i;
-//   }
+async function querySubmit(e, quickSearch = false) {
+    if (e) e.preventDefault();
 
-//   for (let j = 0; j <= n; j++) {
-//     dp[0][j] = j;
-//   }
+    // Indicate that we're searching by changing the button icon and disabling them
+    input.buttons.query.disabled = true;
+    input.buttons.query.innerHTML = '<i class="fa-solid fa-cog fa-spin fa-fw"></i>';
 
-//   // Fill in the rest of the array
-//   for (let i = 1; i <= m; i++) {
-//     for (let j = 1; j <= n; j++) {
-//       const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
-//       dp[i][j] = Math.min(
-//         dp[i - 1][j] + 1, // Deletion
-//         dp[i][j - 1] + 1, // Insertion
-//         dp[i - 1][j - 1] + cost // Substitution
-//       );
-//     }
-//   }
+    // Parse user input into a searchable query
+    let query = {
+        power: [Number(input.power.min.value), Number(input.power.max.value)],
+        gliders: Array.from(document.querySelectorAll(`#select-ship input[type="checkbox"]:checked`), (ship) => Number(ship.value)),
+        parts: Array.from(input.types, (type) => Array.from(document.querySelectorAll(`#${type.id} input[type="checkbox"]:checked`), (part) => Number(part.value))),
+        stats: Array.from(input.targets, (target) => Number(target.value)),
+        greaterOnly: input.option.greaterOnly.checked,
+        limit: 120,
+    };
 
-//   // Return the Levenshtein distance
-//   return dp[m][n];
-// }
+    let gliderCodes = Array.from(redoutDB.gliders, (glider) => glider.code);
 
-// function getBestMatch(inputStr, stringArray) {
-//   let bestMatch = null;
-//   let bestScore = Infinity; // Initialize with a high value
+    //Parse the ShipGen ID (if any specified)
+    input.id.value.split("-").forEach((id) => {
+        if (!quickSearch && id) {
+            switch (id.length) {
+                case 3:
+                    // Possible ship code
+                    query.gliders = [gliderCodes.indexOf(id.toUpperCase())];
+                    if (query.gliders[0] === -1) query.gliders = [0, 11];
+                    break;
+                case 6:
+                    // Possible part code, ignore power range
+                    query.power = [175, 1200];
+                    [...id].forEach((idChar, i) => {
+                        if (partCode.includes(idChar.toUpperCase())) {
+                            query.parts[i] = [partCode.indexOf(idChar.toUpperCase())];
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
 
-//   stringArray.forEach((candidate) => {
-//     const score = levenshteinDistance(inputStr, candidate);
-//     if (score < bestScore) {
-//       bestScore = score;
-//       bestMatch = candidate;
-//     }
-//   });
+    // Check if the current query has been searched before
+    // If so: set the current query to a previous query...
+    queries.current = -1;
+    queries.inputs.forEach((prevQuery, i) => {
+        if (JSON.stringify(query) == JSON.stringify(prevQuery)) {
+            queries.current = i;
+        }
+    });
 
-//   return [bestMatch];
-// }
 
-let lastResults;
-let lastQuery;
+    let count = query.gliders.length;
+    query.parts.forEach((part) => {
+        count = count * part.length;
+    });
+    output.info.innerHTML = `Searching ${count.toLocaleString()} combinations`;
+    output.info.style.setProperty("filter", "invert(0%)");
+    let results;
+    if (queries.current != -1) {
+        // ...and reuse the results from previous query
+        results = queries.results[queries.current];
+        console.warn(`Reusing result #${queries.current}`);
+    } else {
+        // Otherwise run the query and set the current query to the last in the queries array
+        // If browser supports Web Workers and we're searching for more than one ship, run threaded
+        //results = await runQuery(query);
+        results = window.Worker && query.gliders.length > 1 ? await runQueryThreaded(query, count) : await runQuery(query, count);
 
-async function querySubmit(e, ignoreID = false) {
-  if (e) e.preventDefault();
-  input.buttons.query.disabled = true;
-  input.buttons.query.innerHTML = '<i class="fa-solid fa-cog fa-spin fa-fw"></i>';
-
-  let query = {
-    id: input.id.value.split("-"),
-    scores: input.score.value.split("-"),
-    gliders: redoutDB.gliders,
-    parts: Array.from(input.parts, (part, partIndex) => redoutDB.parts[partIndex].details.slice(...part.value.split("-"))),
-    stats: Array.from(input.targets, (target) => target.value),
-    greaterOnly: input.checkbox.greaterOnly.checked,
-  };
-
-  query.id.forEach((id) => {
-    if (id) {
-      if (!ignoreID && id.length === 6 && [...id].every((idChar) => partCode.includes(idChar.toUpperCase()) || idChar.toUpperCase() === "X")) {
-        // Looks like an ID, set query parts accordingly and ignore score range
-        query.scores = [0, 1200];
-        [...id].forEach((idChar, idCharIndex) => {
-          if (idChar.toUpperCase() === "X") {
-            query.parts[idCharIndex] = redoutDB.parts[idCharIndex].details;
-          } else if (partCode.includes(idChar.toUpperCase())) {
-            query.parts[idCharIndex] = redoutDB.parts[idCharIndex].details.slice(...[partCode.indexOf(idChar.toUpperCase()), partCode.indexOf(idChar.toUpperCase()) + 1]);
-          }
-        });
-      } else if (query.gliders.length === redoutDB.gliders.length) {
-        // Might be a ship name instead
-        query.gliders = [].concat(
-          ...Array.from(id.split(","), (glider) =>
-            redoutDB.gliders.filter((item) => glider.toUpperCase() === "ANY" || glider.toUpperCase() === item.code || glider.toUpperCase() === item.name.toUpperCase() || glider.toUpperCase() === item.nick.toUpperCase())
-          )
-        );
-        if (query.gliders.length === 0) query.gliders = redoutDB.gliders;
-        // console.log(redoutDB.gliders.filter((gliderDB) => gliderDB.name.toLowerCase()));
-        // query.gliders = [].concat(...Array.from(id.split(","), (glider) => redoutDB.gliders.filter((gliderDB) => gliderDB.name.toLowerCase())));
-        // query.gliders = [].concat(...Array.from(id.split(","), (glider) => redoutDB.gliders.filter((gliderDB) => gliderDB.name.toUpperCase().match(new RegExp(`/${glider.toUpperCase()}/`)).count === 1)));
-      }
+        // If there are results, push them to queries and save locally
+        if (results) {
+            results.sort(function (a, b) {
+                return a.delta - b.delta;
+            });
+            queries.results.push(results);
+            queries.inputs.push(query);
+            try {
+                localStorage.setItem("lastQuery", JSON.stringify(query));
+            } catch (e) {
+                console.warn(e);
+            }
+        }
     }
-  });
 
-  // If browser supports Web Workers and we're searching for more than one ship, run threaded
-  // let results = await runQuery(query);
-  let results = window.Worker && query.gliders.length > 1 ? await runQueryThreaded(query) : await runQuery(query);
-  if (results) {
-    input.table.innerHTML = parseResults(results, query);
-    lastResults = results;
-  }
-  lastQuery = query;
-  input.buttons.save.disabled = false;
-  input.buttons.query.disabled = false;
-  input.buttons.query.innerHTML = '<i class="fa-solid fa-magnifying-glass fa-fw"></i>';
+    // Parse and display them in the body of the table...
+    if (results) {
+        console.time("Parsing");
+        let candidates = Array.from(results, (result) => parseResult(result.id, result.delta));
+        // Sort by delta ascending
+        output.headings.forEach((head) => { head.classList.remove("active"); head.classList.add("asc") });
+        candidates.sort(function (a, b) {
+            return a.delta - b.delta;
+        });
+        output.table.innerHTML = parseResults(candidates, query);
+        console.timeEnd("Parsing");
+    }
+
+    // Indicate to the user that the search is finished by changing back the button icon and reenabling them
+    input.buttons.save.disabled = false;
+    input.buttons.query.disabled = false;
+    input.buttons.query.innerHTML = '<i class="fa-solid fa-magnifying-glass fa-fw"></i>';
 }
 
 function addArrays(arrays) {
-  const numArrays = arrays.length;
-  const arrayLength = arrays[0].length;
-  const result = new Array(arrayLength).fill(0);
+    const numArrays = arrays.length;
+    const arrayLength = arrays[0].length;
+    const result = new Array(arrayLength).fill(0);
 
-  for (let i = 0; i < numArrays; i++) {
-    for (let j = 0; j < arrayLength; j++) {
-      result[j] += arrays[i][j];
+    for (let i = 0; i < numArrays; i++) {
+        for (let j = 0; j < arrayLength; j++) {
+            result[j] += arrays[i][j];
+        }
     }
-  }
 
-  // Prevent negative arrays
-  for (let j = 0; j < arrayLength; j++) {
-    result[j] = Math.max(0, result[j]);
-  }
+    // Prevent negative arrays
+    for (let j = 0; j < arrayLength; j++) {
+        result[j] = Math.max(0, result[j]);
+    }
 
-  return result;
+    return result;
 }
 
 function calculateDelta(candidate, query, greaterOnly = false) {
-  let delta = 0;
+    let delta = 0;
 
-  for (let i = 0; i < candidate.length; i++) {
-    if (greaterOnly && candidate[i] < query[i]) return 9999;
-    delta += Math.abs(candidate[i] - query[i]);
-  }
+    for (let i = 0; i < candidate.length; i++) {
+        // Skip targets with 0 value
+        if (query[i] != 0) {
+            if (greaterOnly && candidate[i] < query[i]) return 9999;
+            delta += Math.abs(candidate[i] - query[i]);
+        }
+    }
 
-  return delta;
+    return delta;
 }
 
-async function runQuery(query) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.time("Query");
+async function runQuery(query, count) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.time("Query");
 
-      let maxDelta = 9999;
-      let maxDeltaIndex = 0;
+            // Get detailed info of query from RedoutDB
+            let gliders = Array.from(query.gliders, (glider) => redoutDB.gliders[glider]);
+            let parts = Array.from(query.parts, (type, i) =>
+                Array.from(type, (part) => redoutDB.parts[i].details[part])
+            );
 
-      const candidateLimit = 100;
-      const candidates = new Array(candidateLimit).fill(
-        {
-          id: "",
-          glider: {},
-          rig: [],
-          score: 0,
-          stats: [],
-          delta: maxDelta,
-        },
-        0,
-        candidateLimit
-      );
+            let worst = 0;
+            let maxDelta = 9999;
+            let candidates = new Array(query.limit).fill({ id: "", delta: maxDelta }, 0, query.limit);
 
-      query.gliders.forEach((glider) => {
-        query.parts[0].forEach((propulsor) => {
-          query.parts[1].forEach((stabilizer) => {
-            query.parts[2].forEach((rudder) => {
-              query.parts[3].forEach((hull) => {
-                query.parts[4].forEach((intercooler) => {
-                  query.parts[5].forEach((esc) => {
-                    const candidate = {
-                      id: "",
-                      glider: {},
-                      rig: [],
-                      score: 0,
-                      stats: [],
-                      delta: maxDelta,
-                    };
-                    candidate.score = glider.score + propulsor.score + stabilizer.score + rudder.score + hull.score + intercooler.score + esc.score;
-                    if (candidate.score >= query.scores[0] && candidate.score <= query.scores[1]) {
-                      candidate.stats = addArrays([glider.stats, propulsor.stats, stabilizer.stats, rudder.stats, hull.stats, intercooler.stats, esc.stats]);
-                      candidate.delta = calculateDelta(candidate.stats, query.stats, query.greaterOnly);
-                      if (candidate.delta <= maxDelta) {
-                        candidate.glider = glider;
-                        candidate.rig = [propulsor, stabilizer, rudder, hull, intercooler, esc];
-                        candidate.id = `${propulsor.id}${stabilizer.id}${rudder.id}${hull.id}${intercooler.id}${esc.id}`;
-                        candidates[maxDeltaIndex] = candidate;
-                        maxDelta = 0;
-                        candidates.forEach((_candidate, _candidateIndex) => {
-                          if (_candidate.delta > maxDelta) {
-                            maxDelta = _candidate.delta;
-                            maxDeltaIndex = _candidateIndex;
-                          }
+            gliders.forEach((glider) => {
+                parts[0].forEach((propulsor) => {
+                    parts[1].forEach((stabilizer) => {
+                        parts[2].forEach((rudder) => {
+                            parts[3].forEach((hull) => {
+                                parts[4].forEach((intercooler) => {
+                                    parts[5].forEach((esc) => {
+                                        const rig = [propulsor, stabilizer, rudder, hull, intercooler, esc];
+                                        let power = glider.power;
+                                        rig.forEach((part) => (power += part.power));
+                                        if (query.power[0] <= power && power <= query.power[1]) {
+                                            const stats = addArrays([
+                                                glider.stats,
+                                                ...Array.from(rig, (part) => part.stats),
+                                            ]);
+                                            const delta = calculateDelta(stats, query.stats, query.greaterOnly);
+                                            if (delta <= maxDelta) {
+                                                maxDelta = 0;
+                                                const candidate = {
+                                                    id: `${glider.code}-${Array.from(rig, (part) => part.id).join("")}`,
+                                                    delta: delta,
+                                                };
+                                                candidates[worst] = candidate;
+                                                candidates.forEach((candidate, i) => {
+                                                    if (candidate.delta > maxDelta) {
+                                                        maxDelta = candidate.delta;
+                                                        worst = i;
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                });
+                            });
                         });
-                      }
-                    }
-                  });
+                    });
                 });
-              });
-            });
-          });
-        });
-      });
-
-      let count = query.gliders.length;
-      query.parts.forEach((part) => {
-        count = count * part.length;
-      });
-
-      const mergedResults = candidates.filter((_candidate) => _candidate.delta != 9999);
-      console.timeEnd("Query");
-      console.warn(`Searched ${count.toLocaleString()} combination(s) on a single thread!`);
-      if (mergedResults.length === 0) {
-        reject("No results found!");
-      } else {
-        console.info(`Showing top ${mergedResults.length} result(s)`);
-        resolve(mergedResults);
-      }
-    }, 0);
-  }).catch((e) => {
-    alert(e);
-  });
-}
-
-async function runQueryThreaded(query) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.time("Query");
-
-      let workers = {
-        count: query.gliders.length,
-        results: [],
-        done: 0,
-      };
-
-      query.gliders.forEach((glider) => {
-        let arrayWorker = new Worker("./src/worker.js");
-        arrayWorker.postMessage([query, glider, workers.count]);
-        arrayWorker.onmessage = (e) => {
-          workers.results.push(e.data);
-          workers.done++;
-          if (workers.done === workers.count) {
-            const mergedResults = [].concat(...workers.results);
-            let count = query.gliders.length;
-            query.parts.forEach((part) => {
-              count = count * part.length;
             });
 
+            const mergedResults = candidates.filter((candidate) => candidate.delta != 9999);
             console.timeEnd("Query");
-            console.info(`Searched ${count.toLocaleString()} combination(s) with ${workers.count} thread(s)`);
+            console.warn(`Searched ${count.toLocaleString()} combinations on a single thread!`);
             if (mergedResults.length === 0) {
-              reject("No results found!");
+                reject("No results found!");
+                output.info.innerHTML = "No results found!";
+                output.info.style.setProperty("filter", "invert(100%)");
             } else {
-              console.info(`Showing top ${mergedResults.length} result(s)`);
-              resolve(mergedResults);
+                console.info(`Showing top ${mergedResults.length} result(s)`);
+                output.info.innerHTML = `Searched ${count.toLocaleString()} combinations`;
+                output.info.style.setProperty("filter", "invert(0%)");
+                resolve(mergedResults);
             }
-          }
-          arrayWorker.terminate();
-        };
-      });
-    }, 0);
-  }).catch((e) => {
-    alert(e);
-  });
+        }, 0);
+    }).catch((e) => {
+        console.warn(e);
+    });
 }
 
-function calculatePartDelta(stat, target) {
-  delta = stat - target;
-  if (delta > 0) return `+${delta}`;
-  return delta;
-}
+async function runQueryThreaded(query, count) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.time("Query");
 
-function clamp(val, min, max) {
-  return val > max ? max : val < min ? min : val;
+            let workers = {
+                count: query.gliders.length,
+                results: [],
+                done: 0,
+            };
+
+            // Get detailed info of query from RedoutDB
+            let gliders = Array.from(query.gliders, (glider) => redoutDB.gliders[glider]);
+            let parts = Array.from(query.parts, (type, i) =>
+                Array.from(type, (part) => redoutDB.parts[i].details[part])
+            );
+
+            gliders.forEach((glider) => {
+                let arrayWorker = new Worker("./src/worker.js");
+                arrayWorker.postMessage([query, glider, parts, workers.count]);
+                arrayWorker.onmessage = (e) => {
+                    workers.results.push(e.data);
+                    workers.done++;
+                    if (workers.done === workers.count) {
+                        const mergedResults = [].concat(...workers.results);
+
+                        console.timeEnd("Query");
+                        console.info(
+                            `Searched ${count.toLocaleString()} combinations with ${workers.count} thread(s)`
+                        );
+                        if (mergedResults.length === 0) {
+                            reject("No results found!");
+                            output.info.innerHTML = "No results found!";
+                            output.info.style.setProperty("filter", "invert(100%)");
+                        } else {
+                            console.info(`Showing top ${mergedResults.length} result(s)`);
+                            output.info.innerHTML = `Searched ${count.toLocaleString()} combinations`;
+                            output.info.style.setProperty("filter", "invert(0%)");
+                            resolve(mergedResults);
+                        }
+                    }
+                    arrayWorker.terminate();
+                };
+            });
+        }, 0);
+    }).catch((e) => {
+        console.warn(e);
+    });
 }
 
 function parseResults(candidates, query) {
-  // Sort by delta from least to greatest
-  candidates.sort(function (a, b) {
-    return a.delta - b.delta;
-  });
-  let html = "";
-  candidates.forEach((candidate) => {
-    html += `<tr ${`${selectedRig.glider.code}-${selectedRig.id}` === `${candidate.glider.code}-${candidate.id}` ? "class=results-selected" : ""} onmouseover='rowHover(this)' onclick='rowClick(this, event)'>`;
-    html += `<td class='results-cell-bottom results-cell-right cell-ship' title="${candidate.glider.name} (${candidate.glider.code}) {${candidate.glider.score}} [${candidate.glider.stats}]\n\n${candidate.glider.desc}"><img src='./img/${candidate.glider.code}.webp'></img><span>${candidate.glider.code} - ${candidate.id}</span></td>`;
-    candidate.rig.forEach((part) => {
-      html += `<td class='results-cell-bottom cell-class-${part.class}' title="${part.name} (${part.class}) {${part.score}} [${part.stats}]\n\n${part.desc}">${part.code}</td>`;
+    let html = "";
+    candidates.forEach((candidate) => {
+        html += `<tr ${`${selectedRig.id}` === `${candidate.id}` && "class=selected"} onmouseover='rowHover(event, this)' onclick='rowClick(event, this)'><td class='results-cell-bottom results-cell-right cell-ship' title="${candidate.glider.name} (${candidate.glider.code}) {${candidate.glider.power}} [${candidate.glider.stats}]\n\n${candidate.glider.desc}"><img src='./img/${candidate.glider.code}.webp'></img><span>${candidate.id}</span></td>`;
+        candidate.rig.forEach((part) => {
+            html += `<td class='results-cell-bottom cell-class-${part.class}' title="${part.name} (${part.class}) {${part.power}} [${part.stats}]\n\n${part.desc}">${part.code}</td>`;
+        });
+        html += `<td class='results-cell-bottom results-cell-left results-cell-right cell-power'><span>${candidate.power}</span></td>`;
+        candidate.stats.forEach((stat, i) => {
+            let statType = "";
+            if (stat > query.stats[i] * 1.1) {
+                statType = "cell-good";
+            } else if (stat < query.stats[i] * 0.9) {
+                statType = "cell-bad";
+            }
+            // Top Speed tooltip
+            let statEstimation = "";
+            if (i === 2) {
+                statEstimation = `\n\n${redoutDB.graphs.speed[stat]} km/h (${Math.round(redoutDB.graphs.speed[stat] / 1.609344)} mph)`;
+            }
+            let delta = stat - query.stats[i];
+            let deltaPercentage = new Intl.NumberFormat("en-US", { style: "percent", maximumSignificantDigits: 2, signDisplay: "exceptZero", }).format(delta / 40);
+            let statPercentage = Math.round(100 * stat / 40);
+            html += `<td class='results-cell-bottom ${statType}' title='${chartLabels[i]}: ${stat} (${statPercentage}%)\nStat change: ${delta} (${deltaPercentage})${statEstimation}\nTotal change: ${candidate.delta}'>${input.option.percentageScale.checked ? statPercentage : stat}</td>`;
+        });
+        html += `</tr>`;
     });
-    html += `<td class='results-cell-bottom results-cell-left results-cell-right cell-score' title='Total delta: ${candidate.delta}'><span>${candidate.score}</span></td>`;
-    candidate.stats.forEach((stat, statIndex) => {
-      let statType = "";
-      if (stat > query.stats[statIndex] * 1.1) {
-        statType = "cell-good";
-      } else if (stat < query.stats[statIndex] * 0.9) {
-        statType = "cell-bad";
-      }
-
-      // Top speed tooltip
-      let statEstimation = "";
-      if (statIndex === 2) {
-        statEstimation = `\n\n${redoutDB.graphs.speed[stat]} km/h (${Math.round(redoutDB.graphs.speed[stat] / 1.609344)} mph)`;
-      }
-
-      let delta = calculatePartDelta(stat, query.stats[statIndex]);
-      html += `<td class='results-cell-bottom ${statType}' title='${chartLabels[statIndex]}: ${stat} (${new Intl.NumberFormat("en-US", {
-        style: "percent",
-        minimumFractionDigits: 0,
-      }).format(stat / 40)})\nStat delta: ${delta} (${new Intl.NumberFormat("en-US", {
-        style: "percent",
-        minimumFractionDigits: 0,
-      }).format(delta / 40)})${statEstimation}'>${stat}</td>`;
-    });
-    html += `</tr>`;
-  });
-  return html;
+    return html;
 }
