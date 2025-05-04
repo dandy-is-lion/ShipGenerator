@@ -155,7 +155,7 @@ h1 {
     justify-content: flex-start;
     align-items: center;
     padding: 0 2em;
-    overflow: hidden;
+    overflow: auto;
     gap: 1.5em;
 }
 
@@ -182,6 +182,10 @@ h1 {
     color: var(--foreground-color-hover);
     opacity: 1;
     cursor: pointer;
+}
+
+#info-banner {
+    white-space: nowrap;
 }
 
 .stats {
