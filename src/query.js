@@ -94,7 +94,7 @@ async function querySubmit(e, quickSearch = false) {
             queries.results.push(results);
             queries.inputs.push(query);
             try {
-                localStorage.setItem("lastQuery", JSON.stringify(query));
+                if (!quickSearch) localStorage.setItem("lastQuery", JSON.stringify(query));
             } catch (e) {
                 console.warn(e);
             }
