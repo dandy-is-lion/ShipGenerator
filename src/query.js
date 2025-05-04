@@ -79,6 +79,7 @@ async function querySubmit(e, quickSearch = false) {
     if (queries.current != -1) {
         // ...and reuse the results from previous query
         results = queries.results[queries.current];
+        output.info.innerHTML = `Reusing result #${queries.current}`;
         console.warn(`Reusing result #${queries.current}`);
     } else {
         // Otherwise run the query and set the current query to the last in the queries array
