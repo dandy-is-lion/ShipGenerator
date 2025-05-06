@@ -38,6 +38,7 @@ async function querySubmit(e, quickSearch = false) {
     //Parse the ShipGen ID (if any specified)
     input.id.value.split("-").forEach((id) => {
         if (!quickSearch && id) {
+            quickSearch = true;
             switch (id.length) {
                 case 3:
                     // Possible ship code

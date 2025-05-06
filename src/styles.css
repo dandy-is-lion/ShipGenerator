@@ -695,6 +695,31 @@ h1 {
     border-radius: 0 0.25em 0.25em 0;
 }
 
+.power-input {
+    appearance: textfield !important;
+    font-size: 1.5em;
+    border: none;
+    background: none;
+    color: var(--foreground-color);
+    padding: 0;
+    margin: 0;
+    max-width: min-content;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.power-input:invalid {
+    color: var(--bad-color);
+}
+
+.power-input::-webkit-outer-spin-button,
+.power-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .part-selectors {
     display: flex;
     flex-flow: column nowrap;

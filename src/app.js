@@ -6,8 +6,10 @@ const input = {
     id: document.getElementById("select-id"),
     ships: document.getElementById("select-ship"),
     power: {
-        min: document.getElementById("slider-power-min"),
-        max: document.getElementById("slider-power-max")
+        min: !mobileCheck() ? document.getElementById("slider-power-min") : document.getElementById("select-power-min"),
+        max: !mobileCheck() ? document.getElementById("slider-power-max") : document.getElementById("select-power-max"),
+        minAlt: mobileCheck() ? document.getElementById("slider-power-min") : document.getElementById("select-power-min"),
+        maxAlt: mobileCheck() ? document.getElementById("slider-power-max") : document.getElementById("select-power-max")
     },
     targets: [
         document.getElementById("select-durability"),
@@ -116,6 +118,12 @@ fetch("./src/data.json")
             });
             partsCheck(new Event("Initialize"), part.type);
         });
+        if (mobileCheck()) {
+            input.power.minAlt.classList.add("hide");
+            input.power.maxAlt.classList.add("hide");
+            input.power.min.classList.remove("hide");
+            input.power.max.classList.remove("hide");
+        }
         if (lastQuery) {
             input.power.min.value = lastQuery.power[0];
             input.power.max.value = lastQuery.power[1];
@@ -164,6 +172,7 @@ function quickSelect(e, parts) {
 
 function powerChange(e, range) {
     e.preventDefault();
+    if (e.target && !e.target.checkValidity()) e.target.value = e.target.defaultValue;
     // console.log(input.power.min.value, input.power.max.value);
     if (Number(input.power.min.value) > Number(input.power.max.value)) {
         switch (range) {

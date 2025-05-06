@@ -267,11 +267,13 @@
                             </th>
                             <th class="extra-power border-left border-right border-bottom">
                                 <div class="power-selectors">
+                                    <input id="select-power-min" size="2" maxlength="2" class="power-input hide" onchange="powerChange(event, 'min')" title="Minimum power range" type="number" min="175" max="975" step="25" value="175" />
                                     <input id="slider-power-min" class="slider-power-min" title="Minimum power range" type="range" min="175" max="975" step="25" value="175" oninput="powerChange(event, 'min')" />
                                     <div class="labels-power">
                                         <label for="slider-power-min" id="label-power-min">Min</label>
                                         <label for="slider-power-max" id="label-power-max">Max</label>
                                     </div>
+                                    <input id="select-power-max" size="2" maxlength="2" class="power-input hide" onchange="powerChange(event, 'max')" title="Maximum power range" type="number" min="300" max="1200" step="25" value="1200" />
                                     <input id="slider-power-max" class="slider-power-max" title="Maximum power range" type="range" min="300" max="1200" step="25" value="1200" oninput="powerChange(event, 'max')" />
                                 </div>
                             </th>
