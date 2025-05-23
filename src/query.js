@@ -36,9 +36,10 @@ async function querySubmit(e, quickSearch = false) {
     let gliderCodes = Array.from(redoutDB.gliders, (glider) => glider.code);
 
     //Parse the ShipGen ID (if any specified)
+    let idSpecified = false;
     input.id.value.split("-").forEach((id) => {
         if (!quickSearch && id) {
-            quickSearch = true;
+            idSpecified = true;
             switch (id.length) {
                 case 3:
                     // Possible ship code
@@ -59,6 +60,7 @@ async function querySubmit(e, quickSearch = false) {
             }
         }
     });
+    if (idSpecified) quickSearch = true;
 
     // Check if the current query has been searched before
     // If so: set the current query to a previous query...
