@@ -229,16 +229,17 @@ function columnSort(e, isNumber = false) {
             if (e.currentTarget.classList.contains("asc")) {
                 // Reset order
                 output.headings.forEach((head) => head.classList.remove("active"));
-                let results = Array.from(queries.results.at(queries.current), (result) => parseResult(result.id, result.delta));
-                results.sort(function (a, b) {
+                queries.results.at(queries.current).sort((a, b) => {
                     return a.delta - b.delta;
                 });
-                output.table.innerHTML = parseResults(results, queries.inputs.at(queries.current));
+                output.table.innerHTML = parseResults(
+                    Array.from(queries.results.at(queries.current), (result) => parseResult(result.id, result.delta)),
+                    queries.inputs.at(queries.current)
+                );
                 return;
             }
         }
         output.headings.forEach((head) => head.classList.remove("active"));
-        // console.log(output.headings);
         let column = e.currentTarget.cellIndex;
         let isAscending = e.currentTarget.classList.contains("asc") ? -1 : 1;
         let moveOperations = [];
@@ -253,7 +254,6 @@ function columnSort(e, isNumber = false) {
             .map((sorted_row, i) => {
                 output.table.appendChild(sorted_row);
             });
-        // console.log(moveOperations);
         let sortIteration = -1;
         queries.results.at(queries.current).sort((a, b) => {
             sortIteration++;
