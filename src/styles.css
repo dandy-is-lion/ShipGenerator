@@ -28,13 +28,14 @@
     --anti-border: -2px;
     --power-min-value: 0%;
     --power-max-value: 100%;
-    --transition: background-color 100ms ease, color 100ms ease, opacity 100ms ease, text-shadow 100ms ease,
-        background-image 100ms ease, border-bottom 100ms ease, filter 100ms ease;
+    --transition: background-color 200ms ease, color 200ms ease, opacity 200ms ease, text-shadow 200ms ease,
+        background-image 200ms ease, border-bottom 200ms ease, filter 200ms ease;
 }
 
 * {
     box-sizing: border-box;
     font-family: "Roboto Condensed", Sans-serif;
+    transition: var(--transition);
 }
 
 .blur {
@@ -169,10 +170,6 @@ h1 {
     padding: 0;
 }
 
-.social a {
-    transition: var(--transition);
-}
-
 .social:hover a {
     opacity: 0.5;
 }
@@ -221,7 +218,6 @@ h1 {
 .table-query tbody tr td {
     font-size: 1.75em;
     padding: 0.25em;
-    transition: var(--transition);
     background-color: var(--panel-color);
     border-bottom: var(--border-width) solid var(--border-color);
 }
@@ -239,11 +235,9 @@ h1 {
 .query-button {
     font-size: 1em;
     width: 100%;
-    height: 100%;
     border: none;
     background: none;
     color: var(--foreground-color);
-    transition: var(--transition);
     margin: 0;
     padding: 0;
 }
@@ -285,7 +279,6 @@ h1 {
     text-transform: uppercase;
     white-space: nowrap;
     text-decoration: none;
-    transition: var(--transition);
     border: none;
     color: var(--foreground-color);
     background-color: var(--darken);
@@ -370,21 +363,27 @@ h1 {
 }
 
 .table-stats .header-target {
-    /* color: var(--bad-color); */
     background-color: var(--bad-color-shadow);
     text-shadow: 0 0 0.5em var(--bad-color-shadow);
-    border-left: var(--border-width) solid var(--bad-color);
+    border-left: var(--border-width) solid var(--bad-color-dim);
     border-bottom: var(--border-width) solid var(--bad-color);
     width: 3.7em;
 }
 
+.table-stats .header-target:first-child {
+    border-left: var(--border-width) solid var(--bad-color);
+}
+
 .table-stats .header-comparison {
-    /* color: var(--good-color); */
     background-color: var(--good-color-shadow);
     text-shadow: 0 0 0.5em var(--good-color-shadow);
-    border-right: var(--border-width) solid var(--good-color);
+    border-right: var(--border-width) solid var(--good-color-dim);
     border-bottom: var(--border-width) solid var(--good-color);
     width: 3.7em;
+}
+
+.table-stats .header-comparison:last-child {
+    border-right: var(--border-width) solid var(--good-color);
 }
 
 .table-stats .column-delta {
@@ -401,18 +400,26 @@ h1 {
 
 .table-stats .cell-target {
     background-color: var(--bad-color-dim);
-    border-left: var(--border-width) solid var(--bad-color);
+    border-left: var(--border-width) solid var(--bad-color-dim);
     border-bottom: var(--border-width) solid var(--bad-color);
     text-align: center;
     font-style: oblique;
 }
 
+.table-stats .cell-target:first-child {
+    border-left: var(--border-width) solid var(--bad-color);
+}
+
 .table-stats .cell-comparison {
     background-color: var(--good-color-dim);
-    border-right: var(--border-width) solid var(--good-color);
+    border-right: var(--border-width) solid var(--good-color-dim);
     border-bottom: var(--border-width) solid var(--good-color);
     text-align: center;
     font-style: oblique;
+}
+
+.table-stats .cell-comparison:last-child {
+    border-right: var(--border-width) solid var(--good-color);
 }
 
 .logo {
@@ -461,12 +468,15 @@ h1 {
     text-transform: uppercase;
     white-space: nowrap;
     padding: 0.25em;
-    transition: var(--transition);
+    user-select: none;
 }
 
-.row-headings,
-.table-results tbody tr {
-    transition: var(--transition);
+.row-headings > th > img {
+    min-width:1.25em;
+    width: 100%;
+    height: 1.25em;
+    object-fit: contain;
+    display: block;
 }
 
 .row-headings:hover {
@@ -491,14 +501,16 @@ h1 {
     text-shadow: 0 0 0.5em var(--accent-color);
 }
 
-.row-headings th.active:not(.asc):after {
-    content: "↓";
+.row-headings th.active:not(.asc)::after {
+    content: "🞃";
+    font-size: 0.75em;
     color: var(--foreground-color-hover);
     text-shadow: 0 0 0.5em var(--accent-color);
 }
 
-.row-headings th.active:after {
-    content: "↑";
+.row-headings th.active::after {
+    content: "🞁";
+    font-size: 0.75em;
     color: var(--foreground-color-hover);
     text-shadow: 0 0 0.5em var(--accent-color);
 }
@@ -513,7 +525,6 @@ h1 {
     font-weight: bolder;
     text-transform: uppercase;
     text-align: center;
-    transition: var(--transition);
 }
 
 .column-select:hover {
@@ -550,7 +561,6 @@ h1 {
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
-    transition: var(--transition);
 }
 
 .column-input:disabled {
@@ -581,8 +591,8 @@ h1 {
 .extra-parts,
 .extra-power,
 .extra-stats {
-    transition: var(--transition);
     padding: 0.25em;
+    user-select: none;
 }
 
 .extra-parts {
@@ -707,7 +717,6 @@ h1 {
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
-    transition: var(--transition);
 }
 
 .power-input:invalid {
@@ -752,7 +761,7 @@ h1 {
 .part-selector .label-checkbox {
     background-color: var(--darken);
     font-size: 1.25em;
-    width: 1.5em;
+    width: 16em;
     padding: 0.05em 0;
     flex-basis: calc(100% * 1 / 6);
 }
@@ -971,7 +980,6 @@ h1 {
     text-align: center;
     white-space: nowrap;
     padding: 0.25em;
-    transition: var(--transition);
 }
 
 .table-results tbody tr:hover td:hover {
@@ -1013,6 +1021,9 @@ h1 {
 .cell-ship img {
     width: 1.125em;
     height: 1.125em;
+}
+.row-query > .cell-power {
+    min-width: 5.75em;
 }
 
 .cell-power {

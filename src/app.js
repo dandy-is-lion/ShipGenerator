@@ -129,7 +129,7 @@ fetch("./src/data.json")
             input.power.max.value = lastQuery.power[1];
             input.targets.forEach((target, i) => target.value = lastQuery.stats[i]);
         }
-        powerChange(new Event("Initialize"));
+        powerChange();
     });
 
 
@@ -147,7 +147,7 @@ function quickSelect(e, parts) {
     let checkboxes = document.querySelectorAll(`#${active.id} input[type = "checkbox"]`);
     switch (parts) {
         case "none":
-            checkboxes.forEach((checkbox) => checkbox.checked = false);
+            checkboxes.forEach((checkbox) => checkbox.checked = checkbox.classList.contains("part-class-C"));
             break;
         case "B":
             checkboxes.forEach((checkbox) => checkbox.checked = checkbox.classList.contains("part-class-C") | checkbox.classList.contains("part-class-B"));
@@ -171,16 +171,17 @@ function quickSelect(e, parts) {
 }
 
 function powerChange(e, range) {
-    e.preventDefault();
-    if (e.target && !e.target.checkValidity()) e.target.value = e.target.defaultValue;
-    // console.log(input.power.min.value, input.power.max.value);
-    if (Number(input.power.min.value) > Number(input.power.max.value)) {
+    if (e) {
+        e.preventDefault();
+        if (!e.target.checkValidity()) e.target.value = e.target.defaultValue;
+    }
+    if (Number(input.power.min.value) >= Number(input.power.max.value)) {
         switch (range) {
             case 'min':
-                input.power.max.value = input.power.min.value;
+                input.power.max.value = Number(input.power.min.value) + 25;
                 break;
             case 'max':
-                input.power.min.value = input.power.max.value;
+                input.power.min.value = Number(input.power.max.value) - 25;
                 break;
             default:
                 break;
@@ -193,8 +194,9 @@ function powerChange(e, range) {
 
 function partsCheck(e, type) {
     e.preventDefault();
-    let checked = document.querySelectorAll(`#select-${type} input[type = "checkbox"]:checked`);
-    document.querySelector(`#label-${type}`).innerHTML = `${checked.length}`;
+    let checked = document.querySelectorAll(`#select-${type} input[type = "checkbox"]:checked`).length;
+    if (checked == 0) { quickSelect(e, "none"); checked = 1 }
+    document.querySelector(`#label-${type}`).innerHTML = `${checked}`;
 }
 
 function changeChart(e, chart) {
@@ -317,7 +319,7 @@ function resetClick(e) {
     selectedRig = { glider: [{ code: "" }], id: "" };
     updateStatCharts(0, searchData.target.stats);
     redoutDB.parts.forEach((part) => partsCheck(e, part.type));
-    powerChange(e);
+    powerChange();
 }
 
 
