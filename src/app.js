@@ -149,7 +149,7 @@ function quickSelect(e, parts) {
   let active = document.querySelector(`.part-selector:not(.hide)`);
   let checkboxes = document.querySelectorAll(`#${active.id} input[type = "checkbox"]`);
   switch (parts) {
-    case "none":
+    case "base":
       checkboxes.forEach((checkbox) => checkbox.checked = checkbox.classList.contains("part-class-C"));
       break;
     case "B":
@@ -502,7 +502,7 @@ function statChange(comparison, target) {
 
 function powerDelta(comparison, target) {
   let delta = comparison - target;
-  if (delta == 0) { return ""; }
+  if (delta == 0 || target == 0) { return ""; }
   if (delta > 0) { return `+${delta}`; }
   return `${delta}`;
 }

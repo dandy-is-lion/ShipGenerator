@@ -25,7 +25,7 @@ let searchData = {
   }
 }
 
-const chartAspectRatio = 0.87;
+const chartAspectRatio = 1;
 const chartIcons = ["\u002b", "\uf5b0", "\uf625", "\uf076", "\uf021", "\uf337"];
 const chartLabels = ["Durability", "Thrust", "Top Speed", "Stability", "Steer", "Strafe"];
 const chartLabelColors = new Array(6).fill(foregroundColor);
@@ -89,6 +89,14 @@ let chartRadar = new Chart(ctxRadar, {
       else e.native.target.style.cursor = "default";
     },
     plugins: {
+      legend: {
+        labels: {
+          font: {
+            weight: "bold",
+            size: 14,
+          },
+        }
+      },
       tooltip: {
         callbacks: {
           title: function (tooltipItem) {
@@ -154,7 +162,7 @@ let chartRadar = new Chart(ctxRadar, {
           color: chartLabelColors,
           font: {
             weight: "bold",
-            size: 14,
+            size: 16,
           },
         },
       },
@@ -201,6 +209,14 @@ let chartBars = new Chart(ctxBars, {
       else e.native.target.style.cursor = "default";
     },
     plugins: {
+      legend: {
+        labels: {
+          font: {
+            weight: "bold",
+            size: 14,
+          },
+        }
+      },
       tooltip: {
         callbacks: {
           title: function (tooltipItem) {

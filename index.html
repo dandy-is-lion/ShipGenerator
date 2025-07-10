@@ -101,7 +101,7 @@
           <div class="chart-wrapper">
             <canvas class="charts" id="chart-radar"></canvas>
             <canvas class="charts" id="chart-bars" style="display:none"></canvas>
-            <table class="table-stats">
+            <table id="table-stats">
               <thead>
                 <tr>
                   <th title="Target ShipGen ID" colspan="2" id="header-target-id" class="header-target">Target</th>
@@ -285,8 +285,8 @@
                   <div class="part-selector hide" id="select-intercooler"></div>
                   <div class="part-selector hide" id="select-esc"></div>
                   <div class="quick-selector" id="select-quick">
-                    <button type="button" id="button-none" title="Clear parts"
-                      onclick="quickSelect(event,'none')">None</button>
+                    <button type="button" id="button-base" title="Clear parts"
+                      onclick="quickSelect(event,'base')">Base</button>
                     <button type="button" id="button-b" title="White and Green parts (Class B)"
                       onclick="quickSelect(event,'B')">B</button>
                     <button type="button" id="button-a" title="Green and Yellow parts (Class A)"

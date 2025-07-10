@@ -291,62 +291,66 @@ h1 {
   gap: 0.5em;
 }
 
-.table-stats {
+#chart-radar {
+  margin: 0 -2em;
+}
+
+#table-stats {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
   font-size: 1.25em;
 }
 
-.table-stats tr {
+#table-stats tr {
   height: 2em;
 }
 
-.table-stats tr:hover {
+#table-stats tr:hover {
   filter: brightness(125%);
 }
 
-.table-stats .header-delta:hover,
-.table-stats .column-delta:hover {
+#table-stats .header-delta:hover,
+#table-stats .column-delta:hover {
   color: var(--foreground-color-hover);
   background-color: var(--panel-color-hover);
   text-shadow: 0 0 0.5em var(--accent-color);
 }
 
-.table-stats .header-target:hover,
-.table-stats .cell-target:hover {
+#table-stats .header-target:hover,
+#table-stats .cell-target:hover {
   color: var(--foreground-color-hover);
   background-color: var(--bad-color-shadow);
   text-shadow: 0 0 0.5em var(--bad-color);
 }
 
-.table-stats .header-comparison:hover,
-.table-stats .cell-comparison:hover {
+#table-stats .header-comparison:hover,
+#table-stats .cell-comparison:hover {
   color: var(--foreground-color-hover);
   background-color: var(--good-color-shadow);
   text-shadow: 0 0 0.5em var(--good-color);
 }
 
-.table-stats #header-delta-label {
+#table-stats #header-delta-label {
   border-top: var(--border-width) solid var(--border-color);
 }
 
-.table-stats #header-target-id {
+#table-stats #header-target-id {
   border-top: var(--border-width) solid var(--bad-color);
 }
 
-.table-stats #header-comparison-id {
+#table-stats #header-comparison-id {
   border-top: var(--border-width) solid var(--good-color);
 }
 
-.table-stats .header-delta {
+#table-stats .header-delta {
   background-color: var(--panel-color-hover);
   border-left: var(--border-width) solid var(--border-color);
   border-right: var(--border-width) solid var(--border-color);
   border-bottom: var(--border-width) solid var(--border-color);
 }
 
-.table-stats .header-target {
+#table-stats .header-target {
   background-color: var(--bad-color-shadow);
   text-shadow: 0 0 0.5em var(--bad-color-shadow);
   border-left: var(--border-width) solid var(--bad-color-dim);
@@ -354,11 +358,11 @@ h1 {
   width: 3.7em;
 }
 
-.table-stats .header-target:first-child {
+#table-stats .header-target:first-child {
   border-left: var(--border-width) solid var(--bad-color);
 }
 
-.table-stats .header-comparison {
+#table-stats .header-comparison {
   background-color: var(--good-color-shadow);
   text-shadow: 0 0 0.5em var(--good-color-shadow);
   border-right: var(--border-width) solid var(--good-color-dim);
@@ -366,11 +370,11 @@ h1 {
   width: 3.7em;
 }
 
-.table-stats .header-comparison:last-child {
+#table-stats .header-comparison:last-child {
   border-right: var(--border-width) solid var(--good-color);
 }
 
-.table-stats .column-delta {
+#table-stats .column-delta {
   background-color: var(--panel-color);
   border-left: var(--border-width) solid var(--border-color-dim);
   border-right: var(--border-width) solid var(--border-color-dim);
@@ -378,32 +382,64 @@ h1 {
   text-align: center;
 }
 
-.table-stats .cell-part {
+#table-stats .cell-part {
   font-weight: bolder;
 }
 
-.table-stats .cell-target {
+#table-stats .cell-target {
   background-color: var(--bad-color-dim);
   border-left: var(--border-width) solid var(--bad-color-dim);
   border-bottom: var(--border-width) solid var(--bad-color);
   text-align: center;
   font-style: oblique;
+  font-weight: bolder;
 }
 
-.table-stats .cell-target:first-child {
+#table-stats .cell-target:first-child {
   border-left: var(--border-width) solid var(--bad-color);
 }
 
-.table-stats .cell-comparison {
+#table-stats .cell-comparison {
   background-color: var(--good-color-dim);
   border-right: var(--border-width) solid var(--good-color-dim);
   border-bottom: var(--border-width) solid var(--good-color);
   text-align: center;
   font-style: oblique;
+  font-weight: bolder;
 }
 
-.table-stats .cell-comparison:last-child {
+#table-stats .cell-comparison:last-child {
   border-right: var(--border-width) solid var(--good-color);
+}
+
+#table-stats .cell-good {
+  background-color: var(--good-color-dim);
+  text-shadow: 0 0 0.5em var(--good-color);
+  border-bottom: var(--border-width) solid var(--good-color);
+  border-left: var(--border-width) solid var(--good-color-dim);
+  border-right: var(--border-width) solid var(--good-color-dim);
+  font-weight: bolder;
+}
+
+#table-stats .cell-good:hover {
+  color: var(--foreground-color-hover);
+  background-color: var(--good-color-shadow);
+  text-shadow: 0 0 0.5em var(--good-color);
+}
+
+#table-stats .cell-bad {
+  background-color: var(--bad-color-dim);
+  text-shadow: 0 0 0.5em var(--bad-color);
+  border-bottom: var(--border-width) solid var(--bad-color);
+  border-left: var(--border-width) solid var(--bad-color-dim);
+  border-right: var(--border-width) solid var(--bad-color-dim);
+  font-weight: bolder;
+}
+
+#table-stats .cell-bad:hover {
+  color: var(--foreground-color-hover);
+  background-color: var(--bad-color-shadow);
+  text-shadow: 0 0 0.5em var(--bad-color);
 }
 
 .logo {
@@ -1042,14 +1078,14 @@ h1 {
   color: var(--power-foreground-color) !important;
 }
 
-.cell-good {
+#table-results .cell-good {
   color: var(--good-color) !important;
   text-shadow: 0 0 0.5em var(--good-color-shadow);
   font-weight: bolder;
   text-decoration: underline;
 }
 
-.cell-bad {
+#table-results .cell-bad {
   color: var(--bad-color) !important;
   text-shadow: 0 0 0.5em var(--bad-color-shadow);
   font-weight: bolder;
