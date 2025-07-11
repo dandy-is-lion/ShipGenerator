@@ -237,37 +237,37 @@
               </th>
               <th class="border-bottom">
                 <input id="select-durability" size="2" maxlength="2" class="column-input"
-                  onchange="targetInputChange(event, this, 0)"
+                  onchange="targetInputChange(event, 0)"
                   title="Select Durability (0-40)&#013;&#013;Durability determines how long you can boost and your resistance to overheat damage. The higher your Durability the faster you cool down, the slower you heat up, and the slower you take overheat damage."
                   type="number" value="20" min="0" max="40" />
               </th>
               <th class="border-bottom">
                 <input id="select-thrust" size="2" maxlength="2" class="column-input"
-                  onchange="targetInputChange(event, this, 1)"
+                  onchange="targetInputChange(event, 1)"
                   title="Select Thrust (0-40)&#013;&#013;Thrust determines how quickly you get up to Top Speed and beyond by raising your acceleration. The higher your Thrust the faster you accelerate, you heat up, and take overheat damage. Does not change how fast you cool down however; that's determined by your Durability. High Thrust is good for when you need short bursts of speed."
                   type="number" value="20" min="0" max="40" />
               </th>
               <th class="border-bottom">
                 <input id="select-speed" size="2" maxlength="2" class="column-input"
-                  onchange="targetInputChange(event, this, 2)"
+                  onchange="targetInputChange(event, 2)"
                   title="Select Top Speed (0-40)&#013;&#013;Top Speed determines your acceleration and deceleration by being the asymptote to those curves. The higher your Top Speed the faster you'll get up to speed, the higher that speed will be, and the slower your speed will drop when decelerating. It'll positively influence your average speed throughout a lap. Coupled with high Thrust and you can get up to some mind-boggling speeds."
                   type="number" value="20" min="0" max="40" />
               </th>
               <th class="border-bottom">
                 <input id="select-stability" size="2" maxlength="2" class="column-input"
-                  onchange="targetInputChange(event, this, 3)"
+                  onchange="targetInputChange(event, 3)"
                   title="Select Stability (0-40)&#013;&#013;Stability determines your speed loss around corners; also known as grip. The higher your Stability, the faster you will be when turning, and the easier you can turn on a dime at higher speeds. It keeps you magnetically coupled with the center of the track, giving you better handling. Has a peculiar affinity for environments of extreme gravity."
                   type="number" value="20" min="0" max="40" />
               </th>
               <th class="border-bottom">
                 <input id="select-steer" size="2" maxlength="2" class="column-input"
-                  onchange="targetInputChange(event, this, 4)"
+                  onchange="targetInputChange(event, 4)"
                   title="Select Steering (0-40)&#013;&#013;Steering determines your speed around corners. The higher your Steering, the faster you can make turns. Steering always slows you down, so it's best to pair this stat with Strafe and Stability to improve your speed when steering and overall handling."
                   type="number" value="20" min="0" max="40" />
               </th>
               <th class="border-bottom">
                 <input id="select-strafe" size="2" maxlength="2" class="column-input"
-                  onchange="targetInputChange(event, this, 5)"
+                  onchange="targetInputChange(event, 5)"
                   title="Select Strafe (0-40)&#013;&#013;Strafe determines how fast you move horizontally. The higher your Strafe, the quicker and easier you can dodge and maneuver along straights, and the better you can drift around turns (by counter-strafing), improving your speed. Strafing doesn't slow you down, so it's generally recommended to strafe more than you steer."
                   type="number" value="20" min="0" max="40" />
               </th>
@@ -278,12 +278,12 @@
               </th>
               <th class="extra-parts border-bottom" colspan="6">
                 <div class="part-selectors">
-                  <div class="part-selector" id="select-propulsor"></div>
-                  <div class="part-selector hide" id="select-stabilizer"></div>
-                  <div class="part-selector hide" id="select-rudder"></div>
-                  <div class="part-selector hide" id="select-hull"></div>
-                  <div class="part-selector hide" id="select-intercooler"></div>
-                  <div class="part-selector hide" id="select-esc"></div>
+                  <div class="part-selector" data-value="0" id="select-propulsor"></div>
+                  <div class="part-selector hide" data-value="1" id="select-stabilizer"></div>
+                  <div class="part-selector hide" data-value="2" id="select-rudder"></div>
+                  <div class="part-selector hide" data-value="3" id="select-hull"></div>
+                  <div class="part-selector hide" data-value="4" id="select-intercooler"></div>
+                  <div class="part-selector hide" data-value="5" id="select-esc"></div>
                   <div class="quick-selector" id="select-quick">
                     <button type="button" id="button-base" title="Clear parts"
                       onclick="quickSelect(event,'base')">Base</button>

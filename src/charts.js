@@ -122,16 +122,15 @@ let chartRadar = new Chart(ctxRadar, {
         },
         onDrag: function (e, datasetIndex, index, value) {
           if (!(datasetIndex === 0)) return false;
-          if (value < 0 || value > 40) return false;
-          e.target.style.cursor = "grabbing";
+          if (value < 0) value = 0;
+          if (value > 40) value = 40;
+          // e.target.style.cursor = "grabbing";
         },
         onDragEnd: function (e, datasetIndex, index, value) {
-          searchData.target.power = 0;
-          searchData.target.stats[index] = value;
-          selectedRig = { glider: [{ code: "" }], id: "" };
-          input.targets[index].value = value;
-
-          updateStatCharts(0, chartData[0].data);
+          if (!(datasetIndex === 0)) return false;
+          if (value < 0) value = 0;
+          if (value > 40) value = 40;
+          targetInputChange(e, index, value);
         },
         magnet: {
           to: Math.round,
@@ -242,17 +241,16 @@ let chartBars = new Chart(ctxBars, {
           if (!(element === 0)) return false;
         },
         onDrag: function (e, datasetIndex, index, value) {
-          if (value < 0 || value > 40) return false;
           if (!(datasetIndex === 0)) return false;
-          e.target.style.cursor = "grabbing";
+          if (value < 0) value = 0;
+          if (value > 40) value = 40;
+          // e.target.style.cursor = "grabbing";
         },
         onDragEnd: function (e, datasetIndex, index, value) {
-          searchData.target.power = 0;
-          searchData.target.stats[index] = value;
-          selectedRig = { glider: [{ code: "" }], id: "" };
-          input.targets[index].value = value;
-
-          updateStatCharts(0, chartData[0].data);
+          if (!(datasetIndex === 0)) return false;
+          if (value < 0) value = 0;
+          if (value > 40) value = 40;
+          targetInputChange(e, index, value);
         },
         magnet: {
           to: Math.round,

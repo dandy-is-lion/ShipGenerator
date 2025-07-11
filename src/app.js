@@ -96,15 +96,16 @@ const output = {
   info: document.getElementById("info-banner"),
 };
 
-let deltaFormat = ["en-US", { style: "percent", maximumSignificantDigits: 2, signDisplay: "exceptZero" }];
-let chartFormat = ["en-US", { style: "percent", maximumSignificantDigits: 2 }];
-let statFormat = ["en-US", { maximumSignificantDigits: 2 }];
+const deltaFormat = ["en-US", { style: "percent", maximumSignificantDigits: 2, signDisplay: "exceptZero" }];
+const chartFormat = ["en-US", { style: "percent", maximumSignificantDigits: 2 }];
+const statFormat = ["en-US", { maximumSignificantDigits: 2 }];
 
 // If there are previous queries saved in local storage, use them
 let lastQuery = JSON.parse(localStorage.getItem("lastQuery"));
 
 // Read data.json to store it in redoutDB and populate some web elements
 const partCode = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "J", "K"];
+const partType = ["propulsor", "stabilizer", "rudder", "hull", "intercooler", "esc"];
 let redoutDB;
 fetch("./src/data.json")
   .then((response) => response.json())
@@ -117,9 +118,9 @@ fetch("./src/data.json")
     redoutDB.parts.forEach((part, i) => {
       part.details.forEach((detail, j) => {
         Object.assign(detail, { id: partCode[j] });
-        input.types[i].innerHTML += `<input class="checkbox-part part-class-${detail.class}" value="${j}" type="checkbox" onchange="partsCheck(event,'${part.type}')" id="checkbox-${detail.code}" ${lastQuery ? ((lastQuery.parts[i].includes(j)) && "checked") : (detail.class == "S" || detail.class == "X") && "checked"} hidden /><label for="checkbox-${detail.code}" class="label-checkbox part-class-${detail.class}" title="${detail.name} (${detail.class}) {${detail.power}} [${detail.stats}]\n\n${detail.desc}">${detail.code}</label>`;
+        input.types[i].innerHTML += `<input class="checkbox-part part-class-${detail.class}" value="${j}" type="checkbox" onchange="partsCheck(event,${i},'${part.type}')" id="checkbox-${detail.code}" ${lastQuery ? ((lastQuery.parts[i].includes(j)) && "checked") : (detail.class == "S" || detail.class == "X") && "checked"} hidden /><label for="checkbox-${detail.code}" class="label-checkbox part-class-${detail.class}" title="${detail.name} (${detail.class}) {${detail.power}} [${detail.stats}]\n\n${detail.desc}">${detail.code}</label>`;
       });
-      partsCheck(new Event("Initialize"), part.type);
+      partsCheck(new Event("Initialize"), i, part.type);
     });
     if (mobileCheck()) {
       input.power.minAlt.classList.add("hide");
@@ -130,7 +131,7 @@ fetch("./src/data.json")
     if (lastQuery) {
       input.power.min.value = lastQuery.power[0];
       input.power.max.value = lastQuery.power[1];
-      input.targets.forEach((target, i) => target.value = lastQuery.stats[i]);
+      input.targets.forEach((target, i) => targetInputChange(target, i, lastQuery.stats[i]));
     }
     powerChange();
   });
@@ -147,6 +148,7 @@ function scaleChange(e) {
 function quickSelect(e, parts) {
   e.preventDefault();
   let active = document.querySelector(`.part-selector:not(.hide)`);
+  let type = active.id.split('-')[1];
   let checkboxes = document.querySelectorAll(`#${active.id} input[type = "checkbox"]`);
   switch (parts) {
     case "base":
@@ -170,7 +172,7 @@ function quickSelect(e, parts) {
     default:
       break;
   }
-  partsCheck(e, active.id.split('-')[1]);
+  partsCheck(e, partType.indexOf(type), type);
 }
 
 function powerChange(e, range) {
@@ -195,24 +197,20 @@ function powerChange(e, range) {
   output.power.innerHTML = `${input.power.min.value}-${input.power.max.value}`;
 }
 
-let parts = {
-  types: ["propulsor", "stabilizer", "rudder", "hull", "intercooler", "esc"],
-  powers: {
+let powers = {
     min: [],
     max: []
-  }
 };
 
-function partsCheck(e, type) {
+function partsCheck(e, i, type) {
   e.preventDefault();
-  let i = parts.types.indexOf(type);
   let checked = document.querySelectorAll(`#select-${type} input[type = "checkbox"]:checked`);
   let partPowers = Array.from(checked, (part) => redoutDB.parts[i].details[Number(part.value)].power);
-  parts.powers.min[i] = Math.min(...partPowers);
-  parts.powers.max[i] = Math.max(...partPowers);
-  input.power.min.value = 184 + parts.powers.min.reduceRight((x, y) => x + y, 0);
-  input.power.max.value = 184 + parts.powers.max.reduceRight((x, y) => x + y, 0);
-  if (checked.length == 0) quickSelect(e, "none");
+  powers.min[i] = Math.min(...partPowers);
+  powers.max[i] = Math.max(...partPowers);
+  input.power.min.value = 184 + powers.min.reduceRight((x, y) => x + y, 0);
+  input.power.max.value = 184 + powers.max.reduceRight((x, y) => x + y, 0);
+  if (checked.length == 0) quickSelect(e, "base");
   document.querySelector(`#label-${type}`).innerHTML = `${checked.length || 1}`;
   powerChange();
 }
@@ -321,12 +319,14 @@ function downloadTable(e) {
   }
 }
 
-function targetInputChange(e, targetInput, i) {
-  if (!e.target.checkValidity()) e.target.value = e.target.defaultValue;
+function targetInputChange(e, i, value = -1) {
+  if (value != -1) input.targets[i].value = value;
+  if (!input.targets[i].checkValidity()) input.targets[i].value = input.targets[i].defaultValue;
+  (input.targets[i].value == 0) ? input.targets[i].classList.add("input-ignored") : input.targets[i].classList.remove("input-ignored");
   searchData.target.power = 0;
-  searchData.target.stats[i] = e.target.value;
+  searchData.target.stats[i] = input.targets[i].value;
   selectedRig = { glider: [{ code: "" }], id: "" };
-  updateStatCharts(0, searchData.target.stats);
+  if (e) updateStatCharts(0, searchData.target.stats);
 }
 
 function selectIDChange(e) {
@@ -337,9 +337,7 @@ function selectIDChange(e) {
 function resetClick(e) {
   e.preventDefault();
   document.getElementById("form-query").reset();
-  searchData.target.power = 0;
-  searchData.target.stats = Array.from(input.targets, (target) => target.value);
-  selectedRig = { glider: [{ code: "" }], id: "" };
+  input.targets.forEach((target, i) => targetInputChange(null, i, target.value));
   updateStatCharts(0, searchData.target.stats);
   redoutDB.parts.forEach((part) => partsCheck(e, part.type));
   powerChange();
@@ -353,12 +351,9 @@ function balanceTargets(e) {
   let average = Math.round(Array.from(nonZero, (target) => Number(target.value)).reduce((x, y) => x + y) / nonZero.length);
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      searchData.target.stats[i] = average;
-      target.value = searchData.target.stats[i];
+      targetInputChange(null, i, average)
     }
-  })
-  searchData.target.power = 0;
-  selectedRig = { glider: [{ code: "" }], id: "" };
+  });
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -366,12 +361,9 @@ function randomTargets(e) {
   e.preventDefault();
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      searchData.target.stats[i] = clamp(Math.round(Number(target.value) + Number(target.value) * getRandomInt(-1, 2) * 0.1), 1, 40);
-      target.value = searchData.target.stats[i];
+      targetInputChange(null, i, clamp(Math.round(Number(target.value) + Number(target.value) * getRandomInt(-1, 2) * 0.1), 1, 40));
     }
   });
-  searchData.target.power = 0;
-  selectedRig = { glider: [{ code: "" }], id: "" };
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -389,12 +381,9 @@ function decreaseTargets(e) {
   e.preventDefault();
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      searchData.target.stats[i] = Math.round(Math.max(1, searchData.target.stats[i] * 0.9));
-      target.value = searchData.target.stats[i];
+      targetInputChange(null, i, Math.round(Math.max(1, searchData.target.stats[i] * 0.9)));
     }
   });
-  searchData.target.power = 0;
-  selectedRig = { glider: [{ code: "" }], id: "" };
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -402,46 +391,37 @@ function increaseTargets(e) {
   e.preventDefault();
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      searchData.target.stats[i] = Math.round(Math.min(40, searchData.target.stats[i] * 1.1));
-      target.value = searchData.target.stats[i];
+      targetInputChange(null, i, Math.round(Math.min(40, searchData.target.stats[i] * 1.1)));
     }
   });
-  searchData.target.power = 0;
-  selectedRig = { glider: [{ code: "" }], id: "" };
   updateStatCharts(0, searchData.target.stats);
 }
 
 function shiftTargetsRight(e) {
   e.preventDefault();
-  let newTargets = new Array(6);
-  input.targets.forEach((target, i) => {
-    if (i === 0) {
-      newTargets[i] = searchData.target.stats[input.targets.length - 1];
-    } else {
-      newTargets[i] = searchData.target.stats[i - 1];
-    }
-    target.value = newTargets[i];
+  let newTargets = new Array(6).fill(0);
+  newTargets.forEach((target, i) => {
+    newTargets[i] = searchData.target.stats[i ? i - 1 : newTargets.length - 1];
   });
-  searchData.target.power = 0;
-  searchData.target.stats = newTargets;
-  selectedRig = { glider: [{ code: "" }], id: "" };
+  input.targets.forEach((target, i) => {
+    targetInputChange(null, i, newTargets[i]);
+  });
   updateStatCharts(0, searchData.target.stats);
 }
 
 function shiftTargetsLeft(e) {
   e.preventDefault();
-  let newTargets = new Array(6);
-  input.targets.forEach((target, i) => {
+  let newTargets = new Array(6).fill(0);
+  newTargets.forEach((target, i) => {
     if (i === input.targets.length - 1) {
       newTargets[i] = searchData.target.stats[0];
     } else {
       newTargets[i] = searchData.target.stats[i + 1];
     }
-    target.value = newTargets[i];
   });
-  searchData.target.power = 0;
-  searchData.target.stats = newTargets;
-  selectedRig = { glider: [{ code: "" }], id: "" };
+  input.targets.forEach((target, i) => {
+    targetInputChange(null, i, newTargets[i]);
+  });
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -471,7 +451,7 @@ function rowClick(e, row) {
     searchData.target.power = result.power;
     searchData.target.stats = result.stats;
     input.targets.forEach((target, i) => {
-      target.value = result.stats[i];
+      targetInputChange(null, i, result.stats[i]);
     });
     updateStatCharts(0, result.stats, result);
     querySubmit(e, true);
@@ -484,16 +464,19 @@ function statChange(comparison, target) {
   const colors = new Array(6).fill(foregroundColor);
   const styles = new Array(6).fill("cell-neutral");
   for (let i = 0; i < change.length; i++) {
-    if (comparison[i] == -1) break;
-    let delta = (input.option.percentageScale.checked) ? ((comparison[i] - target[i]) * 100 / 40).toLocaleString(...statFormat) : comparison[i] - target[i];
-    if (delta > 0) {
-      change[i] = `+${delta}`;
-      colors[i] = comparisonColor;
-      styles[i] = "cell-good";
-    } else if (delta < 0) {
-      change[i] = `${delta}`;
-      colors[i] = targetColor;
-      styles[i] = "cell-bad";
+    if (target[i] == 0) {
+      change[i] = '*';
+    } else if (comparison[i] != 0) {
+      let delta = (input.option.percentageScale.checked) ? ((comparison[i] - target[i]) * 100 / 40).toLocaleString(...statFormat) : comparison[i] - target[i];
+      if (delta > 0) {
+        change[i] = `+${delta}`;
+        colors[i] = comparisonColor;
+        styles[i] = "cell-good";
+      } else if (delta < 0) {
+        change[i] = `${delta}`;
+        colors[i] = targetColor;
+        styles[i] = "cell-bad";
+      }
     }
   }
 

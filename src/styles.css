@@ -28,8 +28,8 @@
   --anti-border: -2px;
   --power-min-value: 0%;
   --power-max-value: 100%;
-  --transition: background-color 200ms ease, color 200ms ease, opacity 200ms ease, text-shadow 200ms ease,
-    background-image 200ms ease, border-bottom 200ms ease, filter 200ms ease;
+  --transition: background-color 150ms ease, color 150ms ease, opacity 150ms ease, text-shadow 150ms ease,
+    background-image 150ms ease, border-bottom 150ms ease, filter 150ms ease;
 }
 
 * {
@@ -603,10 +603,9 @@ h1 {
   text-shadow: 0 0 0.5em var(--accent-color);
 }
 
-.column-input.ignored {
+.input-ignored {
   opacity: 0.5;
 }
-
 .column-input::-webkit-outer-spin-button,
 .column-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -816,6 +815,36 @@ h1 {
   border-radius: 0 0 0.25em 0;
 }
 
+.part-selector .checkbox-part:checked+.label-checkbox {
+  color: var(--background-color);
+  text-shadow: none;
+}
+
+.checkbox-part:checked+.part-class-X {
+  background: var(--class-x);
+}
+
+.checkbox-part:checked+.part-class-S {
+  background: var(--class-s);
+}
+
+.checkbox-part:checked+.part-class-A {
+  background: var(--class-a);
+}
+
+.checkbox-part:checked+.part-class-B {
+  background: var(--class-b);
+}
+
+.checkbox-part:checked+.part-class-C {
+  background: var(--class-c);
+}
+
+.part-selector .label-checkbox:active {
+  background: var(--darken) !important;
+  color: var(--power-color) !important;
+}
+
 .quick-selector button {
   font-size: 1.25em;
   font-weight: bolder;
@@ -875,11 +904,6 @@ h1 {
   filter: sepia(100%) hue-rotate(150deg);
 }
 
-.part-selector .checkbox-part:checked+.label-checkbox {
-  color: var(--background-color);
-  text-shadow: none;
-}
-
 .ship-selector .checkbox-part:checked+.label-checkbox {
   background-color: var(--border-color-dim);
 }
@@ -894,26 +918,6 @@ h1 {
   filter: brightness(125%) contrast(100%);
   text-shadow: 0 0 0.5em var(--accent-color);
   cursor: pointer;
-}
-
-.checkbox-part:checked+.part-class-X {
-  background: var(--class-x);
-}
-
-.checkbox-part:checked+.part-class-S {
-  background: var(--class-s);
-}
-
-.checkbox-part:checked+.part-class-A {
-  background: var(--class-a);
-}
-
-.checkbox-part:checked+.part-class-B {
-  background: var(--class-b);
-}
-
-.checkbox-part:checked+.part-class-C {
-  background: var(--class-c);
 }
 
 .stat-manipulators {
