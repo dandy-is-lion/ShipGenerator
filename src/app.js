@@ -198,8 +198,8 @@ function powerChange(e, range) {
 }
 
 let powers = {
-    min: [],
-    max: []
+  min: [],
+  max: []
 };
 
 function partsCheck(e, i, type) {
@@ -323,10 +323,12 @@ function targetInputChange(e, i, value = -1) {
   if (value != -1) input.targets[i].value = value;
   if (!input.targets[i].checkValidity()) input.targets[i].value = input.targets[i].defaultValue;
   (input.targets[i].value == 0) ? input.targets[i].classList.add("input-ignored") : input.targets[i].classList.remove("input-ignored");
-  searchData.target.power = 0;
   searchData.target.stats[i] = input.targets[i].value;
   selectedRig = { glider: [{ code: "" }], id: "" };
-  if (e) updateStatCharts(0, searchData.target.stats);
+  if (e) {
+    searchData.target.power = 0;
+    updateStatCharts(0, searchData.target.stats);
+  }
 }
 
 function selectIDChange(e) {
@@ -338,6 +340,7 @@ function resetClick(e) {
   e.preventDefault();
   document.getElementById("form-query").reset();
   input.targets.forEach((target, i) => targetInputChange(null, i, target.value));
+  searchData.target.power = 0;
   updateStatCharts(0, searchData.target.stats);
   redoutDB.parts.forEach((part) => partsCheck(e, part.type));
   powerChange();
@@ -354,6 +357,7 @@ function balanceTargets(e) {
       targetInputChange(null, i, average)
     }
   });
+  searchData.target.power = 0;
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -364,6 +368,7 @@ function randomTargets(e) {
       targetInputChange(null, i, clamp(Math.round(Number(target.value) + Number(target.value) * getRandomInt(-1, 2) * 0.1), 1, 40));
     }
   });
+  searchData.target.power = 0;
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -384,6 +389,7 @@ function decreaseTargets(e) {
       targetInputChange(null, i, Math.round(Math.max(1, searchData.target.stats[i] * 0.9)));
     }
   });
+  searchData.target.power = 0;
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -394,6 +400,7 @@ function increaseTargets(e) {
       targetInputChange(null, i, Math.round(Math.min(40, searchData.target.stats[i] * 1.1)));
     }
   });
+  searchData.target.power = 0;
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -406,6 +413,7 @@ function shiftTargetsRight(e) {
   input.targets.forEach((target, i) => {
     targetInputChange(null, i, newTargets[i]);
   });
+  searchData.target.power = 0;
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -422,6 +430,7 @@ function shiftTargetsLeft(e) {
   input.targets.forEach((target, i) => {
     targetInputChange(null, i, newTargets[i]);
   });
+  searchData.target.power = 0;
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -448,11 +457,11 @@ function rowClick(e, row) {
   document.querySelectorAll(`#tbody-results tr`).forEach((row) => row.classList.remove("selected"));
   row.classList.add("selected");
   if (result.id === selectedRig.id) {
-    searchData.target.power = result.power;
-    searchData.target.stats = result.stats;
     input.targets.forEach((target, i) => {
       targetInputChange(null, i, result.stats[i]);
     });
+    searchData.target.stats = result.stats;
+    searchData.target.power = result.power;
     updateStatCharts(0, result.stats, result);
     querySubmit(e, true);
   }

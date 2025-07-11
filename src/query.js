@@ -298,7 +298,7 @@ function parseResults(candidates, query) {
       // Top Speed tooltip
       let statEstimation = "";
       if (i === 2) {
-        statEstimation = `\n\n${redoutDB.graphs.speed[stat]} km/h)} (${Math.round(redoutDB.graphs.speed[stat] / 1.609344)} mph)`;
+        statEstimation = `\n\n${redoutDB.graphs.speed[stat]} km/h (${Math.round(redoutDB.graphs.speed[stat] / 1.609344)} mph)`;
       }
       let delta = stat - query.stats[i];
       let deltaPercentage = (delta / 40).toLocaleString(...deltaFormat);
