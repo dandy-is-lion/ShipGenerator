@@ -1,6 +1,7 @@
 const input = {
   buttons: {
     query: document.getElementById("button-query"),
+    queryIcon: document.getElementById("query-icon"),
     save: document.getElementById("button-save"),
   },
   id: document.getElementById("select-id"),
@@ -289,7 +290,7 @@ function columnSort(e, isNumber = false) {
 
 function downloadTable(e) {
   e.preventDefault();
-  if (queries.results) {
+  if (queries.results.length > 0) {
     const separator = ",";
     let csv = [
       "ID, Ship, Propulsor, Stabilizer, Rudder, Hull, Intercooler, ESC, Power, Durability, Thrust, Top_Speed, Stability, Steer, Strafe, Delta",
@@ -342,7 +343,7 @@ function resetClick(e) {
   input.targets.forEach((target, i) => targetInputChange(null, i, target.value));
   searchData.target.power = 0;
   updateStatCharts(0, searchData.target.stats);
-  redoutDB.parts.forEach((part) => partsCheck(e, part.type));
+  redoutDB.parts.forEach((part, i) => partsCheck(e, i, part.type));
   powerChange();
 }
 

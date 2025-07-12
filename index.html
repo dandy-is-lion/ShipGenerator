@@ -70,27 +70,19 @@
       <div class="border-left stats">
         <div class="query">
           <table class="table-query">
-            <tbody>
-              <tr>
-                <td class="border-bottom">
-                  <button id="button-query" type="submit" class="query-button" title="Search">
-                    <i class="fa-solid fa-magnifying-glass fa-fw"></i>
-                  </button>
-                </td>
-                <td class="border-bottom border-left border-right">
-                  <button id="button-save" type="button" class="query-button" title="Save results to text document"
-                    onclick="downloadTable(event)" disabled>
+            <thead>
+              <tr class="row-headings">
+                <th id="button-query" class="border-bottom" onclick="querySubmit(event)" title="Search combinations">
+                    <i id="query-icon" class="fa-solid fa-magnifying-glass fa-fw"></i>
+                </th>
+                <th id="button-save" class="border-bottom border-left border-right" title="Save results to text document" onclick="downloadTable(event)" disabled>
                     <i class="fa-solid fa-save fa-fw"></i>
-                  </button>
-                </td>
-                <td class="border-bottom">
-                  <button id="button-reset" type="button" class="query-button" title="Clear search"
-                    onclick="resetClick(event)">
+                </th>
+                <th id="button-reset" class="border-bottom" onclick="resetClick(event)" title="Clear search">
                     <i class="fa-solid fa-delete-left fa-fw"></i>
-                  </button>
-                </td>
+                </th>
               </tr>
-            </tbody>
+            </thead>
           </table>
         </div>
         <div class="info">

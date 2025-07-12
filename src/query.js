@@ -2,6 +2,7 @@ let queries = {
   inputs: [],
   results: [],
   current: -1,
+  inProgress: false
 };
 
 function parseResult(id, delta = 0) {
@@ -19,9 +20,13 @@ function parseResult(id, delta = 0) {
 async function querySubmit(e, quickSearch = false) {
   if (e) e.preventDefault();
 
+  if (queries.inProgress) return 0;
+  queries.inProgress = true;
+
   // Indicate that we're searching by changing the button icon and disabling them
   input.buttons.query.disabled = true;
-  input.buttons.query.innerHTML = '<i class="fa-solid fa-cog fa-spin fa-fw"></i>';
+  input.buttons.queryIcon.classList.remove("fa-magnifying-glass");
+  input.buttons.queryIcon.classList.add("fa-cog", "fa-spin");
 
   // Parse user input into a searchable query
   let query = {
@@ -119,9 +124,11 @@ async function querySubmit(e, quickSearch = false) {
   }
 
   // Indicate to the user that the search is finished by changing back the button icon and reenabling them
+  queries.inProgress = false;
   input.buttons.save.disabled = false;
   input.buttons.query.disabled = false;
-  input.buttons.query.innerHTML = '<i class="fa-solid fa-magnifying-glass fa-fw"></i>';
+  input.buttons.queryIcon.classList.remove("fa-cog", "fa-spin");
+  input.buttons.queryIcon.classList.add("fa-magnifying-glass");
 }
 
 function addArrays(arrays) {
