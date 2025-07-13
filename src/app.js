@@ -10,24 +10,10 @@ const input = {
     min: !mobileCheck() ? document.getElementById("slider-power-min") : document.getElementById("select-power-min"),
     max: !mobileCheck() ? document.getElementById("slider-power-max") : document.getElementById("select-power-max"),
     minAlt: mobileCheck() ? document.getElementById("slider-power-min") : document.getElementById("select-power-min"),
-    maxAlt: mobileCheck() ? document.getElementById("slider-power-max") : document.getElementById("select-power-max")
+    maxAlt: mobileCheck() ? document.getElementById("slider-power-max") : document.getElementById("select-power-max"),
   },
-  targets: [
-    document.getElementById("select-durability"),
-    document.getElementById("select-thrust"),
-    document.getElementById("select-speed"),
-    document.getElementById("select-stability"),
-    document.getElementById("select-steer"),
-    document.getElementById("select-strafe"),
-  ],
-  types: [
-    document.getElementById("select-propulsor"),
-    document.getElementById("select-stabilizer"),
-    document.getElementById("select-rudder"),
-    document.getElementById("select-hull"),
-    document.getElementById("select-intercooler"),
-    document.getElementById("select-esc"),
-  ],
+  targets: [document.getElementById("select-durability"), document.getElementById("select-thrust"), document.getElementById("select-speed"), document.getElementById("select-stability"), document.getElementById("select-steer"), document.getElementById("select-strafe")],
+  types: [document.getElementById("select-propulsor"), document.getElementById("select-stabilizer"), document.getElementById("select-rudder"), document.getElementById("select-hull"), document.getElementById("select-intercooler"), document.getElementById("select-esc")],
   option: {
     greaterOnly: document.getElementById("check-greaterOnly"),
     percentageScale: document.getElementById("check-percentageScale"),
@@ -44,55 +30,20 @@ const output = {
       id: document.getElementById("header-target-id"),
       ship: document.getElementById("header-target-ship"),
       power: document.getElementById("header-target-power"),
-      stats: [
-        document.getElementById("cell-target-durability"),
-        document.getElementById("cell-target-thrust"),
-        document.getElementById("cell-target-speed"),
-        document.getElementById("cell-target-stability"),
-        document.getElementById("cell-target-steer"),
-        document.getElementById("cell-target-strafe"),
-      ],
-      parts: [
-        document.getElementById("cell-target-propulsor"),
-        document.getElementById("cell-target-stabilizer"),
-        document.getElementById("cell-target-rudder"),
-        document.getElementById("cell-target-hull"),
-        document.getElementById("cell-target-intercooler"),
-        document.getElementById("cell-target-esc"),
-      ],
+      stats: [document.getElementById("cell-target-durability"), document.getElementById("cell-target-thrust"), document.getElementById("cell-target-speed"), document.getElementById("cell-target-stability"), document.getElementById("cell-target-steer"), document.getElementById("cell-target-strafe")],
+      parts: [document.getElementById("cell-target-propulsor"), document.getElementById("cell-target-stabilizer"), document.getElementById("cell-target-rudder"), document.getElementById("cell-target-hull"), document.getElementById("cell-target-intercooler"), document.getElementById("cell-target-esc")],
     },
     comparison: {
       id: document.getElementById("header-comparison-id"),
       ship: document.getElementById("header-comparison-ship"),
       power: document.getElementById("header-comparison-power"),
-      stats: [
-        document.getElementById("cell-comparison-durability"),
-        document.getElementById("cell-comparison-thrust"),
-        document.getElementById("cell-comparison-speed"),
-        document.getElementById("cell-comparison-stability"),
-        document.getElementById("cell-comparison-steer"),
-        document.getElementById("cell-comparison-strafe"),
-      ],
-      parts: [
-        document.getElementById("cell-comparison-propulsor"),
-        document.getElementById("cell-comparison-stabilizer"),
-        document.getElementById("cell-comparison-rudder"),
-        document.getElementById("cell-comparison-hull"),
-        document.getElementById("cell-comparison-intercooler"),
-        document.getElementById("cell-comparison-esc"),
-      ],
+      stats: [document.getElementById("cell-comparison-durability"), document.getElementById("cell-comparison-thrust"), document.getElementById("cell-comparison-speed"), document.getElementById("cell-comparison-stability"), document.getElementById("cell-comparison-steer"), document.getElementById("cell-comparison-strafe")],
+      parts: [document.getElementById("cell-comparison-propulsor"), document.getElementById("cell-comparison-stabilizer"), document.getElementById("cell-comparison-rudder"), document.getElementById("cell-comparison-hull"), document.getElementById("cell-comparison-intercooler"), document.getElementById("cell-comparison-esc")],
     },
     delta: {
       power: document.getElementById("header-delta-power"),
-      stats: [
-        document.getElementById("cell-delta-durability"),
-        document.getElementById("cell-delta-thrust"),
-        document.getElementById("cell-delta-speed"),
-        document.getElementById("cell-delta-stability"),
-        document.getElementById("cell-delta-steer"),
-        document.getElementById("cell-delta-strafe"),
-      ],
-    }
+      stats: [document.getElementById("cell-delta-durability"), document.getElementById("cell-delta-thrust"), document.getElementById("cell-delta-speed"), document.getElementById("cell-delta-stability"), document.getElementById("cell-delta-steer"), document.getElementById("cell-delta-strafe")],
+    },
   },
   info: document.getElementById("info-banner"),
 };
@@ -113,13 +64,13 @@ fetch("./src/data.json")
   .then((json) => {
     redoutDB = json;
     redoutDB.gliders.forEach((glider, i) => {
-      input.ships.innerHTML += `<input class="checkbox-part" value="${i}" type="checkbox" onchange="glidersCheck(event)" id="checkbox-${glider.code}" ${lastQuery ? ((lastQuery.gliders.includes(i)) && "checked") : "checked"} hidden /><label for="checkbox-${glider.code}" class="label-checkbox" title="${glider.name} (${glider.code}) {${glider.power}} [${glider.stats}]\n\n${glider.desc}"><img src='./img/${glider.code}.webp'></label>`;
+      input.ships.innerHTML += `<input class="checkbox-part" value="${i}" type="checkbox" onchange="glidersCheck(event)" id="checkbox-${glider.code}" ${lastQuery ? lastQuery.gliders.includes(i) && "checked" : "checked"} hidden /><label for="checkbox-${glider.code}" class="label-checkbox" title="${glider.name} (${glider.code}) {${glider.power}} [${glider.stats}]\n\n${glider.desc}"><img src='./img/${glider.code}.webp'></label>`;
       output.ships.innerHTML += `<option value='${glider.code}'>`;
     });
     redoutDB.parts.forEach((part, i) => {
       part.details.forEach((detail, j) => {
         Object.assign(detail, { id: partCode[j] });
-        input.types[i].innerHTML += `<input class="checkbox-part part-class-${detail.class}" value="${j}" type="checkbox" onchange="partsCheck(event,${i},'${part.type}')" id="checkbox-${detail.code}" ${lastQuery ? ((lastQuery.parts[i].includes(j)) && "checked") : (detail.class == "S" || detail.class == "X") && "checked"} hidden /><label for="checkbox-${detail.code}" class="label-checkbox part-class-${detail.class}" title="${detail.name} (${detail.class}) {${detail.power}} [${detail.stats}]\n\n${detail.desc}">${detail.code}</label>`;
+        input.types[i].innerHTML += `<input class="checkbox-part part-class-${detail.class}" value="${j}" type="checkbox" onchange="partsCheck(event,${i},'${part.type}')" id="checkbox-${detail.code}" ${lastQuery ? lastQuery.parts[i].includes(j) && "checked" : (detail.class == "S" || detail.class == "X") && "checked"} hidden /><label for="checkbox-${detail.code}" class="label-checkbox part-class-${detail.class}" title="${detail.name} (${detail.class}) {${detail.power}} [${detail.stats}]\n\n${detail.desc}">${detail.code}</label>`;
       });
       partsCheck(new Event("Initialize"), i, part.type);
     });
@@ -137,38 +88,40 @@ fetch("./src/data.json")
     powerChange();
   });
 
-
 function scaleChange(e) {
   e.preventDefault();
   if (output.table.innerHTML != "") {
-    output.table.innerHTML = parseResults(Array.from(queries.results.at(queries.current), (result) => parseResult(result.id, result.delta)), queries.inputs.at(queries.current));
+    output.table.innerHTML = parseResults(
+      Array.from(queries.results.at(queries.current), (result) => parseResult(result.id, result.delta)),
+      queries.inputs.at(queries.current)
+    );
   }
-  updateStatCharts(0, searchData.target.stats, (selectedRig.id != "") ? parseResult(selectedRig.id) : null);
+  updateStatCharts(0, searchData.target.stats, selectedRig.id != "" ? parseResult(selectedRig.id) : null);
 }
 
 function quickSelect(e, parts) {
   e.preventDefault();
   let active = document.querySelector(`.part-selector:not(.hide)`);
-  let type = active.id.split('-')[1];
+  let type = active.id.split("-")[1];
   let checkboxes = document.querySelectorAll(`#${active.id} input[type = "checkbox"]`);
   switch (parts) {
     case "base":
-      checkboxes.forEach((checkbox) => checkbox.checked = checkbox.classList.contains("part-class-C"));
+      checkboxes.forEach((checkbox) => (checkbox.checked = checkbox.classList.contains("part-class-C")));
       break;
     case "B":
-      checkboxes.forEach((checkbox) => checkbox.checked = checkbox.classList.contains("part-class-C") | checkbox.classList.contains("part-class-B"));
+      checkboxes.forEach((checkbox) => (checkbox.checked = checkbox.classList.contains("part-class-C") | checkbox.classList.contains("part-class-B")));
       break;
     case "A":
-      checkboxes.forEach((checkbox) => checkbox.checked = checkbox.classList.contains("part-class-B") | checkbox.classList.contains("part-class-A"));
+      checkboxes.forEach((checkbox) => (checkbox.checked = checkbox.classList.contains("part-class-B") | checkbox.classList.contains("part-class-A")));
       break;
     case "S":
-      checkboxes.forEach((checkbox) => checkbox.checked = checkbox.classList.contains("part-class-A") | checkbox.classList.contains("part-class-S"));
+      checkboxes.forEach((checkbox) => (checkbox.checked = checkbox.classList.contains("part-class-A") | checkbox.classList.contains("part-class-S")));
       break;
     case "X":
-      checkboxes.forEach((checkbox) => checkbox.checked = checkbox.classList.contains("part-class-S") | checkbox.classList.contains("part-class-X"));
+      checkboxes.forEach((checkbox) => (checkbox.checked = checkbox.classList.contains("part-class-S") | checkbox.classList.contains("part-class-X")));
       break;
     case "all":
-      checkboxes.forEach((checkbox) => checkbox.checked = true);
+      checkboxes.forEach((checkbox) => (checkbox.checked = true));
       break;
     default:
       break;
@@ -183,34 +136,34 @@ function powerChange(e, range) {
   }
   if (Number(input.power.min.value) >= Number(input.power.max.value)) {
     switch (range) {
-      case 'min':
+      case "min":
         input.power.max.value = Number(input.power.min.value) + 25;
         break;
-      case 'max':
+      case "max":
         input.power.min.value = Number(input.power.max.value) - 25;
         break;
       default:
         break;
     }
-  };
-  document.documentElement.style.setProperty("--power-min-value", `${Math.round(100 * (input.power.min.value - input.power.min.min) / (input.power.min.max - input.power.min.min))}%`);
-  document.documentElement.style.setProperty("--power-max-value", `${Math.round(100 * (input.power.max.value - input.power.max.min) / (input.power.max.max - input.power.max.min))}%`);
+  }
+  document.documentElement.style.setProperty("--power-min-value", `${Math.round((100 * (input.power.min.value - input.power.min.min)) / (input.power.min.max - input.power.min.min))}%`);
+  document.documentElement.style.setProperty("--power-max-value", `${Math.round((100 * (input.power.max.value - input.power.max.min)) / (input.power.max.max - input.power.max.min))}%`);
   output.power.innerHTML = `${input.power.min.value}-${input.power.max.value}`;
 }
 
-let powers = {
+let partPowers = {
   min: [],
-  max: []
+  max: [],
 };
 
 function partsCheck(e, i, type) {
   e.preventDefault();
   let checked = document.querySelectorAll(`#select-${type} input[type = "checkbox"]:checked`);
-  let partPowers = Array.from(checked, (part) => redoutDB.parts[i].details[Number(part.value)].power);
-  powers.min[i] = Math.min(...partPowers);
-  powers.max[i] = Math.max(...partPowers);
-  input.power.min.value = 184 + powers.min.reduceRight((x, y) => x + y, 0);
-  input.power.max.value = 184 + powers.max.reduceRight((x, y) => x + y, 0);
+  let checkedPowers = Array.from(checked, (part) => redoutDB.parts[i].details[Number(part.value)].power);
+  partPowers.min[i] = Math.min(...checkedPowers);
+  partPowers.max[i] = Math.max(...checkedPowers);
+  input.power.min.value = 184 + partPowers.min.reduceRight((x, y) => x + y, 0) - 25;
+  input.power.max.value = 184 + partPowers.max.reduceRight((x, y) => x + y, 0) + 25;
   if (checked.length == 0) quickSelect(e, "base");
   document.querySelector(`#label-${type}`).innerHTML = `${checked.length || 1}`;
   powerChange();
@@ -219,7 +172,7 @@ function partsCheck(e, i, type) {
 function glidersCheck(e) {
   e.preventDefault();
   let checked = document.querySelectorAll(`#select-ship input[type = "checkbox"]:checked`);
-  if (checked.length == 0) document.querySelectorAll(`#select-ship input[type = "checkbox"]`).forEach((checkbox) => checkbox.checked = true);
+  if (checked.length == 0) document.querySelectorAll(`#select-ship input[type = "checkbox"]`).forEach((checkbox) => (checkbox.checked = true));
 }
 
 function changeChart(e, chart) {
@@ -270,8 +223,8 @@ function columnSort(e, isNumber = false) {
     let moveOperations = [];
     [...output.table.querySelectorAll("tr")]
       .sort((a, b) => {
-        let firstRow = (isNumber) ? Number(a.querySelectorAll("td")[column].textContent.toLowerCase()) : a.querySelectorAll("td")[column].textContent.toLowerCase(),
-          secondRow = (isNumber) ? Number(b.querySelectorAll("td")[column].textContent.toLowerCase()) : b.querySelectorAll("td")[column].textContent.toLowerCase();
+        let firstRow = isNumber ? Number(a.querySelectorAll("td")[column].textContent.toLowerCase()) : a.querySelectorAll("td")[column].textContent.toLowerCase(),
+          secondRow = isNumber ? Number(b.querySelectorAll("td")[column].textContent.toLowerCase()) : b.querySelectorAll("td")[column].textContent.toLowerCase();
         let direction = isAscending * (firstRow < secondRow ? -1 : 1);
         moveOperations.push(direction);
         return direction;
@@ -292,9 +245,7 @@ function downloadTable(e) {
   e.preventDefault();
   if (queries.results.length > 0) {
     const separator = ",";
-    let csv = [
-      "ID, Ship, Propulsor, Stabilizer, Rudder, Hull, Intercooler, ESC, Power, Durability, Thrust, Top_Speed, Stability, Steer, Strafe, Delta",
-    ];
+    let csv = ["ID, Ship, Propulsor, Stabilizer, Rudder, Hull, Intercooler, ESC, Power, Durability, Thrust, Top_Speed, Stability, Steer, Strafe, Delta"];
     queries.results.at(queries.current).forEach((result) => {
       result = parseResult(result.id, result.delta);
       let row = [];
@@ -323,10 +274,10 @@ function downloadTable(e) {
 function targetInputChange(e, i, value = -1) {
   if (value != -1) input.targets[i].value = value;
   if (!input.targets[i].checkValidity()) input.targets[i].value = input.targets[i].defaultValue;
-  (input.targets[i].value == 0) ? input.targets[i].classList.add("input-ignored") : input.targets[i].classList.remove("input-ignored");
+  input.targets[i].value == 0 ? input.targets[i].classList.add("input-ignored") : input.targets[i].classList.remove("input-ignored");
   searchData.target.stats[i] = input.targets[i].value;
-  selectedRig = { glider: [{ code: "" }], id: "" };
   if (e) {
+    selectedRig = { glider: [{ code: "" }], id: "" };
     searchData.target.power = 0;
     updateStatCharts(0, searchData.target.stats);
   }
@@ -342,11 +293,11 @@ function resetClick(e) {
   document.getElementById("form-query").reset();
   input.targets.forEach((target, i) => targetInputChange(null, i, target.value));
   searchData.target.power = 0;
+  selectedRig = { glider: [{ code: "" }], id: "" };
   updateStatCharts(0, searchData.target.stats);
   redoutDB.parts.forEach((part, i) => partsCheck(e, i, part.type));
   powerChange();
 }
-
 
 function balanceTargets(e) {
   e.preventDefault();
@@ -355,22 +306,18 @@ function balanceTargets(e) {
   let average = Math.round(Array.from(nonZero, (target) => Number(target.value)).reduce((x, y) => x + y) / nonZero.length);
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      targetInputChange(null, i, average)
+      targetInputChange(e, i, average);
     }
   });
-  searchData.target.power = 0;
-  updateStatCharts(0, searchData.target.stats);
 }
 
 function randomTargets(e) {
   e.preventDefault();
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      targetInputChange(null, i, clamp(Math.round(Number(target.value) + Number(target.value) * getRandomInt(-1, 2) * 0.1), 1, 40));
+      targetInputChange(e, i, clamp(Math.round(Number(target.value) + Number(target.value) * getRandomInt(-1, 2) * 0.1), 1, 40));
     }
   });
-  searchData.target.power = 0;
-  updateStatCharts(0, searchData.target.stats);
 }
 
 function clamp(val, min, max) {
@@ -387,22 +334,18 @@ function decreaseTargets(e) {
   e.preventDefault();
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      targetInputChange(null, i, Math.round(Math.max(1, searchData.target.stats[i] * 0.9)));
+      targetInputChange(e, i, Math.round(Math.max(1, searchData.target.stats[i] * 0.9)));
     }
   });
-  searchData.target.power = 0;
-  updateStatCharts(0, searchData.target.stats);
 }
 
 function increaseTargets(e) {
   e.preventDefault();
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      targetInputChange(null, i, Math.round(Math.min(40, searchData.target.stats[i] * 1.1)));
+      targetInputChange(e, i, Math.round(Math.min(40, searchData.target.stats[i] * 1.1)));
     }
   });
-  searchData.target.power = 0;
-  updateStatCharts(0, searchData.target.stats);
 }
 
 function shiftTargetsRight(e) {
@@ -415,6 +358,7 @@ function shiftTargetsRight(e) {
     targetInputChange(null, i, newTargets[i]);
   });
   searchData.target.power = 0;
+  selectedRig = { glider: [{ code: "" }], id: "" };
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -432,6 +376,7 @@ function shiftTargetsLeft(e) {
     targetInputChange(null, i, newTargets[i]);
   });
   searchData.target.power = 0;
+  selectedRig = { glider: [{ code: "" }], id: "" };
   updateStatCharts(0, searchData.target.stats);
 }
 
@@ -440,8 +385,8 @@ let selectedRig = { glider: [{ code: "" }], id: "" };
 function rowHover(e, row) {
   e.preventDefault();
   let result = parseResult(queries.results.at(queries.current)[row.rowIndex - 3].id);
-  searchData.comparison.power = result.power;
   searchData.comparison.stats = result.stats;
+  searchData.comparison.power = result.power;
   updateStatCharts(1, result.stats, result);
 }
 
@@ -459,9 +404,8 @@ function rowClick(e, row) {
   row.classList.add("selected");
   if (result.id === selectedRig.id) {
     input.targets.forEach((target, i) => {
-      targetInputChange(null, i, result.stats[i]);
+      targetInputChange(null, i, result.stats[i] | 1);
     });
-    searchData.target.stats = result.stats;
     searchData.target.power = result.power;
     updateStatCharts(0, result.stats, result);
     querySubmit(e, true);
@@ -475,9 +419,9 @@ function statChange(comparison, target) {
   const styles = new Array(6).fill("cell-neutral");
   for (let i = 0; i < change.length; i++) {
     if (target[i] == 0) {
-      change[i] = '*';
+      change[i] = "*";
     } else if (comparison[i] != 0) {
-      let delta = (input.option.percentageScale.checked) ? ((comparison[i] - target[i]) * 100 / 40).toLocaleString(...statFormat) : comparison[i] - target[i];
+      let delta = input.option.percentageScale.checked ? (((comparison[i] - target[i]) * 100) / 40).toLocaleString(...statFormat) : comparison[i] - target[i];
       if (delta > 0) {
         change[i] = `+${delta}`;
         colors[i] = comparisonColor;
@@ -495,15 +439,19 @@ function statChange(comparison, target) {
 
 function powerDelta(comparison, target) {
   let delta = comparison - target;
-  if (delta == 0 || target == 0) { return ""; }
-  if (delta > 0) { return `+${delta}`; }
+  if (delta == 0 || target == 0) {
+    return "";
+  }
+  if (delta > 0) {
+    return `+${delta}`;
+  }
   return `${delta}`;
 }
 
 function updateStatCharts(dataset, data, result = null) {
-  chartRadar, chartBars.data.datasets[dataset].data = data;
-  chartRadar, chartBars.data.datasets[dataset].label = result ? result.id : "Target";
-  chartRadar, chartBars.data.datasets[dataset].hidden = false;
+  chartRadar, (chartBars.data.datasets[dataset].data = data);
+  chartRadar, (chartBars.data.datasets[dataset].label = result ? result.id : "Target");
+  chartRadar, (chartBars.data.datasets[dataset].hidden = false);
 
   let changes = statChange(searchData.comparison.stats, searchData.target.stats);
   let chartTable = dataset ? output.chart.comparison : output.chart.target;
@@ -522,7 +470,7 @@ function updateStatCharts(dataset, data, result = null) {
     chartBars.options.scales.y.ticks.color[i] = changes.color[i];
     chartTable.parts[i].innerHTML = result && result.rig[i].code;
     chartTable.parts[i].title = result ? `${result.rig[i].name} (${result.rig[i].class}) {${result.rig[i].power}} [${result.rig[i].stats}]\n\n${result.rig[i].desc}` : "N/A";
-    chartTable.stats[i].innerHTML = input.option.percentageScale.checked ? Math.round(100 * data / 40) : data;
+    chartTable.stats[i].innerHTML = input.option.percentageScale.checked ? Math.round((100 * data) / 40) : data;
     output.chart.delta.stats[i].classList.remove("cell-neutral", "cell-good", "cell-bad");
     output.chart.delta.stats[i].classList.add(changes.style[i]);
     output.chart.delta.stats[i].innerHTML = changes.delta[i];

@@ -2,15 +2,13 @@ let queries = {
   inputs: [],
   results: [],
   current: -1,
-  inProgress: false
+  searching: false,
 };
 
 function parseResult(id, delta = 0) {
   id = id.split("-");
   const glider = redoutDB.gliders.filter((glider) => glider.code === id[0]);
-  const rig = [].concat(
-    ...Array.from(id[1].split(""), (char, i) => redoutDB.parts[i].details.filter((part) => part.id === char))
-  );
+  const rig = [].concat(...Array.from(id[1].split(""), (char, i) => redoutDB.parts[i].details.filter((part) => part.id === char)));
   let power = glider[0].power;
   rig.forEach((part) => (power += part.power));
   const stats = addArrays([glider[0].stats, ...Array.from(rig, (part) => part.stats)]);
@@ -20,11 +18,10 @@ function parseResult(id, delta = 0) {
 async function querySubmit(e, quickSearch = false) {
   if (e) e.preventDefault();
 
-  if (queries.inProgress) return 0;
-  queries.inProgress = true;
+  if (queries.searching) return 0;
+  queries.searching = true;
 
-  // Indicate that we're searching by changing the button icon and disabling them
-  input.buttons.query.disabled = true;
+  // Indicate that we're searching by changing the UI
   input.buttons.queryIcon.classList.remove("fa-magnifying-glass");
   input.buttons.queryIcon.classList.add("fa-cog", "fa-spin");
 
@@ -37,10 +34,9 @@ async function querySubmit(e, quickSearch = false) {
     greaterOnly: input.option.greaterOnly.checked,
     limit: 120,
   };
-
+  
+  // Parse the ShipGen ID (if any specified)
   let gliderCodes = Array.from(redoutDB.gliders, (glider) => glider.code);
-
-  //Parse the ShipGen ID (if any specified)
   let idSpecified = false;
   input.id.value.split("-").forEach((id) => {
     if (!quickSearch && id) {
@@ -48,19 +44,27 @@ async function querySubmit(e, quickSearch = false) {
       switch (id.length) {
         case 3:
           // Possible ship code
-          query.gliders = [gliderCodes.indexOf(id.toUpperCase())];
-          if (query.gliders[0] === -1) query.gliders = [0, 11];
+          let potentialGlider = gliderCodes.indexOf(id);
+          if (potentialGlider != -1) query.gliders = [potentialGlider];
           break;
         case 6:
           // Possible part code, ignore power range
-          query.power = [175, 1200];
           [...id].forEach((idChar, i) => {
-            if (partCode.includes(idChar.toUpperCase())) {
-              query.parts[i] = [partCode.indexOf(idChar.toUpperCase())];
+            if (partCode.includes(idChar)) {
+              query.parts[i] = [partCode.indexOf(idChar)];
             }
           });
+          query.power = [175, 1150];
           break;
         default:
+          // Possible cheat code
+          let cheats = redoutDB.cheatcodes.filter((cheat) => cheat.code.includes(id));
+          if (cheats.length > 0) {
+            let cheat = cheats[0];
+            if (cheat.gliders.length != 0) query.gliders = cheat.gliders;
+            query.parts = cheat.parts;
+            query.power = [175, 1150];
+          }
           break;
       }
     }
@@ -75,7 +79,6 @@ async function querySubmit(e, quickSearch = false) {
       queries.current = i;
     }
   });
-
 
   let count = query.gliders.length;
   query.parts.forEach((part) => {
@@ -92,10 +95,10 @@ async function querySubmit(e, quickSearch = false) {
   } else {
     // Otherwise run the query and set the current query to the last in the queries array
     // If browser supports Web Workers and we're searching for more than one ship, run threaded
-    //results = await runQuery(query);
+    // Else run on a single thread for faster results.
     results = window.Worker && query.gliders.length > 1 ? await runQueryThreaded(query, count) : await runQuery(query, count);
 
-    // If there are results, push them to queries and save locally
+    // If there are results, push them to queries and save locally for reuse
     if (results) {
       results.sort(function (a, b) {
         return a.delta - b.delta;
@@ -115,7 +118,10 @@ async function querySubmit(e, quickSearch = false) {
     console.time("Parsing");
     let candidates = Array.from(results, (result) => parseResult(result.id, result.delta));
     // Sort by delta ascending
-    output.headings.forEach((head) => { head.classList.remove("active"); head.classList.add("asc") });
+    output.headings.forEach((head) => {
+      head.classList.remove("active");
+      head.classList.add("asc");
+    });
     candidates.sort(function (a, b) {
       return a.delta - b.delta;
     });
@@ -123,10 +129,8 @@ async function querySubmit(e, quickSearch = false) {
     console.timeEnd("Parsing");
   }
 
-  // Indicate to the user that the search is finished by changing back the button icon and reenabling them
-  queries.inProgress = false;
-  input.buttons.save.disabled = false;
-  input.buttons.query.disabled = false;
+  // Indicate to the user that the search is finished by changing back the UI
+  queries.searching = false;
   input.buttons.queryIcon.classList.remove("fa-cog", "fa-spin");
   input.buttons.queryIcon.classList.add("fa-magnifying-glass");
 }
@@ -171,9 +175,7 @@ async function runQuery(query, count) {
 
       // Get detailed info of query from RedoutDB
       let gliders = Array.from(query.gliders, (glider) => redoutDB.gliders[glider]);
-      let parts = Array.from(query.parts, (type, i) =>
-        Array.from(type, (part) => redoutDB.parts[i].details[part])
-      );
+      let parts = Array.from(query.parts, (type, i) => Array.from(type, (part) => redoutDB.parts[i].details[part]));
 
       let worst = 0;
       let maxDelta = 9999;
@@ -190,10 +192,7 @@ async function runQuery(query, count) {
                     let power = glider.power;
                     rig.forEach((part) => (power += part.power));
                     if (query.power[0] <= power && power <= query.power[1]) {
-                      const stats = addArrays([
-                        glider.stats,
-                        ...Array.from(rig, (part) => part.stats),
-                      ]);
+                      const stats = addArrays([glider.stats, ...Array.from(rig, (part) => part.stats)]);
                       const delta = calculateDelta(stats, query.stats, query.greaterOnly);
                       if (delta <= maxDelta) {
                         maxDelta = 0;
@@ -250,9 +249,7 @@ async function runQueryThreaded(query, count) {
 
       // Get detailed info of query from RedoutDB
       let gliders = Array.from(query.gliders, (glider) => redoutDB.gliders[glider]);
-      let parts = Array.from(query.parts, (type, i) =>
-        Array.from(type, (part) => redoutDB.parts[i].details[part])
-      );
+      let parts = Array.from(query.parts, (type, i) => Array.from(type, (part) => redoutDB.parts[i].details[part]));
 
       gliders.forEach((glider) => {
         let arrayWorker = new Worker("./src/worker.js");
@@ -264,9 +261,7 @@ async function runQueryThreaded(query, count) {
             const mergedResults = [].concat(...workers.results);
 
             console.timeEnd("Query");
-            console.info(
-              `Searched ${count.toLocaleString()} combinations with ${workers.count} thread(s)`
-            );
+            console.info(`Searched ${count.toLocaleString()} combinations with ${workers.count} thread(s)`);
             if (mergedResults.length === 0) {
               reject("No results found!");
               output.info.innerHTML = "No results found!";
@@ -309,7 +304,7 @@ function parseResults(candidates, query) {
       }
       let delta = stat - query.stats[i];
       let deltaPercentage = (delta / 40).toLocaleString(...deltaFormat);
-      let statPercentage = (100 * stat / 40).toLocaleString(...statFormat);
+      let statPercentage = ((100 * stat) / 40).toLocaleString(...statFormat);
       html += `<td class='results-cell-bottom ${statType}' title='${chartLabels[i]}: ${stat} (${statPercentage}%)\nStat change: ${delta} (${deltaPercentage})${statEstimation}\nTotal change: ${candidate.delta}'>${input.option.percentageScale.checked ? statPercentage : stat}</td>`;
     });
     html += `</tr>`;

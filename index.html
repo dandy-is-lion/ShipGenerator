@@ -73,13 +73,15 @@
             <thead>
               <tr class="row-headings">
                 <th id="button-query" class="border-bottom" onclick="querySubmit(event)" title="Search combinations">
-                    <i id="query-icon" class="fa-solid fa-magnifying-glass fa-fw"></i>
+                  <button type="submit" style="display:none;" onclick="querySubmit(event)"></button>
+                  <i id="query-icon" class="fa-solid fa-magnifying-glass fa-fw"></i>
                 </th>
-                <th id="button-save" class="border-bottom border-left border-right" title="Save results to text document" onclick="downloadTable(event)" disabled>
-                    <i class="fa-solid fa-save fa-fw"></i>
+                <th id="button-save" class="border-bottom border-left border-right"
+                  title="Save results to text document" onclick="downloadTable(event)" disabled>
+                  <i class="fa-solid fa-save fa-fw"></i>
                 </th>
                 <th id="button-reset" class="border-bottom" onclick="resetClick(event)" title="Clear search">
-                    <i class="fa-solid fa-delete-left fa-fw"></i>
+                  <i class="fa-solid fa-delete-left fa-fw"></i>
                 </th>
               </tr>
             </thead>
@@ -103,11 +105,12 @@
                 </tr>
                 <tr>
                   <th title="Target Ship" id="header-target-ship" class="header-target"></th>
-                  <th title="Target Power" class="header-target cell-power"><span id="header-target-power" style="filter: invert(100%)">N/A</span>
+                  <th title="Target Power" class="header-target cell-power"><span id="header-target-power"
+                      style="filter: invert(100%)">N/A</span>
                   </th>
                   <th title="Power Difference" id="header-delta-power" class="header-delta"></th>
-                  <th title="Comparison Power" class="header-comparison cell-power"><span
-                      id="header-comparison-power" style="filter: invert(100%)">N/A</span></th>
+                  <th title="Comparison Power" class="header-comparison cell-power"><span id="header-comparison-power"
+                      style="filter: invert(100%)">N/A</span></th>
                   <th title="Comparison Ship" id="header-comparison-ship" class="header-comparison"></th>
                 </tr>
               </thead>
@@ -225,7 +228,7 @@
                 title="Select Electronic Stability Controllers&#013;&#013;Control Stability and Strafe. Signature parts (Purple) trade off with Durability and Top Speed.">
                 X</th>
               <th class="border-bottom border-left border-right cell-power" title="Select power range">
-                <span id="power-label">175-1125</span>
+                <span id="power-label">175-1150</span>
               </th>
               <th class="border-bottom">
                 <input id="select-durability" size="2" maxlength="2" class="column-input"
@@ -304,10 +307,10 @@
                     <label for="slider-power-max" id="label-power-max">Max</label>
                   </div>
                   <input id="select-power-max" size="2" maxlength="2" class="power-input hide"
-                    onchange="powerChange(event, 'max')" title="Maximum power range" type="number" min="300" max="1125"
-                    step="25" value="1125" />
+                    onchange="powerChange(event, 'max')" title="Maximum power range" type="number" min="300" max="1150"
+                    step="25" value="1150" />
                   <input id="slider-power-max" class="slider-power-max" title="Maximum power range" type="range"
-                    min="300" max="1125" step="25" value="1125" oninput="powerChange(event, 'max')" />
+                    min="300" max="1150" step="25" value="1150" oninput="powerChange(event, 'max')" />
                 </div>
               </th>
               <th class="extra-stats border-bottom" colspan="6">
@@ -354,4 +357,5 @@
     </div>
   </form>
 </body>
+
 </html>
