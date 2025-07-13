@@ -404,7 +404,7 @@ function rowClick(e, row) {
   row.classList.add("selected");
   if (result.id === selectedRig.id) {
     input.targets.forEach((target, i) => {
-      targetInputChange(null, i, result.stats[i] | 1);
+      targetInputChange(null, i, result.stats[i] || 1);
     });
     searchData.target.power = result.power;
     updateStatCharts(0, result.stats, result);
