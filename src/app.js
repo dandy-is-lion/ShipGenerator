@@ -334,7 +334,7 @@ function decreaseTargets(e) {
   e.preventDefault();
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      targetInputChange(e, i, Math.round(Math.max(1, searchData.target.stats[i] * 0.9)));
+      targetInputChange(e, i, Math.round(Math.max(1, Number(searchData.target.stats[i]) - (40 / 7))));
     }
   });
 }
@@ -343,7 +343,7 @@ function increaseTargets(e) {
   e.preventDefault();
   input.targets.forEach((target, i) => {
     if (target.value != 0) {
-      targetInputChange(e, i, Math.round(Math.min(40, searchData.target.stats[i] * 1.1)));
+      targetInputChange(e, i, Math.round(Math.min(40, Number(searchData.target.stats[i]) + (40 / 7))));
     }
   });
 }
