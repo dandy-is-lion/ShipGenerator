@@ -62,7 +62,6 @@ async function querySubmit(e, quickSearch = false) {
           if (cheats.length > 0) {
             let cheat = cheats[0];
             if (cheat.gliders.length != 0) query.gliders = cheat.gliders;
-            if (cheat.stats.length != 0) query.stats = cheat.stats;
             query.parts = cheat.parts;
             query.power = [175, 1150];
           }
